@@ -16,6 +16,10 @@ exact rational arithmetic.
 - `05_binary_cubic_certificate.m` verifies the structural identities
   `Q=0`, `Q_U=2V`, and `Q_V=-2U` for the associated binary cubic, then proves
   that the fiber over `(1/3,2,2/3)` is the unit ideal.
+- `06_plane_attack_certificates.m` verifies the equivariant plane quotient,
+  nonlinear collision-tangent and invariant-slice obstructions, and the
+  octahedral degree-six cusp near-model.  It certifies exact identities, not a
+  solution of the plane conjecture.
 - `run_all.m` runs every certificate and exits nonzero if an assertion fails.
 
 On this Mac, Magma is installed outside `PATH`. Run from this directory:

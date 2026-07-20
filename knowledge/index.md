@@ -40,6 +40,10 @@ Beyond reproducing the announcement, the notes establish:
    generic degree \(3\);
 7. the discriminant hypersurface as the nonproperness set, with explicit
    escaping families.
+8. exact obstructions to every direct marked-root, polynomial-graph, linear
+   target-slice, and natural equivariant nonlinear descent to dimension two;
+9. an equivariant noninjective plane quotient with Jacobian \(-2c^2\), and an
+   octahedral degree-six cusp cover with Jacobian \(108x^3\).
 
 ## Reading paths
 
@@ -51,6 +55,10 @@ Beyond reproducing the announcement, the notes establish:
   [behavior at infinity](infinity.md).
 - For historical status and cautious attribution, see the
   [literature audit](literature-audit.md).
+- For the active plane attack, start with [the current plane status](plane-status.md),
+  then read [the descent obstructions](plane-descent-obstructions.md),
+  [the two exact near-models](plane-near-models.md), and the
+  [focused program](plane-program.md).
 - For independent reproduction, use [reproducibility](reproducibility.md) or
   run the included [SymPy notebook](notebooks/sympy-verification.ipynb).
 

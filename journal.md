@@ -84,3 +84,45 @@ all decisive outputs are also encoded as executable assertions.
 - Created the private repository
   `https://github.com/nasqret/jacobian-counterexample` and pushed `main` over
   the already-validated SSH transport.
+
+## 2026-07-20 — full-force plane attack
+
+- Re-audited the current plane literature.  The safe established covering
+  constraint is geometric degree at least six.  The strongest degree-108
+  statement remains a preprint; below degree 125 it leaves only `(72,108)`.
+  Recorded the known gap in Żołądek's separate gcd theorem and did not use it.
+- Proved that a plane Keller map with one coordinate affine-linear in a source
+  variable is triangular.  This eliminates the most literal analogue of the
+  threefold map's `z`-linearity.
+- For an arbitrary affine two-plane of binary forms and the root chart
+  `w=y+1/x`, derived `D(w) J(A,B)=s s_x`.  A Keller determinant would force a
+  rational square to have an odd valuation, excluding cubics, quartics,
+  sextics, and all higher degrees in this construction class.
+- Proved by leading homogeneous terms that no polynomial graph `z=g(x,y)` and
+  no rank-two linear projection of the three outputs can have constant plane
+  Jacobian.  A separate exact Gröbner search rejected every quadratic graph
+  through the known collision in all three projection charts.
+- Strengthened the natural quadratic graph obstruction from linear projections
+  to arbitrary target polynomials.  The three tangent-minor rows satisfy
+  `M_+ + M_- + 106*M_0=0`; at a common target the same two-form must pair with
+  all three, forcing `108*kappa=0`.
+- Tested the most promising nonlinear target slice `A+lambda*B^2`.  Although a
+  nonzero lambda fills the missing `1+xy=0` divisor of the linear slice, its
+  invariant zero-fiber quotient has the nonconstant unit `1+u`.  Extended the
+  obstruction to the full homogeneous triangular families
+  `A+B^2*phi(B*C)` and `B+A*C*psi(A*C^2)` using two infinity points and units.
+- Proved that no nonzero linear combination of the three outputs is a source
+  coordinate, using an exact Laurent formula on the components of its
+  `z`-coefficient curve and compactly supported Euler characteristic.
+- Discovered the `C*` equivariance of the threefold map and descended it to a
+  noninjective plane map with determinant `-2*(2-3*u-v)^2`.  Factored it through
+  a noninjective cubic map with determinant `-2*X` and isolated a valuation
+  mismatch that prevents the obvious rational pole cancellation.
+- Constructed the octahedral degree-six cusp model from
+  `P(t)^2-Q(t)^3=108*t*(1-t)`.  In its finite normalization coordinates its
+  determinant is `108*x^3` and its cusp pullback is
+  `108*x^4*y*(x-y)`.  Zariski Main and Ax--Grothendieck exclude every
+  reparametrization of this exact extension as a Keller counterexample.
+- Added exact SymPy, Sage, Magma, pytest, Obsidian, and Jupyter Book artifacts.
+  The next concrete target is a degree-six normalization `Y != A^2` with a
+  proper `A^2` open and nontrivial boundary divisor classes.

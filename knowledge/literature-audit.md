@@ -37,6 +37,11 @@ Bisi et al. described the conjecture as open even in dimension two
 counterexample {cite}`makarlimanov2025`, while Truong studied properness as the
 critical obstruction in reduced classes {cite}`truong2026`.
 
+The dedicated [plane status chapter](plane-status.md) contains the extended
+2026 audit: geometric degree at least six, the provisional degree-108 bound,
+the surviving `(72,108)` Newton configuration, and the exact distinction
+between peer-reviewed restrictions and recent preprints.
+
 These papers establish the immediate pre-announcement context; they naturally
 do not discuss a formula announced later.
 

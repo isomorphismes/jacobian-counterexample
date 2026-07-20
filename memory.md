@@ -122,6 +122,63 @@ satisfies `F=(0,2/s,0)`.  It proves nonproperness as `|s| -> infinity`.  This
 does not rescue the conjecture: properness is an extra sufficient hypothesis,
 not part of the Keller condition.
 
+## Dimension-two attack
+
+The plane conjecture remains unresolved.  The threefold construction does not
+descend by any of its natural low-complexity routes:
+
+- a plane Keller coordinate affine-linear in one source variable forces a
+  triangular automorphism;
+- for every affine two-plane of binary forms in the root chart `w=y+1/x`, the
+  differentiated root equation gives `D(w)*J(A,B)=s*s_x`; a nonzero constant
+  Jacobian would make a rational square equal to a function with an odd
+  valuation;
+- restricting the threefold map to any polynomial graph `z=g(x,y)` and taking
+  any rank-two constant linear target projection leaves a unique nonzero
+  highest Jacobian term;
+- on the interpolating graph `z=(27*x^2-1)/4`, the tangent-minor rows at the
+  three collision points obey `M_+ + M_- + 106*M_0=0`; because the target
+  two-form is identical at a common image, this excludes arbitrary nonlinear
+  target polynomial pairs with nonzero constant restricted Jacobian;
+- the homogeneous target shears `A+B^2*phi(B*C)` and
+  `B+A*C*psi(A*C^2)` never pull back to source coordinates: their invariant
+  zero-fiber quotients are not `A^1` (two infinity points or a nonconstant
+  unit);
+- no nonzero linear combination of `F1,F2,F3` is a coordinate, by exact fiber
+  topology and unit arguments.
+
+The `C*` weights `(1,-1,-2)` on the source and `(-2,-1,1)` on the target give a
+new explicit plane quotient.  With `u=xy`, `v=x^2*z`, `c=2-3*u-v`, it is a
+noninjective polynomial map with determinant `-2*c^2`.  It factors through
+
+```text
+G(X,Y) = (X*Y + Y^2 - Y^3, 2*X + 4*Y - 3*Y^2),
+det JG = -2*X,
+G(0,0) = G(2,2).
+```
+
+An independent degree-six cusp model is
+
+```text
+U = x^2 - 16*x*y + 16*y^2,
+V = x^3 + 30*x^2*y - 96*x*y^2 + 64*y^3,
+det J(U,V) = 108*x^3,
+V^2 - U^3 = 108*x^4*y*(x-y).
+```
+
+It realizes the octahedral passport `(2^3),(3^2),(4,1,1)` but its finite
+normalization is again `A^2`; Zariski Main plus Ax--Grothendieck excludes the
+entire function-field extension from being reparametrized into a plane Keller
+counterexample.  A viable degree-six construction therefore needs a finite
+normalization `Y != A^2` with a proper `A^2` open and nontrivial boundary
+divisor classes.
+
+The current literature filter is geometric degree at least six.  The strongest
+quantitative bound located is a preprint bound of maximum coordinate degree at
+least `108`, with `(72,108)` the only surviving pair below `125`.  These status
+claims and their peer-review labels are recorded in
+[plane-status.md](knowledge/plane-status.md).
+
 ## Verification state
 
 - SymPy exact determinant, points, both inverse charts, normalization, fiber
@@ -130,7 +187,11 @@ not part of the Keller condition.
   target, and normalization: passing.
 - Magma V2.22-3 direct, weighted, fiber, normalization, binary-cubic, and
   omitted-target certificates: passing.
-- Pytest: `8 passed`.
+- Plane quotient, marked-plane, linear and equivariant nonlinear slice,
+  collision-tangent, and octahedral cusp identities: passing in SymPy, with
+  both explicit near-models independently checked in Magma.
+- Sage normalized collision ideal through total degree three: unit ideal.
+- Pytest: fourteen exact certificate tests after the plane artifacts were added.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
 - Private GitHub repository published on branch `main`:
   `https://github.com/nasqret/jacobian-counterexample`.

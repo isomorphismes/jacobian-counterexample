@@ -49,10 +49,14 @@ compilable cubic counterexample.
 
 ## Plane obstruction
 
-The construction depends on a third coordinate that absorbs the reciprocal
-normalization of a marked cubic root.  Determine which step is impossible in
-two variables.  The binary-cubic model may expose a precise obstruction rather
-than merely failing to generalize.
+The missing step is now precise: affine-linearity, affine two-planes of marked
+forms, polynomial graph restrictions, linear target slices, and the natural
+equivariant nonlinear target shears are all ruled out.  The active construction
+target is a non-Galois degree-six cusp cover
+whose finite normalization is not affine two-space but contains affine
+two-space as a proper étale open.  See
+[the exact obstructions](plane-descent-obstructions.md),
+[near-models](plane-near-models.md), and [the focused program](plane-program.md).
 
 ## Geometry and topology
 

@@ -91,7 +91,9 @@ All calculations use exact rational arithmetic.
 
 ```sh
 python3 artifacts/sympy/verify.py
+python3 artifacts/sympy/verify_plane_attack.py
 DOT_SAGE=/tmp/jacobian-sage sage artifacts/sage/verify.sage
+DOT_SAGE=/tmp/jacobian-sage sage research/n2/low_degree_collision.sage
 (cd artifacts/magma && MAGMA_STARTUP_FILE=/dev/null /Applications/Magma/magma run_all.m)
 pytest -q
 jupyter-book build knowledge
@@ -99,6 +101,33 @@ jupyter-book build knowledge
 
 `make verify` runs the locally available algebra systems and tests; `make book`
 builds the HTML book at `knowledge/_build/html/index.html`.
+
+## Dimension two: exact progress, not a solution
+
+The plane conjecture remains open in this repository.  The current attack does
+establish that every direct descent of the marked-cubic mechanism fails:
+
+- a plane Keller map affine-linear in one source variable is triangular;
+- every affine two-plane of marked binary forms in the canonical root chart is
+  ruled out by an odd-valuation/square obstruction;
+- no polynomial graph in the threefold source followed by any rank-two linear
+  target projection can have constant Jacobian;
+- on the natural quadratic collision graph, even arbitrary nonlinear target
+  polynomials are ruled out by an exact three-tangent relation;
+- the natural homogeneous nonlinear target shears cannot pull back to source
+  coordinates, by their torus-invariant quotient curves;
+- no linear combination of the three outputs is a lowering coordinate.
+
+Two exact near-models identify the next construction boundary.  The
+`C*`-quotient of the threefold map is noninjective with Jacobian
+`-2*(2-3*u-v)^2`.  An independent octahedral degree-six cusp cover has
+Jacobian `108*x^3`, the first covering degree not excluded by established
+plane results.  Both are certified in SymPy and Magma, and both fail precisely
+because their ramification divisor remains affine.  See
+[the plane status](knowledge/plane-status.md),
+[descent obstructions](knowledge/plane-descent-obstructions.md),
+[near-models](knowledge/plane-near-models.md), and the
+[focused program](knowledge/plane-program.md).
 
 ## Repository guide
 

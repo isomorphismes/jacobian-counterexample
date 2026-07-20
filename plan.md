@@ -19,6 +19,22 @@ Status date: 2026-07-20.
 - [x] Validate all exact certificates, the notebook, tests, and a clean book build.
 - [x] Publish the committed tree to the private GitHub repository
   `nasqret/jacobian-counterexample`.
+- [x] Audit the 2026 literature frontier for the plane case, separating
+  peer-reviewed theorems from preprints and failed proof claims.
+- [x] Prove that every plane Keller map affine-linear in one source variable is
+  triangular.
+- [x] Prove the marked affine-two-plane odd-valuation obstruction in every
+  binary-form degree.
+- [x] Exclude every polynomial graph restriction and rank-two linear target
+  projection of the threefold counterexample.
+- [x] Exclude arbitrary nonlinear target polynomial pairs on the natural
+  quadratic collision graph by the exact three-tangent relation.
+- [x] Exclude the natural homogeneous triangular nonlinear target slices by
+  computing their torus-invariant zero-fiber quotients.
+- [x] Compute and certify the noninjective equivariant plane quotient with
+  square Jacobian defect.
+- [x] Construct and certify the octahedral degree-six cusp near-model and
+  exclude its full function-field extension by normalization.
 - [ ] Obtain at least two named, independent human checks outside this
   repository.
 - [ ] Freeze a public timestamp or archival DOI after attribution is confirmed.
@@ -47,6 +63,12 @@ Status date: 2026-07-20.
 - Search for lower total degree or coefficient height in dimension `3`.
 - Test whether analogous “unimodular row” constructions can or cannot descend
   to dimension `2`.
+- Classify degree-six cusp passports and the finite normal surfaces realizing
+  them; search for a normalization with a proper `A^2` Keller open.
+- Compute boundary divisor class groups and log-canonical data for those
+  normalizations.
+- Encode the integral Newton-chain recurrences for the surviving `(72,108)`
+  configuration and eliminate chains with exact certificates.
 
 ## Publication policy
 

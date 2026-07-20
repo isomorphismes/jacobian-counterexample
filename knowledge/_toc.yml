@@ -9,6 +9,10 @@ chapters:
   - file: generic-fiber
   - file: infinity
   - file: dimension-and-consequences
+  - file: plane-status
+  - file: plane-descent-obstructions
+  - file: plane-near-models
+  - file: plane-program
   - file: objections
   - file: literature-audit
   - file: reproducibility
