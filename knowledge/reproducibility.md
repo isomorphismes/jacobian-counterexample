@@ -22,6 +22,9 @@ Or run each layer separately:
 ```sh
 python3 artifacts/sympy/verify.py
 python3 artifacts/sympy/verify_plane_attack.py
+python3 artifacts/sympy/verify_resultant_route.py
+python3 research/n2/certify_pseudoplane_poisson.py
+python3 research/n2/search_resultant_poisson.py --poisson-degree 3
 DOT_SAGE=/tmp/jacobian-sage sage artifacts/sage/verify.sage
 DOT_SAGE=/tmp/jacobian-sage sage research/n2/low_degree_collision.sage
 cd artifacts/magma
@@ -33,11 +36,11 @@ cache/startup behavior.  They do not change the coefficient field or algorithms.
 
 ## What each implementation checks
 
-| Artifact | Threefold map | Plane descent | Quotient near-model | Sextic cusp |
+| Artifact | Threefold map | Plane descent | Near-models | Resultant route |
 |---|---:|---:|---:|---:|
-| SymPy scripts | full | identities | yes | yes |
+| SymPy scripts | full | identities | yes | full identities/search |
 | Sage scripts | full | degree-3 collision ideal | no | no |
-| Magma suite | full | structural identities | yes | yes |
+| Magma suite | full | structural identities | yes | core identities |
 | Jupyter notebook | full core | documentation | documentation | documentation |
 
 ## Jupyter Book
@@ -71,6 +74,8 @@ runs end with messages of the form:
 ```text
 PASS: all SymPy certificates verified exactly over Q.
 PASS: all exact plane-attack certificates verified over Q.
+PASS: all exact factorization/resultant route certificates verified over Q.
+PASS: pseudo-plane Poisson identities and quadratic no-go certified over Q.
 PASS: all SageMath certificates verified exactly over Q.
 PASS: all Magma certificates completed.
 ```

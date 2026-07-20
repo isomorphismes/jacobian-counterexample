@@ -23,6 +23,15 @@ Jean Abou Samra posted an independent
 06:31 UTC.  Exact-phrase searches found no indexed pre-announcement occurrence,
 but a negative search is not proof of priority.
 
+Later the same day, Aaron Lou hosted
+[a self-contained factorization--resultant derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf).
+Exact conjugacy shows that its map is the announced map after $z\mapsto-z$ and
+reversal of the three outputs.  It is valuable independent reconstruction and
+motivation, not a distinct counterexample.  A same-day
+[weighted-lift repository](https://github.com/algal/jacobianfun) gives further
+exact families; it is self-published and unrefereed, and is treated only as
+construction data in this audit.
+
 As of the cutoff, no refereed paper or arXiv preprint devoted to this new map
 was found.  The appropriate wording is therefore: an exact, reproducible
 counterexample with provisional same-day provenance, not yet vetted through
@@ -52,6 +61,36 @@ Rodríguez Díaz traces the plane statement to Kraus in 1884.  The standard
 modern reduction is Bass--Connell--Wright {cite}`bass1982`; important later
 reductions include Drużkowski {cite}`druzkowski1983` and the symmetric
 reduction of de Bondt--van den Essen {cite}`debondt2005`.
+
+## The exceptional pseudo-plane connection
+
+The quadratic-factor scaffold in this repository is exactly the affine
+pseudo-plane
+
+\[
+S(2,2,1)=\{u(1+uv)=w^2\}.
+\]
+
+Miyanishi developed affine pseudo-coverings specifically to study a possible
+factorization of a plane Keller map through such an intermediate surface
+{cite}`miyanishi2005,miyanishi2015lectures`.  The standard canonical-class
+obstruction is silent here: this is type $r=2$, for which
+$K_S=(r-2)F_0$ vanishes.
+
+Dubouloz--Palka's refereed 2018 paper proves that this pseudo-plane admits
+large families of nonproper etale endomorphisms and gives explicit
+Belyi--Shabat formulas {cite}`duboulozpalka2018`.  These are maps $S\to S$,
+not the missing map $S\to\mathbb A^2$.  Exact conjugation in the
+[factorization chapter](resultant-factor-route.md) shows that their plane-chart
+transition is a constant-Jacobian rational map with a genuine pole, and that
+the published deformation family cannot avoid the omitted boundary line.
+
+The current Borisov--Gabber--Vasiu manuscript treats related standard affine
+pseudo-planes, constructs maps to affine space in positive characteristic,
+and explicitly contrasts them with the unresolved characteristic-zero
+$r=2$ case {cite}`borisovgabbervasiu2026`.  It is a current manuscript, not a
+refereed status authority; it is used here to cross-check the boundary of the
+known theorem, not to certify a plane result.
 
 ## Claimed proofs that are not status authorities
 

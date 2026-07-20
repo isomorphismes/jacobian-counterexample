@@ -20,6 +20,11 @@ exact rational arithmetic.
   nonlinear collision-tangent and invariant-slice obstructions, and the
   octahedral degree-six cusp near-model.  It certifies exact identities, not a
   solution of the plane conjecture.
+- `07_resultant_route.m` verifies the coefficient--resultant Jacobians for the
+  `(1,2)` and `(2,3)` factor splits, the collapse of the literal quadratic
+  analogue, the explicit noninjective quadratic-factor plane scaffold, its
+  pseudo-plane universal cover, and the rational constant-Jacobian boundary
+  near-solution.
 - `run_all.m` runs every certificate and exits nonzero if an assertion fails.
 
 On this Mac, Magma is installed outside `PATH`. Run from this directory:

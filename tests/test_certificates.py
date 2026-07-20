@@ -16,6 +16,26 @@ PLANE_VERIFY = importlib.util.module_from_spec(PLANE_SPEC)
 assert PLANE_SPEC.loader is not None
 PLANE_SPEC.loader.exec_module(PLANE_VERIFY)
 
+RESULTANT_SCRIPT = (
+    Path(__file__).parents[1] / "artifacts" / "sympy" / "verify_resultant_route.py"
+)
+RESULTANT_SPEC = importlib.util.spec_from_file_location(
+    "resultant_route_verify", RESULTANT_SCRIPT
+)
+RESULTANT_VERIFY = importlib.util.module_from_spec(RESULTANT_SPEC)
+assert RESULTANT_SPEC.loader is not None
+RESULTANT_SPEC.loader.exec_module(RESULTANT_VERIFY)
+
+PSEUDOPLANE_SCRIPT = (
+    Path(__file__).parents[1] / "research" / "n2" / "certify_pseudoplane_poisson.py"
+)
+PSEUDOPLANE_SPEC = importlib.util.spec_from_file_location(
+    "pseudoplane_poisson_verify", PSEUDOPLANE_SCRIPT
+)
+PSEUDOPLANE_VERIFY = importlib.util.module_from_spec(PSEUDOPLANE_SPEC)
+assert PSEUDOPLANE_SPEC.loader is not None
+PSEUDOPLANE_SPEC.loader.exec_module(PSEUDOPLANE_VERIFY)
+
 
 def test_direct_certificate():
     VERIFY.certify_direct()
@@ -71,3 +91,43 @@ def test_equivariant_nonlinear_slice_obstructions():
 
 def test_octahedral_sextic_model():
     PLANE_VERIFY.certify_octahedral_sextic_model()
+
+
+def test_lou_conjugacy_and_factor_chart():
+    RESULTANT_VERIFY.certify_lou_conjugacy_and_chart()
+
+
+def test_general_resultant_jacobians():
+    RESULTANT_VERIFY.certify_resultant_jacobians()
+
+
+def test_literal_quadratic_factor_collapse():
+    RESULTANT_VERIFY.certify_literal_quadratic_collapse()
+
+
+def test_weighted_plane_core():
+    RESULTANT_VERIFY.certify_weighted_plane_core()
+
+
+def test_quintic_slice_obstructions():
+    RESULTANT_VERIFY.certify_quintic_slice_obstructions()
+
+
+def test_quartic_factor_scaffold():
+    RESULTANT_VERIFY.certify_quartic_factor_scaffold()
+
+
+def test_pseudoplane_darboux_charts():
+    PSEUDOPLANE_VERIFY.certify_poisson_and_darboux_charts()
+
+
+def test_pseudoplane_homogeneous_no_go_formulas():
+    PSEUDOPLANE_VERIFY.certify_homogeneous_formulas()
+
+
+def test_pseudoplane_ambient_quadratic_no_go():
+    PSEUDOPLANE_VERIFY.certify_no_ambient_quadratic_pair()
+
+
+def test_pseudoplane_lnd_and_self_map():
+    PSEUDOPLANE_VERIFY.certify_lnd_and_self_map_identities()

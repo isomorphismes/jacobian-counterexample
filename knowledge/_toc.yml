@@ -12,6 +12,8 @@ chapters:
   - file: plane-status
   - file: plane-descent-obstructions
   - file: plane-near-models
+  - file: resultant-factor-route
+  - file: pseudoplane-poisson-obstructions
   - file: plane-program
   - file: objections
   - file: literature-audit

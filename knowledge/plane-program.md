@@ -5,10 +5,10 @@ tags: [dimension-two, plan, computation, infinity]
 
 # Focused program for dimension two
 
-The broad search has narrowed to three credible fronts: construct the first
-possible non-Galois degree-six cover, prove that its required boundary
-configuration cannot occur, or find the last genuinely nonlinear descent from
-the threefold map.
+The broad search has narrowed to four credible fronts: solve or obstruct the
+explicit factor-invariant Poisson equation, construct a boundary-crossing
+quadratic--cubic slice, deform the first possible non-Galois degree-six cover,
+or finish the genuinely nonlinear descent audit for the threefold map.
 
 A third, tightly constrained route is nonlinear descent from the threefold
 map.  Linear slices, equivariant triangular nonlinear slices, and arbitrary
@@ -17,6 +17,64 @@ What remains is a genuinely nonequivariant target coordinate $R$ for which
 $R(F)$ could be a source coordinate.  Finding one would immediately restrict
 the threefold collision to a plane Keller counterexample; proving that no
 common coordinate exists would close the last direct descent mechanism.
+
+## Factor front: solve one explicit Poisson equation
+
+The strongest new scaffold in
+[The factorization--resultant route](resultant-factor-route.md) is a polynomial
+map to the smooth surface
+
+\[
+\Phi=(a,\mathcal B,\mathcal C):\mathbb A^2
+\longrightarrow
+\{\mathcal B^2=a+a^2\mathcal C\}\subset\mathbb A^3
+\]
+
+with an exact two-point collision.  Its rational deck involution has Jacobian
+$+1$, so it evades the collision-tangent obstruction.  The task is
+
+\[
+\text{find }U,V\in
+\mathbb C[a,\mathcal B,\mathcal C]/(\mathcal B^2-a-a^2\mathcal C)
+\quad\text{with}\quad \{U,V\}_{x,y}=1.
+\]
+
+A solution is a plane counterexample.  No linear pair works, although an exact
+sum of three quadratic brackets equals $1$, so de Rham cohomology alone cannot
+obstruct it.  Descent to the smaller product-coefficient ring adds an elliptic
+conductor; linear projections and target-degree-three bracket spans in that
+smaller ring are excluded exactly.
+
+This surface is the exceptional affine pseudo-plane $S(2,2,1)$.  The source
+map factors as an affine-plane chart in the universal cover
+$X^2Y=Z^2-1$, followed by its $\mathbb Z/2$ quotient.  The canonical class
+obstruction that rules out most pseudo-planes vanishes at type $r=2$.
+Dubouloz--Palka's etale self-maps give the exact rational Darboux pair
+
+\[
+x(1+x^2y),\qquad
+\frac{2y(2+x^2y)}{(1+x^2y)^2},
+\qquad J=4,
+\]
+
+but its double pole is genuine.  A two-divisor valuation argument proves that
+the first coordinate $\mathcal B$ has no regular constant Poisson mate, so
+every triangular shear of this pair is excluded at once.  The full
+equivariant Chebyshev family also hits the omitted boundary.  The next ansatz
+must change the first Darboux coordinate or produce a non-fibration-preserving
+cover endomorphism whose preimage of the omitted line stays in that line.
+
+The same valuation and residue analysis excludes a constant mate for each of
+$a,\mathcal B,\mathcal C$.  A weight classification excludes every
+$\mathbb C^*$-homogeneous pair, and an exact Gröbner certificate excludes all
+pairs represented by ambient polynomials of total degree at most two.  A live
+ansatz is therefore necessarily mixed, nonhomogeneous, and at least cubic.
+
+The parallel degree-ten program uses normalized quadratic--cubic factors.
+Fixed top or middle coefficient slices that remain in a monic chart are killed
+by a nonconstant-unit obstruction, and the Bring--Jerrard slice has
+$\chi_c=0$.  A successful slice must be nonlinear and cross the divisor where
+the marked quadratic loses its leading coefficient.
 
 ## Construction front: deform the sextic cusp cover
 
@@ -82,6 +140,11 @@ thousands of variables.
   sextic identities over $\mathbb Q$.
 - `artifacts/magma/06_plane_attack_certificates.m` independently checks both
   explicit near-models.
+- `artifacts/sympy/verify_resultant_route.py` and
+  `artifacts/magma/07_resultant_route.m` certify the factorization--resultant
+  identities and the noninjective affine-plane scaffold.
+- `research/n2/search_resultant_poisson.py` performs the bounded exact Poisson
+  search and the finite-field sparse-plane sieve.
 
 The unrestricted degree-four Gröbner calculation was stopped after 23 minutes;
 no conclusion is recorded from it.  In light of the established degree and

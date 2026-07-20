@@ -126,3 +126,71 @@ all decisive outputs are also encoded as executable assertions.
 - Added exact SymPy, Sage, Magma, pytest, Obsidian, and Jupyter Book artifacts.
   The next concrete target is a degree-six normalization `Y != A^2` with a
   proper `A^2` open and nontrivial boundary divisor classes.
+
+## 2026-07-20 — Lou factorization audit and plane resultant attack
+
+- Downloaded Aaron Lou's six-page derivation, extracted its text, rendered all
+  six pages with Poppler, and visually inspected every page under the PDF
+  verification workflow.
+- Proved by exact expansion that Lou's map is `R o F o S`, where
+  `S(x,y,z)=(x,y,-z)` and `R(A,B,C)=(C,B,A)`.  Its product cubic is the existing
+  marked binary cubic after the corresponding sign change.
+- Generalized the PDF's 5-by-5 determinant to
+  `det D(coeff(PQ),Res(P,Q))=+/-(s-r)Res(P,Q)^2` using root coordinates and
+  Vandermonde determinants.  Exact symbolic cases include `(1,1)`, `(1,2)`,
+  `(1,3)`, and `(2,3)`.
+- Identified quadratic-times-cubic factorization as the clean direct plane
+  blueprint: resultant weight one, generic degree ten, and no residual scaling
+  gauge.  Proved that the Bring--Jerrard slice is connected with
+  `chi_c=0`, and derived unit obstructions for fixed top and middle coefficient
+  slices in the monic quadratic chart.
+- Constructed the normalized two-quadratic Danielewski surface and its exact
+  `A^2` chart.  The induced product-coefficient map has the collision
+  `(1,0),(-1,-2) -> (-1,-1,-1/4)` and a symplectic rational complement-factor
+  involution.  Reduced the missing Keller condition first to `{U,V}=1` on the
+  smooth surface `B^2=a+a^2*C`, and then to the narrower conductor-descent
+  equation in `C[p,q,r]/(H)`.
+- Found the exact identity expressing `1` as a sum of three degree-two brackets
+  on the smooth surface.  It is not one bracket and hence not a solution, but
+  it rules out a purely de Rham-cohomological obstruction.
+- Excluded every linear target projection and, by exact rational linear
+  algebra, excluded a constant from the span of all brackets through target
+  degree three.  Small-finite-field counts were added as a heuristic sieve for
+  sparse quintic coefficient planes.
+- Audited the same-day weighted-lift follow-on.  Its plane core has determinant
+  defect `-c*gamma`; the log-symplectic chart cancels the defect but introduces
+  poles, while the third weighted scale in dimension three polynomializes it.
+- Added exact SymPy and Magma certificates, bounded-search code, an Obsidian and
+  Jupyter Book chapter, and updates to the durable memory and research plan.
+- Recognized the smooth target as the classical affine pseudo-plane
+  `S(2,2,1)`.  More precisely, the resultant-one factor surface is the
+  universal cover `X^2*Y=Z^2-1`, the source plane is its complement of the line
+  `X=0,Z=-1`, and the map to `B^2=a+a^2*C` is the standard `Z/2` quotient.
+  Thus the construction exactly recovers Miyanishi's Galois affine
+  pseudo-covering framework for a hypothetical split plane Keller map.
+- Verified that this is the exceptional pseudo-plane type `r=2`: its canonical
+  class vanishes, so the usual canonical-divisor obstruction is silent.
+  Dubouloz--Palka construct nonproper etale self-maps of this surface, but not
+  the needed map from it to `A^2`; the 2026 Borisov--Gabber--Vasiu manuscript
+  explicitly records this exceptional direction as conditional on the plane
+  Jacobian conjecture.
+- Composed Dubouloz--Palka's basic open embedding with the inverse plane chart.
+  This gives the exact rational pair
+  `U=x*(1+x^2*y)`,
+  `V=2*y*(2+x^2*y)/(1+x^2*y)^2`, with `J(U,V)=4` and the retained collision.
+  Their standard deformation family only adds `P(U)` to `V`; the double pole
+  on `1+x^2*y=0` remains.  Reformulated the next construction problem as
+  finding a noninvertible etale endomorphism of the universal cover whose
+  inverse image of the omitted line is contained in that line.
+- Computed a two-chart Darboux atlas on the pseudo-plane; its transition has
+  the exact inverse-square twist `Q=-2*p-1/q^2`.  Valuation and logarithmic
+  residue arguments exclude constant Poisson mates for each generator
+  `a,B,C` in all degrees.  A full weight classification excludes every
+  homogeneous pair, and an exact coefficient ideal excludes all pairs of
+  ambient total degree at most two.  The live search begins with mixed,
+  nonhomogeneous cubic ansatzes.
+- Audited the Chebyshev form of all equivariant universal-cover endomorphisms.
+  Conjugation to the plane chart has constant Jacobian but a genuine pole for
+  every degree greater than one.  The standard non-equivariant deformation
+  automorphisms preserve the omitted boundary line, so the entire published
+  family fails the boundary-avoidance requirement.

@@ -179,6 +179,79 @@ least `108`, with `(72,108)` the only surviving pair below `125`.  These status
 claims and their peer-review labels are recorded in
 [plane-status.md](knowledge/plane-status.md).
 
+## Factorization--resultant extraction
+
+Aaron Lou's 2026-07-20 PDF gives exactly the canonical map after the source
+change `z -> -z` and target reversal `(A,B,C) -> (C,B,A)`.  Its reusable core is
+the general identity
+
+```text
+det D(coeff(P*Q), Res(P,Q)) = +/- (deg(Q)-deg(P))*Res(P,Q)^2.
+```
+
+The normalized factor cover has generic degree
+`abs(s-r)*binomial(r+s,r)`.  The literal `1+1` plane version degenerates; the
+clean next direct construction is `2+3`, with weight one and generic degree
+ten.  The Bring--Jerrard slice `t^5+a*t+b` is connected and smooth but has
+compactly supported Euler characteristic zero.  Fixed top and middle
+coefficient slices that stay in a monic quadratic chart have a nonconstant-unit
+obstruction.  Any successful degree-ten slice must cross the divisor where the
+marked quadratic loses its leading term.
+
+An equal-degree restriction nevertheless yields an exact noninjective plane
+scaffold.  Put
+
+```text
+p = -x^2-y-x^2*y^2/2,
+q = -x-x^3*y,
+r = ((-y-x^2*y^2/2)^2-(1+x^2*y)^2)/4.
+```
+
+Then `(1,0)` and `(-1,-2)` both map to `(-1,-1,-1/4)`.  The rational deck map
+`(x,y) -> (-x,-y-2/x^2)` has determinant `1` and fixes `p,q,r`.  More simply,
+it fixes `a=x^2`, `B=x*(1+x^2*y)`, and `C=2*y+x^2*y^2`, which satisfy
+`B^2=a+a^2*C` and send both points to `(1,1,0)`.  A pair in this smooth surface
+ring with bracket `1` would be a plane counterexample.  No linear pair works,
+but an exact sum of three quadratic brackets equals `1`, so cohomology alone is
+too weak.  The product ring `C[p,q,r]/(H)` is a narrower conductor-descent
+problem; its linear projections and bracket spans through target degree three
+fail exactly, but no global obstruction is known.
+
+The smooth surface is exactly the affine pseudo-plane
+`S(2,2,1)={u*(1+u*v)=w^2}` under `(u,v,w)=(a,C,B)`.  The factor surface is its
+universal cover `X^2*Y=Z^2-1`; the source plane is the complement of
+`{X=0,Z=-1}`, and `(X,Y,Z)->(X^2,Y,X*Z)` restricts to the displayed
+noninjective map.  This is Miyanishi's standard degree-two Galois affine
+pseudo-covering.  Its canonical class vanishes because it is the exceptional
+type `r=2`, so the usual pseudo-plane obstruction cannot rule out the missing
+map to `A^2`.
+
+Dubouloz--Palka's basic nonproper etale self-map of this pseudo-plane factors
+through the universal cover and yields the rational plane pair
+
+```text
+U = x*(1+x^2*y),
+V = 2*y*(2+x^2*y)/(1+x^2*y)^2,
+J(U,V) = 4.
+```
+
+The denominator is a genuine pole.  Their standard deformation automorphisms
+only add a polynomial in `U` to `V`, so they do not clear it.  Equivalently,
+the lifted cover endomorphism `(X,Y,Z)->(X*Z,4*Y,2*Z^2-1)` sends the interior
+curve `Z=0` to the omitted boundary line.  A new exact route is therefore to
+find a noninvertible etale cover endomorphism `E` with
+`E^{-1}(L_-) subset L_-`; restricting it to the plane chart would solve the
+plane conjecture.
+
+The intrinsic Poisson surface has two Darboux charts with transition
+`P=q/2`, `Q=-2*p-1/q^2`; the inverse-square term is the concrete gluing
+obstruction.  Exact valuation/residue arguments prove that none of the three
+generators `a,B,C` has a regular constant Poisson mate.  The weight grading
+`wt(a,B,C)=(2,1,-2)` excludes every homogeneous pair, and an exact Gröbner
+certificate excludes every pair represented by ambient polynomials of total
+degree at most two.  Any survivor must be mixed, symmetry-breaking, and at
+least cubic.
+
 ## Verification state
 
 - SymPy exact determinant, points, both inverse charts, normalization, fiber
@@ -190,8 +263,11 @@ claims and their peer-review labels are recorded in
 - Plane quotient, marked-plane, linear and equivariant nonlinear slice,
   collision-tangent, and octahedral cusp identities: passing in SymPy, with
   both explicit near-models independently checked in Magma.
+- Lou conjugacy, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
+  identities, and the quadratic-factor scaffold: passing in SymPy and Magma.
 - Sage normalized collision ideal through total degree three: unit ideal.
-- Pytest: fourteen exact certificate tests after the plane artifacts were added.
+- Pytest: twenty-four exact certificate tests after the resultant and
+  pseudo-plane Poisson artifacts were added.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
 - Private GitHub repository published on branch `main`:
   `https://github.com/nasqret/jacobian-counterexample`.

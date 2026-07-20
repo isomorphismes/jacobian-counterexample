@@ -5,6 +5,8 @@ verify: sympy sage magma test
 sympy:
 	python3 artifacts/sympy/verify.py
 	python3 artifacts/sympy/verify_plane_attack.py
+	python3 artifacts/sympy/verify_resultant_route.py
+	python3 research/n2/certify_pseudoplane_poisson.py
 	python3 research/n2/search_graph_sections.py --groebner
 
 sage:

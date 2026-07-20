@@ -33,6 +33,24 @@ condition plus Galoisness forces polynomial invertibility
 counterexample should be sought as a composite, non-Galois cover, with degree
 six the first plausible target.
 
+The factorization route in this repository produces exactly such an
+intermediate-cover framework.  Its degree-two top extension is the standard
+Galois affine pseudo-covering
+
+\[
+\mathbb A^2\longrightarrow
+S(2,2,1)=\{u(1+uv)=w^2\}.
+\]
+
+A second etale map from this pseudo-plane to $\mathbb A^2$ would compose to
+a non-Galois plane Keller map of even geometric degree.  Since total degrees
+two through five are excluded, the second map would have generic degree at
+least three.  Miyanishi's canonical-divisor obstruction eliminates broad
+classes of pseudo-planes, but vanishes for this exceptional type $r=2$
+{cite}`miyanishi2005,miyanishi2015lectures`.  The exceptional direction
+remains tied to the classical plane conjecture in the 2026
+Borisov--Gabber--Vasiu manuscript {cite}`borisovgabbervasiu2026`.
+
 ## Degree and Newton constraints
 
 The strongest quantitative degree statement located is the 2022 preprint of

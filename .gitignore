@@ -5,3 +5,4 @@ __pycache__/
 .DS_Store
 knowledge/_build/
 .ipynb_checkpoints/
+tmp/

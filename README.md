@@ -92,6 +92,7 @@ All calculations use exact rational arithmetic.
 ```sh
 python3 artifacts/sympy/verify.py
 python3 artifacts/sympy/verify_plane_attack.py
+python3 artifacts/sympy/verify_resultant_route.py
 DOT_SAGE=/tmp/jacobian-sage sage artifacts/sage/verify.sage
 DOT_SAGE=/tmp/jacobian-sage sage research/n2/low_degree_collision.sage
 (cd artifacts/magma && MAGMA_STARTUP_FILE=/dev/null /Applications/Magma/magma run_all.m)
@@ -126,8 +127,36 @@ plane results.  Both are certified in SymPy and Magma, and both fail precisely
 because their ramification divisor remains affine.  See
 [the plane status](knowledge/plane-status.md),
 [descent obstructions](knowledge/plane-descent-obstructions.md),
-[near-models](knowledge/plane-near-models.md), and the
+[near-models](knowledge/plane-near-models.md),
+[the factorization--resultant route](knowledge/resultant-factor-route.md),
+[pseudo-plane Poisson obstructions](knowledge/pseudoplane-poisson-obstructions.md), and the
 [focused program](knowledge/plane-program.md).
+
+The factorization attack adds a sharper survivor.  An explicit affine-plane
+chart of normalized quadratic factors has a two-point collision and a
+symplectic rational deck involution.  It would become a plane counterexample
+exactly if two regular functions on the smooth surface
+`B^2 = a + a^2*C` have Poisson bracket `1`.  No linear pair works; in the
+smaller product-coefficient ring, no target-degree-three bracket combination
+works.  The unrestricted Poisson equation remains open.
+
+That surface is exactly Miyanishi's exceptional affine pseudo-plane
+`S(2,2,1)`, and the source map is its classical degree-two Galois affine
+pseudo-covering.  Its universal cover is `X^2*Y=Z^2-1`, with the source plane
+obtained by deleting `{X=0,Z=-1}`.  Dubouloz--Palka's nonproper etale
+self-maps produce the striking rational near-solution
+
+```text
+U = x*(1+x^2*y)
+V = 2*y*(2+x^2*y)/(1+x^2*y)^2
+J(U,V) = 4
+```
+
+but the denominator is a genuine boundary pole.  A valuation argument rules
+out every constant Poisson mate for `U=B`, and the full published
+Chebyshev/Belyi--Shabat family fails the same boundary-avoidance test.  A
+successful construction must mix the pseudo-plane coordinates in a genuinely
+new way.
 
 ## Repository guide
 

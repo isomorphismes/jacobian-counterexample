@@ -35,6 +35,23 @@ Status date: 2026-07-20.
   square Jacobian defect.
 - [x] Construct and certify the octahedral degree-six cusp near-model and
   exclude its full function-field extension by normalization.
+- [x] Audit Aaron Lou's factorization derivation and prove its exact conjugacy
+  to the canonical threefold map.
+- [x] Derive and certify the general coefficient--resultant determinant law and
+  identify the consecutive `(2,3)` split as the clean degree-ten plane route.
+- [x] Exclude the connected Bring--Jerrard factor surface by Euler
+  characteristic and exclude natural monic coefficient slices by units.
+- [x] Construct and certify the noninjective quadratic-factor `A^2` scaffold
+  and reduce its Keller condition to one explicit Poisson equation.
+- [x] Identify that scaffold with Miyanishi's standard Galois affine
+  pseudo-covering of the exceptional pseudo-plane `S(2,2,1)` and audit the
+  Dubouloz--Palka etale endomorphism formulas.
+- [x] Extract the resulting constant-Jacobian rational plane pair and certify
+  its exact, boundary-supported pole.
+- [x] Exclude constant mates for all three pseudo-plane generators, every
+  homogeneous pair, and every pair of ambient total degree at most two.
+- [x] Exclude the published equivariant Chebyshev endomorphisms and their
+  standard deformation family by the omitted-line criterion.
 - [ ] Obtain at least two named, independent human checks outside this
   repository.
 - [ ] Freeze a public timestamp or archival DOI after attribution is confirmed.
@@ -63,6 +80,18 @@ Status date: 2026-07-20.
 - Search for lower total degree or coefficient height in dimension `3`.
 - Test whether analogous “unimodular row” constructions can or cannot descend
   to dimension `2`.
+- Solve or structurally obstruct `{U,V}=1` in the explicit quartic
+  factor-invariant ring, starting at its elliptic singular curve.
+- Search the Belyi--Shabat endomorphisms of `X^2*Y=Z^2-1` for a noninvertible
+  map `E` with `E^{-1}({X=0,Z=-1})` contained in that omitted line.  Such a map
+  would restrict to a polynomial plane Keller counterexample; the basic
+  degree-two family fails because `Z=0` maps into the omitted line.
+- Build a sparse mixed, nonhomogeneous cubic Poisson ansatz on `S(2,2,1)`,
+  using the two Darboux charts and their inverse-square transition to impose
+  regularity before solving coefficient equations.
+- Search nonlinear quadratic--cubic coefficient surfaces that cross the
+  marked-factor leading-coefficient boundary; screen them first by units,
+  Euler characteristic, connectedness, and finite-field point counts.
 - Classify degree-six cusp passports and the finite normal surfaces realizing
   them; search for a normalization with a proper `A^2` Keller open.
 - Compute boundary divisor class groups and log-canonical data for those
