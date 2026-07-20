@@ -99,7 +99,7 @@ provenance, and scope.
   a true 390-pixel viewport and console/network assertions.
 - [x] Audit the full Git history and generated artifacts for secrets and
   unintended personal information before changing repository visibility.
-- [ ] Make the GitHub repository public only after all preceding release gates
+- [x] Make the GitHub repository public only after all preceding release gates
   pass, then verify the deployed Pages URL from a clean browser session.
 
 ## Immediate dissemination checklist

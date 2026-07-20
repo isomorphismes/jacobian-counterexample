@@ -344,8 +344,11 @@ the preferred eventual narration.
 - Pytest: sixty-nine exact, publication-contract, animation, and Piper-service
   tests after the public-explainer artifacts were added.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
-- GitHub repository on branch `main`:
+- Public GitHub repository on branch `main`:
   `https://github.com/nasqret/jacobian-counterexample`.
+- GitHub Pages deployment, built from the committed custom workflow and
+  verified from a clean browser session:
+  `https://nasqret.github.io/jacobian-counterexample/`.
 
 ## Source hygiene
 

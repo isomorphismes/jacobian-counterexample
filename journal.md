@@ -273,3 +273,11 @@ all decisive outputs are also encoded as executable assertions.
   `69` Python tests and `11` Vitest tests passing, a clean paper and Jupyter
   Book build, a zero-vulnerability npm audit, and desktop, mobile,
   reduced-motion, and WebGL-fallback browser checks.
+- Published release commit `e27b8e6`, changed
+  `nasqret/jacobian-counterexample` from private to public, enabled GitHub
+  Pages with the committed custom workflow, and obtained green verification
+  and deployment runs.
+- Verified the public repository, landing page, PDF, Jupyter Book, WebVTT
+  captions, and HTTP byte-range delivery of the MP4.  Repeated the complete
+  browser suite against the live Pages URL in clean desktop, 390-pixel mobile,
+  reduced-motion, and no-WebGL contexts with no console or request failures.
