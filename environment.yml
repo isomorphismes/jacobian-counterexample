@@ -1,0 +1,10 @@
+name: jacobian-counterexample-audit
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - sympy>=1.13,<2
+  - pytest>=8,<10
+  - jupyter-book>=1.0,<2
+  - myst-nb>=1.0,<2
+  - pip

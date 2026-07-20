@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.sage.py
+.DS_Store
+knowledge/_build/
+.ipynb_checkpoints/

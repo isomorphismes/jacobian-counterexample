@@ -1,0 +1,18 @@
+format: jb-book
+root: index
+chapters:
+  - file: map-definition
+  - file: direct-certificate
+  - file: structural-certificate
+  - file: fiber-scheme
+  - file: normalization
+  - file: generic-fiber
+  - file: infinity
+  - file: dimension-and-consequences
+  - file: objections
+  - file: literature-audit
+  - file: reproducibility
+  - file: research-directions
+  - file: risk-register
+  - file: notebooks/sympy-verification
+  - file: references

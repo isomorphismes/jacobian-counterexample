@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this audit, cite the repository and the original announcement."
+title: "Exact audit of a three-dimensional Jacobian-conjecture counterexample"
+type: software
+version: 0.1.0
+date-released: 2026-07-20
+authors:
+  - name: "Repository contributors"
+abstract: >-
+  Exact rational, human-readable, SymPy, SageMath, and Magma certificates for a
+  dimension-three Keller map with a three-point reduced fiber.
+keywords:
+  - Jacobian conjecture
+  - Keller map
+  - polynomial automorphism
+  - computer algebra
+license: CC-BY-4.0
