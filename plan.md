@@ -17,8 +17,8 @@ Status date: 2026-07-20.
 - [x] Audit pre-announcement literature and current online provenance.
 - [x] Build Obsidian, Jupyter Book, SymPy, SageMath, and Magma artifacts.
 - [x] Validate all exact certificates, the notebook, tests, and a clean book build.
-- [ ] Publish the committed tree to a newly created private GitHub repository
-  (waiting only on GitHub API/web authentication; SSH transport works).
+- [x] Publish the committed tree to the private GitHub repository
+  `nasqret/jacobian-counterexample`.
 - [ ] Obtain at least two named, independent human checks outside this
   repository.
 - [ ] Freeze a public timestamp or archival DOI after attribution is confirmed.

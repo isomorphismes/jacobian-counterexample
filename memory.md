@@ -132,8 +132,8 @@ not part of the Keller condition.
   omitted-target certificates: passing.
 - Pytest: `8 passed`.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
-- GitHub SSH authentication works for `nasqret`; repository creation still
-  requires refreshing the invalid `gh` API token or an authenticated browser.
+- Private GitHub repository published on branch `main`:
+  `https://github.com/nasqret/jacobian-counterexample`.
 
 ## Source hygiene
 

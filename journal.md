@@ -75,3 +75,12 @@ all decisive outputs are also encoded as executable assertions.
 - GitHub SSH handshake authenticated as `nasqret`; API-backed repository
   creation remained blocked by the expired `gh` token and absence of a
   connected in-app browser.
+
+## 2026-07-20 — private publication
+
+- Refreshed GitHub authorization through the official device-login flow.
+- Initialized local branch `main` and committed the complete audited tree as
+  `e88224c`.
+- Created the private repository
+  `https://github.com/nasqret/jacobian-counterexample` and pushed `main` over
+  the already-validated SSH transport.

@@ -4,6 +4,8 @@ This repository is an exact, reproducible audit of the polynomial map announced
 on 2026-07-20 as a counterexample to the Jacobian conjecture.  The finite
 algebra needed for the conclusion checks out:
 
+Private canonical remote: [nasqret/jacobian-counterexample](https://github.com/nasqret/jacobian-counterexample).
+
 \[
 \begin{aligned}
 F_1&=(1+xy)^3z+y^2(1+xy)(4+3xy),\\
