@@ -1,8 +1,10 @@
 # A three-dimensional Keller map with a three-point fiber
 
-This repository is an exact, reproducible audit of the polynomial map announced
-on 2026-07-20 as a counterexample to the Jacobian conjecture.  The finite
-algebra needed for the conclusion checks out:
+This repository is an exact, reproducible audit of the polynomial map publicly
+announced by Levent Alpöge in an
+[X post](https://x.com/__alpoge__/status/2079028340955197566) on 2026-07-20 as
+a counterexample to the Jacobian conjecture.  The finite algebra needed for the
+conclusion checks out:
 
 Private canonical remote: [nasqret/jacobian-counterexample](https://github.com/nasqret/jacobian-counterexample).
 
@@ -84,6 +86,12 @@ projective root; `F` forgets the root.  A generic cubic has three such roots,
 so `F` has geometric degree `3`.  Cubics with a triple root have no preimage,
 and the cubic discriminant is exactly the nonproperness hypersurface.  The full
 inverse formulas and proofs are in [the binary-cubic chapter](knowledge/generic-fiber.md).
+Andy Jiang (@davikrehalt) subsequently posted this
+[projective symmetric-product formulation](https://x.com/davikrehalt/status/2079175065695035442),
+and Aaron Lou gave its resultant-normalized affine chart.  These are
+isomorphic presentations of the same marked-root morphism, not literally the
+same coordinate formula; see the precise
+[equivalence and provenance audit](knowledge/literature-audit.md#equivalence-of-the-four-presentations).
 
 ## Reproduce
 

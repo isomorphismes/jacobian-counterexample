@@ -93,8 +93,8 @@ def test_octahedral_sextic_model():
     PLANE_VERIFY.certify_octahedral_sextic_model()
 
 
-def test_lou_conjugacy_and_factor_chart():
-    RESULTANT_VERIFY.certify_lou_conjugacy_and_chart()
+def test_lou_left_right_equivalence_and_factor_chart():
+    RESULTANT_VERIFY.certify_lou_left_right_equivalence_and_chart()
 
 
 def test_general_resultant_jacobians():

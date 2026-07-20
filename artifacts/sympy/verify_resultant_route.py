@@ -32,8 +32,8 @@ def coefficient_resultant_data(r: int, s: int):
     return p, q, product_coefficients, resultant, determinant
 
 
-def certify_lou_conjugacy_and_chart():
-    """Lou's displayed map is a sign/reversal conjugate of the canonical map."""
+def certify_lou_left_right_equivalence_and_chart():
+    """Lou's displayed map is left--right equivalent to the canonical map."""
     x, y, z, t = sp.symbols("x y z t")
     u = 1 + x * y
     canonical = sp.Matrix(
@@ -401,7 +401,7 @@ def certify_quartic_factor_scaffold():
 
 
 def run_all():
-    certify_lou_conjugacy_and_chart()
+    certify_lou_left_right_equivalence_and_chart()
     certify_resultant_jacobians()
     certify_literal_quadratic_collapse()
     certify_weighted_plane_core()

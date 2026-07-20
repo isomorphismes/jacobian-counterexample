@@ -66,6 +66,16 @@ affine-space identification, recover the explicit polynomial formula, and
 interpret the discriminant as the precise locus of nonproperness.
 \end{abstract}
 
+\paragraph{Provenance.}
+The explicit coordinate map studied here was publicly announced by Levent
+Alp\"oge in an X post of 20 July 2026 \cite{Alpoge}; that post credits Akhil
+for asking about the problem and Fable for working during the World Cup final.
+Later that day Andy Jiang (@davikrehalt) posted the projective symmetric-product
+formulation \cite{Jiang}, explicitly presenting it in the post as GPT output.
+Aaron Lou subsequently gave a factorization--resultant derivation and a global
+affine chart \cite{Lou}.  The purpose of this note is to make the equivalence
+of these presentations precise and to supply a detailed intrinsic proof.
+
 \section{The intrinsic construction}
 
 Throughout, varieties are over $\C$.  Let $W$ be a two-dimensional vector
@@ -118,6 +128,64 @@ Accordingly, the statement that $\pi$ is etale is intrinsic, whereas the
 numerical value $-2$ of its Jacobian depends on the chosen affine volume
 coordinates.
 \end{remark}
+
+\subsection{The projective symmetric-product model}
+
+The construction above is the affine normalization of the projective picture
+posted by Jiang \cite{Jiang}.  Identify effective degree-three divisors on
+$\PP(W)$ with projective binary cubics,
+
+\[
+  \Sym^3\!\bigl(\PP(W)\bigr)
+  \simeq \PP\!\bigl(\Sym^3W^\vee\bigr),
+\]
+
+and let
+
+\[
+  \mu\colon \PP(W)\times\Sym^2\!\bigl(\PP(W)\bigr)
+  \longrightarrow \Sym^3\!\bigl(\PP(W)\bigr),
+  \qquad (p,D)\longmapsto p+D
+\]
+
+forget which root was marked.  Write $R$ for its ramification divisor and
+
+\[
+  H_\infty=\left\{[C]:\langle\tau,C\rangle=0\right\}.
+\]
+
+The small diagonal $\{3p:p\in\PP(W)\}$ is a twisted cubic.  Because $\tau$
+has type $(2,1)$, the restriction of the defining functional of $H_\infty$
+to this twisted cubic has zero divisor $2p+q$ with $p\ne q$.  Thus
+$H_\infty$ is tangent but not osculating to the small diagonal.  Conversely,
+every such hyperplane arises this way and all of them are equivalent under
+$\operatorname{PGL}(W)$.
+
+There are natural isomorphisms
+
+\[
+  \Sym^3\!\bigl(\PP(W)\bigr)\setminus H_\infty
+  \xrightarrow{\sim}H_\tau,
+  \qquad [C]\longmapsto
+  \frac{C}{\langle\tau,C\rangle},
+\]
+
+and
+
+\[
+  \left(\PP(W)\times\Sym^2\!\bigl(\PP(W)\bigr)\right)
+  \setminus\left(R\cup\mu^{-1}(H_\infty)\right)
+  \xrightarrow{\sim}X_\tau.
+\]
+
+Under these isomorphisms, $\mu$ becomes $\pi$.  Indeed, deleting $R$ says
+exactly that the marked root is simple; the two unmarked roots are still
+allowed to coincide.  Lemma~\ref{lem:gauge} below gives a further affine lift:
+writing the marked cubic as $C=\ell q$ and imposing
+$\Res_\omega(\ell,q)=1$ fixes the remaining factor-rescaling gauge.  Hence
+Jiang's projective restriction, the normalized factor space, and the
+marked-root incidence are isomorphic presentations of one morphism.  The
+identifications are not literal equalities of coordinate formulas.
 
 The word ``exceptionally'' belongs to the assertion
 $X_\tau\simeq\A^3$.  The target is visibly affine three-space, but the same
@@ -273,6 +341,10 @@ Then \eqref{eq:Y} becomes the two equations
   x^2\epsilon-x\beta\delta+\beta^2\gamma=1.
 \end{equation}
 
+This resultant-normalized affine presentation and the chart below are the
+factorization construction given by Lou \cite{Lou}; we include the inverse to
+make the global affine-space assertion explicit.
+
 \begin{proposition}[Global affine chart]\label{prop:chart}
 The map $\chi\colon\A^3_{x,y,z}\to Y_{\omega,\tau}$ defined by
 \begin{align*}
@@ -348,7 +420,8 @@ and therefore
   \boxed{\det JG=-2.}
 \]
 
-The map in the original coordinate order is
+The map announced by Alp\"oge \cite{Alpoge}, in the original coordinate order,
+is
 
 \begin{align*}
 F_1&=(1+xy)^3z+y^2(1+xy)(4+3xy),\\
@@ -363,8 +436,10 @@ $R_0(a,b,c)=(c,b,a)$, then
   G=R_0\circ F\circ S_0.
 \]
 
-Thus $F$ and $G$ are the same etale morphism in different affine
-trivializations.
+Thus $F$ and $G$ are exactly left--right linearly equivalent presentations of
+the same etale morphism.  This is an isomorphism of source--target arrows, not
+strict dynamical conjugacy: the source and target coordinate changes are
+independent.
 
 There is an equally compact normalized-root certificate.  For
 $F(x,y,z)=(A,B,C)$ define
@@ -449,7 +524,8 @@ Thus $\pi$ is etale and quasi-finite but not finite or proper.  It should not
 be called a topological three-sheeted covering.  Its generic monodromy is the
 ordinary $S_3$-monodromy of the roots of a cubic.
 
-For the original target coordinates $(a,b,c)$, the discriminant is
+For the original target coordinates $(a,b,c)$, a normalized discriminant
+(one quarter of the standard binary-cubic discriminant) is
 
 \[
   \Delta(a,b,c)
@@ -492,6 +568,26 @@ geometry.
 
 \begin{thebibliography}{9}
 
+\bibitem{Alpoge}
+L.~Alp\"oge,
+\newblock X post announcing the explicit three-dimensional polynomial map,
+\newblock 20 July 2026, 02:19:17 UTC,
+\newblock \url{https://x.com/__alpoge__/status/2079028340955197566}.
+
+\bibitem{Jiang}
+A.~Jiang (@davikrehalt),
+\newblock X post giving the projective symmetric-product marked-root
+  formulation,
+\newblock 20 July 2026, 12:02:19 UTC,
+\newblock \url{https://x.com/davikrehalt/status/2079175065695035442}.
+
+\bibitem{Lou}
+A.~Lou,
+\newblock Deriving an explicit polynomial counterexample to the Jacobian
+  conjecture: a reproducible cubic-factor and resultant construction,
+\newblock research note, 20 July 2026,
+\newblock \url{https://aaronlou.com/jacobian_counterexample_derivation.pdf}.
+
 \bibitem{BCW}
 H.~Bass, E.~H. Connell, and D.~Wright,
 \newblock The Jacobian conjecture: reduction of degree and formal expansion
@@ -502,13 +598,6 @@ H.~Bass, E.~H. Connell, and D.~Wright,
 A.~van den Essen,
 \newblock \emph{Polynomial Automorphisms and the Jacobian Conjecture},
 \newblock Progress in Mathematics 190, Birkh\"auser, 2000.
-
-\bibitem{Lou}
-A.~Lou,
-\newblock Deriving an explicit polynomial counterexample to the Jacobian
-  conjecture: a reproducible cubic-factor and resultant construction,
-\newblock research note, 20 July 2026,
-\newblock \url{https://aaronlou.com/jacobian_counterexample_derivation.pdf}.
 
 \end{thebibliography}
 

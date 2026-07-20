@@ -12,9 +12,11 @@ record.  Searches were performed on 2026-07-20.
 
 The earliest indexed public source found for the exact formula is Levent
 Alpöge's [X announcement](https://x.com/__alpoge__/status/2079028340955197566),
-posted 2026-07-20.  Decoding the public status identifier gives 02:19:17 UTC.
-The post credits a Claude Fable interaction; the precise authorship and priority
-language should be confirmed with the announcer before formal publication.
+posted 2026-07-20 at 02:19:17 UTC.  The post gives the displayed polynomial,
+the determinant −2, and the three-point collision; it credits Akhil for asking
+about the problem and Fable for working during the World Cup final.  The
+precise authorship and priority language should be confirmed with the
+announcer before formal publication {cite}`alpoge2026x`.
 
 Qiaochu Yuan reproduced the exact map and conclusion in a
 [MathOverflow answer](https://mathoverflow.net/questions/130777/could-the-jacobian-conjecture-be-undecidable/513385).
@@ -23,11 +25,27 @@ Jean Abou Samra posted an independent
 06:31 UTC.  Exact-phrase searches found no indexed pre-announcement occurrence,
 but a negative search is not proof of priority.
 
+At 12:02:19 UTC the same day, Andy Jiang (@davikrehalt) posted the
+[projective symmetric-product formulation](https://x.com/davikrehalt/status/2079175065695035442):
+restrict the map
+
+\[
+\mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)
+\longrightarrow \operatorname{Sym}^3(\mathbb P^1),
+\qquad (p,D)\longmapsto p+D,
+\]
+
+after deleting its ramification divisor and the inverse image of a hyperplane
+tangent but not osculating to the small diagonal.  Jiang explicitly presented
+the formulation in the post as GPT output.  It is exactly the projective form
+of the marked-simple-root construction developed here {cite}`jiang2026x`.
+
 Later the same day, Aaron Lou hosted
 [a self-contained factorization--resultant derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf).
-Exact conjugacy shows that its map is the announced map after $z\mapsto-z$ and
-reversal of the three outputs.  It is valuable independent reconstruction and
-motivation, not a distinct counterexample.  A same-day
+Exact left--right linear equivalence shows that its map is the announced map
+after $z\mapsto-z$ in the source and reversal of the three outputs in the
+target.  It is valuable independent reconstruction and motivation, not a
+distinct counterexample.  A same-day
 [weighted-lift repository](https://github.com/algal/jacobianfun) gives further
 exact families; it is self-published and unrefereed, and is treated only as
 construction data in this audit.
@@ -36,6 +54,62 @@ As of the cutoff, no refereed paper or arXiv preprint devoted to this new map
 was found.  The appropriate wording is therefore: an exact, reproducible
 counterexample with provisional same-day provenance, not yet vetted through
 peer review.
+
+## Equivalence of the four presentations
+
+The Alpöge formula, Jiang's projective model, Lou's resultant chart, and this
+repository's marked-root incidence are presentations of one algebraic
+morphism, but they are not literally the same formulas and the identifications
+are not canonical.
+
+Let
+
+\[
+\mu:\mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)
+\longrightarrow\operatorname{Sym}^3(\mathbb P^1)
+\]
+
+be Jiang's map, let $R$ be its ramification divisor, and let $H_\infty$ be a
+hyperplane tangent but not osculating to the small diagonal.  If $\lambda$
+defines $H_\infty$, normalization gives
+
+\[
+[C]\longmapsto \frac{C}{\lambda(C)}:
+\operatorname{Sym}^3(\mathbb P^1)\setminus H_\infty
+\xrightarrow{\sim}\{C:\lambda(C)=1\}=H_\tau.
+\]
+
+Upstairs, deleting $R$ says precisely that the marked root is simple; the two
+unmarked roots may still coincide.  Therefore
+
+\[
+\bigl(\mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)\bigr)
+\setminus\bigl(R\cup\mu^{-1}(H_\infty)\bigr)
+\simeq X_\tau,
+\]
+
+and $\mu$ becomes the forgetful map $X_\tau\to H_\tau$.  A tangent,
+nonosculating hyperplane meets the twisted cubic in $2p+q$ with $p\ne q$; all
+such choices are equivalent under $\operatorname{PGL}_2$.
+
+Lou writes the marked cubic as a linear factor times a quadratic and imposes
+both the affine coefficient level and $\operatorname{Res}(\ell,q)=1$.  Those
+conditions fix the projective and factor-rescaling gauges and give an explicit
+global $\mathbb A^3$ chart on the same open incidence.  If $G$ is Lou's
+coordinate map and $F$ is Alpöge's, the exact relation is
+
+\[
+G=R_0\circ F\circ S_0,
+\qquad S_0(x,y,z)=(x,y,-z),\quad R_0(A,B,C)=(C,B,A).
+\]
+
+This is **left--right linear equivalence**, or an isomorphism of morphisms, not
+strict conjugacy: the source and target changes are independent.  Etaleness,
+geometric degree three, fiber structure, and nonproperness are invariant under
+these identifications; the chosen bases, signs, affine levels, and the
+numerical Jacobian constant are presentation-dependent.  Higher-degree
+weighted-lift families are descendants of the same idea, not equivalent maps
+when their geometric degrees differ.
 
 ## Status immediately before the announcement
 
@@ -111,5 +185,6 @@ its decisive content is a determinant identity and an explicit collision.
 
 This repository is an **independent audit and structural analysis**, not a claim
 to have first discovered the displayed formula.  Until a stable paper appears,
-cite the original announcement, the public replication, and this repository
+cite Alpöge's original formula announcement, Jiang's projective formulation,
+the public replications or derivations actually used, and this repository
 according to their distinct roles.

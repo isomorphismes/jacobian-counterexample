@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this audit, cite the repository and the original announcement."
+message: "If you use this audit, cite the repository, the original formula announcement, and the projective formulation according to their distinct roles."
 title: "Exact audit of a three-dimensional Jacobian-conjecture counterexample"
 type: software
 version: 0.1.0

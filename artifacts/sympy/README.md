@@ -24,8 +24,9 @@ on the collision graph, the equivariant nonlinear-slice invariants, and the
 octahedral degree-six cusp near-model and passport.  Passing it does not assert
 a solution of the plane conjecture.
 
-The third script verifies the exact conjugacy of Aaron Lou's factor derivation,
-representative cases of the general coefficient--resultant determinant law,
+The third script verifies the exact left--right linear equivalence of Aaron
+Lou's factor derivation, representative cases of the general
+coefficient--resultant determinant law,
 the collapse of the literal degree-two analogue, two quadratic--cubic slice
 obstructions, and the noninjective quadratic-factor $\mathbb A^2$ scaffold.
 It also certifies the universal-cover quotient, the rational

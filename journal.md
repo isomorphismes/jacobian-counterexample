@@ -194,3 +194,28 @@ all decisive outputs are also encoded as executable assertions.
   every degree greater than one.  The standard non-equivariant deformation
   automorphisms preserve the omitted boundary line, so the entire published
   family fails the boundary-avoidance requirement.
+
+## 2026-07-20 — provenance and equivalence audit
+
+- Verified the primary X posts and their exact UTC chronology.  Levent
+  Alpöge's 02:19:17 post is the original public announcement located for the
+  explicit formula, determinant, and collision; Andy Jiang's 12:02:19 post
+  gives the projective symmetric-product construction and explicitly presents
+  it as GPT output.
+- Proved the exact comparison with the intrinsic model.  Normalizing the
+  complement of Jiang's tangent nonosculating hyperplane gives the affine
+  slice `H_tau`; deleting the projective ramification divisor says exactly
+  that the marked root is simple.  Lou's resultant-one condition fixes the
+  remaining factor-rescaling gauge.
+- Corrected the terminology for Lou's coordinate formula: `G = R0 o F o S0`
+  is left--right linear equivalence, not strict conjugacy, because the source
+  and target changes are independent.
+- Added both X posts to the literature database and placed role-specific
+  citations in the paper, README, knowledge index, factorization chapter,
+  research memory, and citation metadata.
+- Recompiled the seven-page coordinate-free paper twice with all citations and
+  cross-references resolved.  Rendered and visually inspected every page; no
+  clipping, overlap, or bad bibliography break remains.  The final PDF text
+  contains both credits and the explicit equivalence statement.
+- Rebuilt the Jupyter Book with zero warnings and reran the exact test suite:
+  `24 passed`.

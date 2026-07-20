@@ -35,8 +35,12 @@ Status date: 2026-07-20.
   square Jacobian defect.
 - [x] Construct and certify the octahedral degree-six cusp near-model and
   exclude its full function-field extension by normalization.
-- [x] Audit Aaron Lou's factorization derivation and prove its exact conjugacy
-  to the canonical threefold map.
+- [x] Audit Aaron Lou's factorization derivation and prove its exact left--right
+  linear equivalence to the canonical threefold map.
+- [x] Verify and document that Alpöge's formula, Jiang's projective
+  symmetric-product model, Lou's resultant chart, and the intrinsic
+  marked-root model present the same morphism up to source--target
+  isomorphism; record their distinct provenance.
 - [x] Derive and certify the general coefficient--resultant determinant law and
   identify the consecutive `(2,3)` split as the clean degree-ten plane route.
 - [x] Exclude the connected Bring--Jerrard factor surface by Euler

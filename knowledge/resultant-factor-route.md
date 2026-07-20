@@ -14,6 +14,14 @@ repository, after one source sign change and reversal of the outputs.  It does
 not solve the plane case.  Its factorization viewpoint nevertheless yields two
 precise plane programs, one of which contains an explicit noninjective
 $\mathbb A^2$ scaffold with the correct infinitary deck behavior.
+
+For provenance, the explicit formula first appeared in Levent Alpöge's
+[announcement](https://x.com/__alpoge__/status/2079028340955197566).  Andy
+Jiang (@davikrehalt) then posted the
+[projective marked-root model](https://x.com/davikrehalt/status/2079175065695035442).
+Lou's factor coordinates and this chapter give affine gauges for that same
+projective incidence; the exact comparison is recorded in the
+[literature audit](literature-audit.md).
 :::
 
 Every algebraic identity below is checked independently in
@@ -38,8 +46,9 @@ If $G$ denotes the map in Lou's equation (13), exact expansion gives
 \boxed{G=R\circ F\circ S.}
 \]
 
-Thus the note is a conceptually valuable derivation of the same example, not a
-second family.  Its cubic
+Thus the maps are exactly left--right linearly equivalent: this is an
+isomorphism of source--target arrows, not strict conjugacy.  The note is a
+conceptually valuable derivation of the same example, not a second family.  Its cubic
 
 \[
 \frac{G_1}{2}t^3+t^2+\frac{G_2}{2}t+G_3

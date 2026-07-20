@@ -68,6 +68,45 @@ H = D^(-1) o G o D.
 `H` has integer coefficients, `det JH=1`, and `dH_0=I`.  Its explicit formula
 and collision are in [normalization.md](knowledge/normalization.md).
 
+## Provenance and equivalence of presentations
+
+Levent Alpöge's
+[X post](https://x.com/__alpoge__/status/2079028340955197566) at 02:19:17 UTC
+on 2026-07-20 is the original public announcement located for the displayed
+formula, determinant, and three-point collision.  It credits Akhil for asking
+about the problem and Fable for working during the World Cup final.  Andy
+Jiang (@davikrehalt) posted the
+[projective symmetric-product model](https://x.com/davikrehalt/status/2079175065695035442)
+at 12:02:19 UTC, explicitly presenting it as GPT output.
+
+Jiang's restriction of
+
+```text
+P^1 x Sym^2(P^1) -> Sym^3(P^1),   (p,D) -> p+D
+```
+
+away from the ramification divisor and a tangent nonosculating hyperplane is
+exactly the projective compactification of the marked-simple-root map in this
+repository.  Normalizing the hyperplane complement by `<tau,C>=1` gives the
+affine target `H_tau`; removing ramification says only that the marked root is
+simple.  Lou's factorization construction fixes the remaining scale by
+`Res(ell,q)=1` and supplies a global affine chart.
+
+Thus the Alpöge formula, Jiang model, Lou chart, and the intrinsic incidence
+are isomorphic presentations of one degree-three etale morphism.  They are not
+literally identical or canonically identified.  In coordinates Lou's map is
+
+```text
+G = R0 o F o S0,
+S0(x,y,z) = (x,y,-z),   R0(A,B,C) = (C,B,A).
+```
+
+This is exact left--right linear equivalence, not strict conjugacy, because
+the source and target changes are independent.  Higher-degree weighted lifts
+are related constructions, not equivalent morphisms when their geometric
+degrees differ.  Full sourcing is in
+[literature-audit.md](knowledge/literature-audit.md).
+
 ## New structural facts derived in this audit
 
 For a target `(a,b,c)`, define
@@ -181,9 +220,9 @@ claims and their peer-review labels are recorded in
 
 ## Factorization--resultant extraction
 
-Aaron Lou's 2026-07-20 PDF gives exactly the canonical map after the source
-change `z -> -z` and target reversal `(A,B,C) -> (C,B,A)`.  Its reusable core is
-the general identity
+Aaron Lou's 2026-07-20 PDF gives a map exactly left--right linearly equivalent
+to the canonical map, by the source change `z -> -z` and target reversal
+`(A,B,C) -> (C,B,A)`.  Its reusable core is the general identity
 
 ```text
 det D(coeff(P*Q), Res(P,Q)) = +/- (deg(Q)-deg(P))*Res(P,Q)^2.
@@ -263,7 +302,7 @@ least cubic.
 - Plane quotient, marked-plane, linear and equivariant nonlinear slice,
   collision-tangent, and octahedral cusp identities: passing in SymPy, with
   both explicit near-models independently checked in Magma.
-- Lou conjugacy, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
+- Lou left--right equivalence, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
   identities, and the quadratic-factor scaffold: passing in SymPy and Magma.
 - Sage normalized collision ideal through total degree three: unit ideal.
 - Pytest: twenty-four exact certificate tests after the resultant and
@@ -278,4 +317,5 @@ Do not use arXiv:2209.01451 as authority for the conjecture's status or for the
 injectivity equivalence.  It is a claimed proof preprint, not an accepted
 resolution, and is unnecessary here.  Prefer Bass--Connell--Wright, van den
 Essen, the recent refereed historical paper, and the exact primary announcement
-links recorded in [literature-audit.md](knowledge/literature-audit.md).
+and projective-formulation links recorded in
+[literature-audit.md](knowledge/literature-audit.md).
