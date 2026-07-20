@@ -1,0 +1,515 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=29mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,
+  citecolor=blue!45!black,urlcolor=blue!50!black]{hyperref}
+
+\definecolor{paperblue}{RGB}{28,66,102}
+\hypersetup{
+  pdftitle={Forgetting a Simple Root of a Binary Cubic},
+  pdfauthor={Independent exact audit},
+  pdfsubject={A coordinate-free model for a noninjective Keller map in dimension three},
+  pdfkeywords={Jacobian conjecture, Keller map, binary cubic, resultant, etale morphism}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{paperblue}Marked roots of binary cubics}
+\fancyhead[R]{\small\color{paperblue}Coordinate-free construction}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Spec}{Spec}
+\newcommand{\A}{\mathbb A}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Gm}{\mathbb G_{\mathrm m}}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\dd}{\mathrm d}
+
+\title{\color{paperblue}\bfseries
+  Forgetting a Simple Root of a Binary Cubic\\[2mm]
+  \large A coordinate-free model for a noninjective Keller map in dimension three}
+\author{Independent exact audit}
+\date{20 July 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We describe intrinsically a polynomial map
+$F\colon\A^3_{\C}\to\A^3_{\C}$ with constant Jacobian determinant
+$-2$ and geometric degree three.  Let $W$ be a two-dimensional complex
+vector space, let $H$ be a tangential affine slice of the space of binary
+cubics, and mark one simple projective root of a cubic in $H$.  The resulting
+simple-root incidence variety is, exceptionally, isomorphic to $\A^3$.
+Under this identification, $F$ is the morphism which forgets the marked
+root.  Resultant normalization gives a coordinate-free proof of etaleness;
+the three roots of a general cubic explain the generic degree.  We prove the
+affine-space identification, recover the explicit polynomial formula, and
+interpret the discriminant as the precise locus of nonproperness.
+\end{abstract}
+
+\section{The intrinsic construction}
+
+Throughout, varieties are over $\C$.  Let $W$ be a two-dimensional vector
+space and fix a nonzero alternating form
+$\omega\in\bigwedge^2W^\vee$.  Choose a tensor
+$\tau\in\Sym^3W$ of multiplicity type $(2,1)$: after extension to a basis it
+has the form $u^2v$ with $u,v$ independent.  Equivalently, $[\tau]$ lies on
+the tangent developable of the Veronese cubic
+
+\[
+  \nu_3\colon\PP(W)\longrightarrow\PP(\Sym^3W)
+\]
+
+but not on the Veronese curve itself.  Rescale $\tau$ once and for all, and
+put
+
+\[
+  H_\tau=
+  \left\{C\in\Sym^3W^\vee:\langle\tau,C\rangle=1\right\}.
+\]
+
+This is an affine hyperplane in a four-dimensional vector space, hence
+$H_\tau\simeq\A^3$.  Consider the open simple-root incidence
+
+\[
+  X_\tau=
+  \left\{(C,[r])\in H_\tau\times\PP(W):
+  C(r)=0\ \text{and}\ \dd C_r\ne0\right\}.
+\]
+
+Our main statement is the following.
+
+\begin{theorem}[Marked-root model]\label{thm:main}
+The variety $X_\tau$ is isomorphic to $\A^3$.  Under this identification,
+the forgetful morphism
+\[
+  \pi\colon X_\tau\longrightarrow H_\tau,
+  \qquad (C,[r])\longmapsto C,
+\]
+is an etale polynomial map of affine three-spaces, generically of degree
+three.  Its fiber over $C$ is naturally the reduced set of simple projective
+roots of $C$.
+\end{theorem}
+
+\begin{remark}\label{rem:choices}
+The construction is coordinate-free but not choice-free.  Its intrinsic data
+are $(W,\omega,\tau)$ together with the chosen nonzero affine levels.  The
+identifications of $X_\tau$ and $H_\tau$ with $\A^3$ are not canonical.
+Accordingly, the statement that $\pi$ is etale is intrinsic, whereas the
+numerical value $-2$ of its Jacobian depends on the chosen affine volume
+coordinates.
+\end{remark}
+
+The word ``exceptionally'' belongs to the assertion
+$X_\tau\simeq\A^3$.  The target is visibly affine three-space, but the same
+need not be expected of a simple-root incidence for an arbitrary slice.  The
+type-$(2,1)$ tensor is the special geometric datum behind the construction.
+
+\section{Resultant gauge and marked roots}
+
+The volume form gives an intrinsic scalar normalization of the
+linear--quadratic resultant.  For $\ell\in W^\vee$, let
+$v_\ell\in W$ be determined by
+
+\[
+  \iota_{v_\ell}\omega=\ell.
+\]
+
+For $q\in\Sym^2W^\vee$, define
+
+\[
+  \Res_\omega(\ell,q)=q(v_\ell).
+\]
+
+In an $\omega$-unimodular basis this is the classical binary resultant of a
+linear and a quadratic form.  In particular, it is nonzero precisely when
+$\ell$ and $q$ are coprime.  Define the normalized factor space
+
+\begin{equation}\label{eq:Y}
+  Y_{\omega,\tau}=
+  \left\{(\ell,q)\in W^\vee\times\Sym^2W^\vee:
+  \Res_\omega(\ell,q)=1,\quad
+  \langle\tau,\ell q\rangle=1\right\}.
+\end{equation}
+
+\begin{lemma}[Resultant gauge]\label{lem:gauge}
+Multiplication and passage to the root line induce an isomorphism
+\[
+  Y_{\omega,\tau}\xrightarrow{\sim}X_\tau,
+  \qquad
+  (\ell,q)\longmapsto(\ell q,\PP(\ker\ell)).
+\]
+\end{lemma}
+
+\begin{proof}
+A marked root of $C$ is a factorization $C=\ell q$, unique up to
+\[
+  (\ell,q)\longmapsto(s\ell,s^{-1}q),\qquad s\in\Gm.
+\]
+The root is simple if and only if $\ell$ and $q$ are coprime.  Moreover,
+\[
+  \Res_\omega(s\ell,s^{-1}q)
+  =s\,\Res_\omega(\ell,q).
+\]
+Thus every coprime scaling orbit has a unique resultant-one representative.
+Because the normalizing scalar is the inverse of a regular nowhere-zero
+function, this construction is algebraic in both directions.
+\end{proof}
+
+The weight one in the last formula is decisive: multiplication has a
+$\Gm$-gauge, and the resultant cuts each coprime orbit exactly once.
+
+There is also a root-gradient formulation.  If $C=\ell q$ and
+$r=v_\ell$, then
+
+\[
+  \dd C_r=q(r)\ell
+  =\Res_\omega(\ell,q)\,\iota_r\omega.
+\]
+
+Consequently $Y_{\omega,\tau}$ is equivalently the space of pairs
+
+\begin{equation}\label{eq:gradient-normalization}
+  (C,r)\in H_\tau\times(W\setminus\{0\}),
+  \qquad \dd C_r=\iota_r\omega.
+\end{equation}
+
+Euler's identity gives $3C(r)=\dd C_r(r)=0$, while the right-hand side is a
+nonzero covector.  Thus the equation simultaneously says that $r$ is a root
+and that it is simple.  Conversely, every simple projective root has a unique
+representative satisfying \eqref{eq:gradient-normalization}.
+
+\section{A coordinate-free proof of etaleness}
+
+Consider the five-dimensional polynomial map
+
+\[
+  \Psi\colon W^\vee\times\Sym^2W^\vee
+  \longrightarrow\Sym^3W^\vee\times\A^1,
+  \qquad
+  (\ell,q)\longmapsto
+  \bigl(\ell q,\Res_\omega(\ell,q)\bigr).
+\]
+
+\begin{proposition}\label{prop:etale}
+The morphism $\Psi$ is etale wherever $\Res_\omega(\ell,q)\ne0$.
+Consequently, $\pi\colon X_\tau\to H_\tau$ is etale.
+\end{proposition}
+
+\begin{proof}
+Suppose that $\ell$ and $q$ are coprime.  If
+\[
+  \dot\ell q+\ell\dot q=0,
+\]
+then unique factorization implies that $\ell$ divides $\dot\ell$.
+Degree considerations give
+$(\dot\ell,\dot q)=a(\ell,-q)$ for some $a\in\C$.  Hence the kernel of the
+differential of multiplication is exactly the infinitesimal gauge direction.
+
+The resultant has gauge weight one, so
+\[
+  \dd\Res_\omega\big|_{(\ell,q)}(\ell,-q)
+  =\Res_\omega(\ell,q)\ne0.
+\]
+Therefore $\dd\Psi$ is injective, hence an isomorphism between tangent spaces
+of dimension five.  Finally,
+\[
+  Y_{\omega,\tau}
+  =\Psi^{-1}(H_\tau\times\{1\}),
+\]
+and its map to $H_\tau$ is the base change of $\Psi$ along
+$H_\tau\times\{1\}$.  Etaleness is preserved by base change, and
+Lemma~\ref{lem:gauge} identifies this map with $\pi$.
+\end{proof}
+
+In coordinates the same argument is the relative-invariant identity
+
+\[
+  \det \dd\bigl(\operatorname{coeff}(\ell q),
+  \Res_\omega(\ell,q)\bigr)
+  =\pm\Res_\omega(\ell,q)^2.
+\]
+
+The differential proof explains the cancellation without expanding a
+$5\times5$ determinant.
+
+\section{The affine-space miracle}\label{sec:affine-chart}
+
+It remains to prove the substantive assertion $X_\tau\simeq\A^3$.  Choose an
+adapted basis $T,S$ of $W^\vee$, normalized so that
+$\omega=T\wedge S$ and $\langle\tau,C\rangle$ extracts the coefficient of
+$T^2S$.  Write
+
+\[
+  \ell=xT+\beta S,
+  \qquad
+  q=\gamma T^2+\delta TS+\epsilon S^2.
+\]
+
+Then \eqref{eq:Y} becomes the two equations
+
+\begin{equation}\label{eq:slice}
+  x\delta+\beta\gamma=1,
+  \qquad
+  x^2\epsilon-x\beta\delta+\beta^2\gamma=1.
+\end{equation}
+
+\begin{proposition}[Global affine chart]\label{prop:chart}
+The map $\chi\colon\A^3_{x,y,z}\to Y_{\omega,\tau}$ defined by
+\begin{align*}
+  \beta&=1+xy,\\
+  \gamma&=\frac{2-3xy+x^2z}{2},\\
+  \delta&=-\frac{xz-y+x^2yz-3xy^2}{2},\\
+  \epsilon&=-z(1+xy)^2+4y^2+3xy^3
+\end{align*}
+is an isomorphism.  Its polynomial inverse is
+\begin{equation}\label{eq:chart-inverse}
+  x=x,\qquad
+  y=2\beta\delta-x\epsilon,
+  \qquad
+  z=4y\delta+2\gamma y^2-\epsilon.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Substitution verifies both equations in \eqref{eq:slice}.  Conversely, the
+two equations of the slice imply
+\[
+  \beta-1=x(2\beta\delta-x\epsilon)=xy,
+\]
+so $\beta=1+xy$.  Substitution into the first slice equation, followed by
+the definition of $z$ in \eqref{eq:chart-inverse}, gives
+\[
+  2\gamma=2-3xy+x^2z
+\]
+and then
+\[
+  2\delta=y(1+3xy)-xz(1+xy).
+\]
+Finally the formula defining $z$ gives
+\[
+  \epsilon=-z(1+xy)^2+y^2(4+3xy).
+\]
+These are precisely the displayed coordinate functions.  Both compositions
+are therefore the identity, including on $x=0$; no divisor has been removed.
+\end{proof}
+
+This completes the proof that both source and target of $\pi$ are affine
+three-spaces.  Together with Proposition~\ref{prop:etale}, it proves the
+etaleness assertion of Theorem~\ref{thm:main}.
+
+\section{The explicit Keller map}
+
+Write a cubic in $H_\tau$ as
+
+\[
+  C=c_3T^3+T^2S+c_1TS^2+c_0S^3
+\]
+
+and use affine target coordinates $(2c_3,2c_1,c_0)$.  Multiplication
+$C=\ell q$, followed by the chart of Proposition~\ref{prop:chart}, yields
+$G=(G_1,G_2,G_3)$ with
+
+\begin{align*}
+G_1={}&x^3z-3x^2y+2x,\\
+G_2={}&-3x^3y^2z+9x^2y^3-6x^2yz+12xy^2-3xz+y,\\
+G_3={}&-x^3y^3z+3x^2y^4-3x^2y^2z+7xy^3-3xyz+4y^2-z.
+\end{align*}
+
+Because $G$ is etale, its Jacobian determinant is a unit of
+$\C[x,y,z]$, hence a nonzero constant.  Its linear part at the origin is
+
+\[
+  (x,y,z)\longmapsto(2x,y,-z),
+\]
+
+and therefore
+
+\[
+  \boxed{\det JG=-2.}
+\]
+
+The map in the original coordinate order is
+
+\begin{align*}
+F_1&=(1+xy)^3z+y^2(1+xy)(4+3xy),\\
+F_2&=y+3x(1+xy)^2z+3xy^2(4+3xy),\\
+F_3&=2x-3x^2y-x^3z.
+\end{align*}
+
+Indeed, if $S_0(x,y,z)=(x,y,-z)$ and
+$R_0(a,b,c)=(c,b,a)$, then
+
+\[
+  G=R_0\circ F\circ S_0.
+\]
+
+Thus $F$ and $G$ are the same etale morphism in different affine
+trivializations.
+
+There is an equally compact normalized-root certificate.  For
+$F(x,y,z)=(A,B,C)$ define
+
+\[
+  Q_{A,B,C}(U,V)=CU^3-2U^2V+BUV^2-2AV^3
+\]
+
+and set $r=(U,V)=(1+xy,x)$.  Directly,
+
+\[
+  Q_{A,B,C}(r)=0,
+  \qquad
+  (Q_{A,B,C})_U(r)=2V,
+  \qquad
+  (Q_{A,B,C})_V(r)=-2U.
+\]
+
+For $\omega_0=\dd U\wedge\dd V$, this says
+
+\[
+  \dd Q_{A,B,C}\big|_r=-2\,\iota_r\omega_0.
+\]
+
+It is the same marked-root normalization as
+\eqref{eq:gradient-normalization}, after the harmless source and target
+rescalings relating $F$ and $G$.
+
+\section{Fibers, discriminant, and infinity}
+
+The fiber description is immediate from the moduli interpretation.
+
+\begin{proposition}\label{prop:fibers}
+For $C\in H_\tau$, the geometric fiber $\pi^{-1}(C)$ is the reduced set of
+simple projective roots of $C$.  Its cardinality is
+\[
+  \#\pi^{-1}(C)=
+  \begin{cases}
+  3,&C\text{ has three simple roots},\\
+  1,&C\text{ has a double root and a simple root},\\
+  0,&C\text{ has a triple root}.
+  \end{cases}
+\]
+In particular, $\pi$ has geometric degree three and is not injective.
+\end{proposition}
+
+For instance, $C_0=TS(T+S)$ lies in $H_\tau$ and has three possible marked
+linear factors.  In the coordinates of $G$ these give
+
+\[
+  G(-1,2,-8)=G(0,2,16)=G(1,-1,-5)=(0,2,0).
+\]
+
+Equivalently, in the original coordinates,
+
+\[
+\begin{aligned}
+F\left(0,0,-\frac14\right)
+&=F\left(1,-\frac32,\frac{13}{2}\right)\\
+&=F\left(-1,\frac32,\frac{13}{2}\right)
+=\left(-\frac14,0,0\right).
+\end{aligned}
+\]
+
+To see the boundary mechanism, introduce the full incidence
+
+\[
+  \overline X_\tau=
+  \left\{(C,[r])\in H_\tau\times\PP(W):C(r)=0\right\}.
+\]
+
+Its projection to $H_\tau$ is finite flat of degree three.  Its ramification
+locus consists of repeated marked roots, and its branch locus is the binary
+cubic discriminant.  The source $X_\tau$ is obtained by deleting precisely
+that ramification locus upstairs.  Over the complement of the discriminant,
+no point is deleted and $\pi$ is finite etale.  Over a double-root cubic the
+length-two ramified point is removed while the simple-root point remains; at
+a triple-root cubic every point is removed.
+
+In the affine chart $X_\tau\simeq\A^3$, the deleted points appear at infinity.
+Thus $\pi$ is etale and quasi-finite but not finite or proper.  It should not
+be called a topological three-sheeted covering.  Its generic monodromy is the
+ordinary $S_3$-monodromy of the roots of a cubic.
+
+For the original target coordinates $(a,b,c)$, the discriminant is
+
+\[
+  \Delta(a,b,c)
+  =b^2-cb^3-16a+18abc-27a^2c^2.
+\]
+
+The nonproperness set is exactly $V(\Delta)$.  Triple-root cubics form the
+omitted curve
+
+\[
+  (a,b,c)=
+  \left(\frac{\rho^2}{3},2\rho,\frac{2}{3\rho}\right),
+  \qquad \rho\in\C^*.
+\]
+
+This is the geometric reason the map can be everywhere locally invertible
+without being globally invertible: its missing inverse branches do not
+ramify at finite source points; they escape through the boundary of the
+affine chart.
+
+\section{Conclusion}
+
+The coordinate formula conceals a short moduli problem:
+
+\[
+  \boxed{
+  \text{binary cubic in a tangential affine slice}
+  +\text{ one normalized simple root}
+  \ \longmapsto\ \text{the cubic}.}
+\]
+
+The resultant-one condition removes the factor-rescaling gauge, and its
+weight one proves etaleness.  A general cubic has three roots, which explains
+the degree.  The exceptional global chart
+$X_\tau\simeq\A^3$ converts this forgetful morphism into a polynomial
+self-map of affine three-space.  The discriminant records exactly where
+inverse branches leave that chart.  In this form, constant Jacobian,
+noninjectivity, and nonproperness are three aspects of the same marked-root
+geometry.
+
+\begin{thebibliography}{9}
+
+\bibitem{BCW}
+H.~Bass, E.~H. Connell, and D.~Wright,
+\newblock The Jacobian conjecture: reduction of degree and formal expansion
+  of the inverse,
+\newblock \emph{Bull. Amer. Math. Soc. (N.S.)} \textbf{7} (1982), 287--330.
+
+\bibitem{Essen}
+A.~van den Essen,
+\newblock \emph{Polynomial Automorphisms and the Jacobian Conjecture},
+\newblock Progress in Mathematics 190, Birkh\"auser, 2000.
+
+\bibitem{Lou}
+A.~Lou,
+\newblock Deriving an explicit polynomial counterexample to the Jacobian
+  conjecture: a reproducible cubic-factor and resultant construction,
+\newblock research note, 20 July 2026,
+\newblock \url{https://aaronlou.com/jacobian_counterexample_derivation.pdf}.
+
+\end{thebibliography}
+
+\end{document}
