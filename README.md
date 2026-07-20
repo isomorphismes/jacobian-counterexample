@@ -1,12 +1,44 @@
 # A three-dimensional Keller map with a three-point fiber
 
-This repository is an exact, reproducible audit of the polynomial map publicly
-announced by Levent Alpöge in an
-[X post](https://x.com/__alpoge__/status/2079028340955197566) on 2026-07-20 as
-a counterexample to the Jacobian conjecture.  The finite algebra needed for the
-conclusion checks out:
+This repository is an exact, reproducible audit of the polynomial map in the
+earliest public announcement located by this audit: Levent Alpöge's
+[X post](https://x.com/__alpoge__/status/2079028340955197566) on 2026-07-20,
+which presents it as a counterexample to the Jacobian conjecture.  The finite
+algebra needed for the conclusion checks out:
 
-Private canonical remote: [nasqret/jacobian-counterexample](https://github.com/nasqret/jacobian-counterexample).
+Canonical remote: [nasqret/jacobian-counterexample](https://github.com/nasqret/jacobian-counterexample).
+
+## Provenance and contribution roles
+
+The three public descriptions have distinct sources:
+
+- [Levent Alpöge's formula post](https://x.com/__alpoge__/status/2079028340955197566)
+  publicly gives the explicit formula, determinant, and collision and credits
+  Fable for working on it.
+- [Andy Jiang's later post](https://x.com/davikrehalt/status/2079175065695035442)
+  gives the projective marked-root construction and explicitly presents its
+  text as GPT output.
+- [Aaron Lou's derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
+  gives the factorization--resultant gauge and global affine chart.
+
+Bartosz Naskrecki is the compiler and independent auditor of this repository
+and the author of its landing page and visual exposition. He does **not** claim
+authorship of the formula or of the three mathematical presentations above.
+See the exact [paper comparison](knowledge/paper-comparison.md) and
+[literature audit](knowledge/literature-audit.md).
+
+The current canonical short paper is
+[One Map, Three Descriptions](output/pdf/one_map_three_descriptions.pdf).
+It can be rebuilt with `make paper`; the
+[paper artifact index](output/pdf/README.md) distinguishes it from the
+historical version 1.
+
+The public visual guide is maintained in [site/](site/README.md) for deployment
+at [nasqret.github.io/jacobian-counterexample](https://nasqret.github.io/jacobian-counterexample/).
+Its 4:35 Manim film currently uses a clearly labeled offline Piper draft voice;
+the [complete canonical narration](animations/transcript.md), synchronized
+captions, and [animation source and build instructions](animations/README.md)
+remain available independently of audio or video playback.
 
 \[
 \begin{aligned}
@@ -113,8 +145,8 @@ builds the HTML book at `knowledge/_build/html/index.html`.
 
 ## Dimension two: exact progress, not a solution
 
-The plane conjecture remains open in this repository.  The current attack does
-establish that every direct descent of the marked-cubic mechanism fails:
+The plane conjecture remains open in this repository.  The current attack
+rigorously excludes the following natural direct-descent routes:
 
 - a plane Keller map affine-linear in one source variable is triangular;
 - every affine two-plane of marked binary forms in the canonical root chart is
@@ -171,15 +203,25 @@ new way.
 - [memory.md](memory.md) is the curated, durable research memory.
 - [journal.md](journal.md) is the chronological audit trail.
 - [plan.md](plan.md) records gates, completed work, and next research questions.
+- [output/pdf/one_map_three_descriptions.pdf](output/pdf/one_map_three_descriptions.pdf)
+  is the current canonical paper; `make paper` rebuilds it.
 - [knowledge/](knowledge/index.md) is both an Obsidian vault and a Jupyter Book.
 - [artifacts/magma/](artifacts/magma/README.md) contains compilable Magma certificates.
 - [artifacts/sympy/verify.py](artifacts/sympy/verify.py) and
   [artifacts/sage/verify.sage](artifacts/sage/verify.sage) provide independent
   open-source verification.
+- [site/](site/README.md) contains the accessible landing page, exact real-slice
+  viewer, full HTML transcript, and public release instructions.
+- [animations/](animations/README.md) contains the Manim Voiceover source,
+  canonical transcript, caption converter, and offline/human narration modes.
+- [LICENSE](LICENSE), [LICENSE-CODE](LICENSE-CODE),
+  [LICENSE-CONTENT](LICENSE-CONTENT), and
+  [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) separate reuse permissions
+  from mathematical attribution and third-party terms.
 
 ## Scope and date
 
-The web-status audit is frozen at **2026-07-20 (Europe/Warsaw)**.  The
+The web-status audit is frozen at **2026-07-21 (Europe/Warsaw)**.  The
 counterexample announcement was only hours old when this repository was made;
 the exact proof is self-contained, but claims about reception and priority must
 be updated as the literature develops.

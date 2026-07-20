@@ -1,19 +1,22 @@
 cff-version: 1.2.0
-message: "If you use this audit, cite the repository, the original formula announcement, and the projective formulation according to their distinct roles."
-title: "Exact audit of a three-dimensional Jacobian-conjecture counterexample"
+message: "If you use this audit, cite the repository and also cite the original formula, projective formulation, and resultant derivation according to their distinct roles."
+title: "One map, three descriptions: an exact audit and public explainer"
 type: software
-version: 0.1.0
-date-released: 2026-07-20
+version: 0.2.0
+date-released: 2026-07-21
 authors:
-  - name: "Repository contributors"
+  - family-names: "Naskrecki"
+    given-names: "Bartosz"
 abstract: >-
-  Exact rational, human-readable, SymPy, SageMath, and Magma certificates for a
-  dimension-three Keller map with a three-point reduced fiber.
+  Compilation, exact audit, public documentation, visualization, and
+  reproducible SymPy, SageMath, and Magma certificates for a dimension-three
+  Keller map with a three-point reduced fiber. Mathematical provenance is
+  recorded separately and does not belong to the repository author.
 keywords:
   - Jacobian conjecture
   - Keller map
   - polynomial automorphism
   - computer algebra
-license: CC-BY-4.0
+license: MIT
 repository-code: "https://github.com/nasqret/jacobian-counterexample"
-url: "https://github.com/nasqret/jacobian-counterexample"
+url: "https://nasqret.github.io/jacobian-counterexample/"

@@ -1,0 +1,16 @@
+name: jacobian-animation
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - manim=0.20.1
+  - ffmpeg>=7,<9
+  - cairo>=1.18,<2
+  - pango>=1.56,<2
+  - portaudio>=19,<20
+  - sox>=14.4,<15
+  - pkg-config>=0.29,<1
+  - pip>=26.1.2
+  - pip:
+      - "manim-voiceover[recorder]==0.4.0"
+      - "piper-tts==1.4.2"

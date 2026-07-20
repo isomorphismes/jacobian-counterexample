@@ -1,0 +1,27 @@
+{
+  "name": "marked-root-map-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && node scripts/assemble-site.mjs",
+    "build:web": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "qa:browser": "node scripts/browser-qa.mjs"
+  },
+  "dependencies": {
+    "three": "0.178.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/three": "0.178.1",
+    "playwright-core": "1.54.2",
+    "typescript": "5.8.3",
+    "vite": "6.4.3",
+    "vitest": "3.2.7"
+  }
+}

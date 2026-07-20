@@ -6,3 +6,9 @@ __pycache__/
 knowledge/_build/
 .ipynb_checkpoints/
 tmp/
+/media/
+.venv-animation/
+site/node_modules/
+site/dist/
+animations/media/
+animations/.voiceover_cache/

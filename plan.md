@@ -1,6 +1,6 @@
 # Research and dissemination plan
 
-Status date: 2026-07-20.
+Status date: 2026-07-21.
 
 ## Acceptance gates
 
@@ -60,6 +60,47 @@ Status date: 2026-07-20.
   repository.
 - [ ] Freeze a public timestamp or archival DOI after attribution is confirmed.
 - [ ] Submit a short note to a suitable peer-reviewed journal.
+
+## Public explainer and release gates
+
+The public release is treated as a reproducible publication, not merely a
+repository visibility switch. The canonical paper, website, animation, and
+computer-algebra certificates must agree on formulas, terminology,
+provenance, and scope.
+
+- [x] Compare the elementary projective draft with the intrinsic paper and
+  record the exact left--right equivalence of the three public approaches.
+- [x] Freeze role-specific attribution: Alpöge/Fable for the posted formula,
+  Jiang/GPT for the projective marked-root post, Lou for the resultant chart,
+  and Bartosz Naskrecki for compilation, audit, repository, and landing page.
+- [x] Replace the two competing drafts with one clearly designated canonical
+  short paper and retain the older paper as a labeled historical version.
+- [x] Compile the canonical LaTeX source without warnings, render every page,
+  and visually inspect the full PDF.
+- [x] Build a responsive, keyboard-accessible GitHub Pages landing page with
+  a plain-language introduction, an exact proof spine, provenance timeline,
+  literature links, and public-license information.
+- [x] Add a synchronized source/target curve viewer, an accessible numeric
+  fallback, and a permanent warning that the plots show only
+  \(\mathbb R^3\subset\mathbb C^3\).
+- [x] Add a native SVG/HTML beginner infographic whose meaning is not encoded
+  by color alone.
+- [x] Generate a text-free abstract hero image and preserve its project-bound
+  source asset.
+- [x] Implement the Manim Voiceover explainer, canonical transcript, captions,
+  reproducible environment, and shared exact curve data.
+- [x] Add dual public licensing: MIT for code and CC BY 4.0 for paper, prose,
+  diagrams, artwork, transcript, captions, and released narration.
+- [x] Add Pages build/deployment automation, link/attribution checks, algebra
+  parity tests, TypeScript checks, and a low-quality animation smoke test.
+- [x] Test the production site at desktop and mobile widths, with reduced
+  motion and the WebGL fallback. The in-app browser was unavailable, so the
+  same checks were run in installed Chrome through Playwright Core, including
+  a true 390-pixel viewport and console/network assertions.
+- [x] Audit the full Git history and generated artifacts for secrets and
+  unintended personal information before changing repository visibility.
+- [ ] Make the GitHub repository public only after all preceding release gates
+  pass, then verify the deployed Pages URL from a clean browser session.
 
 ## Immediate dissemination checklist
 

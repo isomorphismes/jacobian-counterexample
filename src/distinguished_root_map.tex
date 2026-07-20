@@ -1,0 +1,551 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=27mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,
+  citecolor=blue!45!black,urlcolor=blue!50!black]{hyperref}
+
+\definecolor{paperblue}{RGB}{25,65,101}
+\definecolor{softblue}{RGB}{241,247,252}
+\hypersetup{
+  pdftitle={One Map, Three Descriptions},
+  pdfauthor={Bartosz Naskrecki, repository compilation and independent audit},
+  pdfsubject={Marked roots of binary cubics and a three-dimensional Keller map},
+  pdfkeywords={Jacobian conjecture, Keller map, binary cubic, marked root, resultant}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{paperblue}One map, three descriptions}
+\fancyhead[R]{\small\color{paperblue}Marked roots of binary cubics}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Res}{Res}
+\newcommand{\A}{\mathbb A}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Gm}{\mathbb G_{\mathrm m}}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\dd}{\mathrm d}
+
+\newenvironment{summarybox}
+  {\par\medskip\noindent\begin{minipage}{\textwidth}%
+   \color{paperblue}\hrule\color{black}\vspace{0.65em}}
+  {\vspace{0.35em}\color{paperblue}\hrule\color{black}%
+   \end{minipage}\par\medskip}
+
+\title{\color{paperblue}\bfseries
+  One Map, Three Descriptions\\[2mm]
+  \large Marked roots of binary cubics and a three-dimensional Keller map}
+\author{Repository compilation, exposition, and independent audit\\
+  Bartosz Naskrecki}
+\date{20 July 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+An explicit polynomial map $F\colon\C^3\to\C^3$ has constant Jacobian
+determinant $-2$ but sends three distinct points to one point.  The formula
+looks mysterious; its geometry is not.  A general binary cubic has three
+distinct projective roots.  Mark one simple root and then forget which root
+was marked.  A special
+affine slice makes both the space of cubics and the space of marked cubics
+isomorphic to affine three-space.  This note unifies three public
+presentations of that map: the formula posted by Levent Alp\"oge, with credit
+to Fable; the symmetric-product description posted by Andy Jiang
+(@davikrehalt), explicitly presented there as GPT output; and Aaron Lou's
+factorization-resultant derivation.  We give the exact coordinate changes,
+a short proof of etaleness, the complete set-theoretic fiber counts, and the
+mechanism by which inverse branches escape to infinity.
+\end{abstract}
+
+\begin{summarybox}
+\textbf{Exact claim.}
+Define $F=(F_1,F_2,F_3)$ by
+\begin{align*}
+F_1&=(1+xy)^3z+y^2(1+xy)(4+3xy),\\
+F_2&=y+3x(1+xy)^2z+3xy^2(4+3xy),\\
+F_3&=2x-3x^2y-x^3z.
+\end{align*}
+Then
+\[
+  \det JF=-2
+\]
+and
+\[
+F\left(0,0,-\frac14\right)
+=F\left(1,-\frac32,\frac{13}{2}\right)
+=F\left(-1,\frac32,\frac{13}{2}\right)
+=\left(-\frac14,0,0\right).
+\]
+Thus $F$ is locally invertible everywhere but is not globally injective.
+These are exact polynomial identities, not numerical approximations.
+\end{summarybox}
+
+The Jacobian conjecture says that a polynomial self-map of $\C^n$ with
+nonzero constant Jacobian determinant must have a polynomial inverse.  By the
+standard complex Jacobian conjecture, the two identities in the box therefore
+constitute a counterexample in dimension three.  They are independently
+reproducible, but at the date of this note the announcement had not yet passed
+through the usual refereeing process.
+
+\section{Provenance and the three viewpoints}
+
+The public record available on 20 July 2026 separates naturally into the
+following roles.
+
+\begin{itemize}
+\item \textbf{Alp\"oge--Fable: the coordinate map.}
+  Levent Alp\"oge's post at 02:19:17 UTC gives the formula, determinant, and
+  three-point fiber \cite{Alpoge}.  The post credits Akhil for asking about
+  the problem and Fable for working during the World Cup final.  We use the
+  label ``Alp\"oge--Fable presentation'' without trying to infer a more
+  detailed private division of authorship.
+\item \textbf{Jiang--GPT: the projective geometry.}
+  At 12:02:19 UTC, Andy Jiang (@davikrehalt) posted the symmetric-product
+  construction below and explicitly introduced it in the post as GPT output
+  \cite{Jiang}.
+\item \textbf{Lou: the resultant chart.}
+  Aaron Lou gave a self-contained derivation by factoring a cubic into a
+  linear and a quadratic factor, normalizing their resultant, and finding a
+  global affine chart \cite{Lou}.
+\end{itemize}
+
+This repository compiles, compares, and independently checks those public
+descriptions.  Its maintainer does not claim discovery authorship for any of
+them.  The three descriptions fit into one diagram:
+
+\[
+\begin{array}{ccccc}
+\A^3
+&\xrightarrow{\ \sim\ }&
+M_{\omega,\tau}
+&\xrightarrow{\ \sim\ }&
+X_\tau\simeq X_{\mathrm{proj}}
+\\[-1mm]
+{\scriptstyle F\ \text{or}\ G}\downarrow
+&&\downarrow{\scriptstyle (\ell,q)\mapsto\ell q}
+&&\downarrow{\scriptstyle\text{forget the marked root}}
+\\[-1mm]
+\A^3
+&\xrightarrow{\ \sim\ }&
+H_\tau
+&\xrightarrow{\ \sim\ }&
+Y_{\mathrm{proj}}.
+\end{array}
+\tag{1.1}
+\]
+
+From left to right, these are the explicit formula, Lou's normalized factor
+space, the affine marked-root incidence, and Jiang's projective open set.
+The horizontal arrows are isomorphisms, but they require choices of bases,
+signs, and affine levels.  Thus they are isomorphic presentations of the same
+abstract algebraic morphism; they are not literally the same coordinate
+formulas.
+
+For a nonexpert, four translations are useful.  A \emph{binary cubic} is a
+homogeneous degree-three polynomial in two variables.  Its roots are points
+of the projective line $\PP^1$.  A root is \emph{simple} when it has
+multiplicity one.  An \emph{etale} map has no local folding: its derivative is
+invertible everywhere.  A \emph{nonproper} map may nevertheless lose an
+inverse branch because source points can run to infinity while their images
+remain bounded.
+
+\section{Jiang--GPT: mark a root, then forget it}
+
+An effective divisor of degree $d$ on $\PP^1$ is an unordered list of $d$
+points, counted with multiplicity.  Equivalently, it is the zero set of a
+binary form of degree $d$, up to nonzero scale.  Hence
+\[
+  \Sym^d(\PP^1)\simeq\PP^d.
+\]
+Consider the projective morphism
+\[
+\mu\colon\PP^1\times\Sym^2(\PP^1)\longrightarrow\Sym^3(\PP^1),
+\qquad (p,\{q,r\})\longmapsto\{p,q,r\}.
+\tag{2.1}
+\]
+It remembers a cubic divisor but forgets which point was distinguished.  If
+$p,q,r$ are distinct, its fiber consists of the three possible markings
+\[
+  (p,\{q,r\}),\qquad(q,\{p,r\}),\qquad(r,\{p,q\}).
+\]
+This is the conceptual source of generic degree three and noninjectivity.
+
+Let $R$ be the ramification divisor of $\mu$.  It consists exactly of pairs
+for which the marked point also occurs in the residual quadratic:
+\[
+  R=\{(p,\{q,r\}):p=q\text{ or }p=r\}.
+\tag{2.2}
+\]
+The condition $q=r$ by itself causes no ramification when $p$ is different.
+
+The small diagonal $p\mapsto3p$ is a twisted cubic in
+$\Sym^3(\PP^1)\simeq\PP^3$.  Choose a hyperplane $H_\infty$ tangent but not
+osculating to that curve: its intersection divisor with the curve has type
+$2p+q$, where $p\ne q$.  Set
+\begin{align*}
+Y_{\mathrm{proj}}&=\Sym^3(\PP^1)\setminus H_\infty,\\
+X_{\mathrm{proj}}&=
+\bigl(\PP^1\times\Sym^2(\PP^1)\bigr)
+\setminus\bigl(R\cup\mu^{-1}(H_\infty)\bigr).
+\end{align*}
+Since the complement of a hyperplane in $\PP^3$ is affine space,
+$Y_{\mathrm{proj}}\simeq\A^3$.  The surprising statement is that this
+particular $X_{\mathrm{proj}}$ is also $\A^3$.
+
+Here is an intrinsic affine version.  Let $W$ be two-dimensional and choose a
+tensor $\tau\in\Sym^3W$ of multiplicity type $(2,1)$.  The projective
+hyperplane $H_\infty$ is defined by
+$\langle\tau,C\rangle=0$.  Its complement is identified with the affine slice
+\[
+H_\tau=\{C\in\Sym^3W^\vee:\langle\tau,C\rangle=1\}\simeq\A^3,
+\qquad [C]\longmapsto\frac{C}{\langle\tau,C\rangle}.
+\tag{2.3}
+\]
+Define the simple-root incidence
+\[
+X_\tau=\{(C,[r])\in H_\tau\times\PP(W):C(r)=0, \dd C_r\ne0\}.
+\tag{2.4}
+\]
+Deleting $R$ says precisely that the marked root is simple, so (2.3) gives
+natural isomorphisms $X_{\mathrm{proj}}\simeq X_\tau$ and
+$Y_{\mathrm{proj}}\simeq H_\tau$, under which $\mu$ becomes
+$(C,[r])\mapsto C$.
+
+\section{Lou: fix the factorization gauge by a resultant}
+
+Fix a nonzero alternating form $\omega\in\bigwedge^2W^\vee$.  A marked root
+of $C$ is the same as a factorization
+\[
+  C=\ell q,\qquad \ell\in W^\vee,\qquad q\in\Sym^2W^\vee,
+\]
+where $\ell$ vanishes at the marked point.  This factorization has a scaling
+ambiguity
+\[
+  (\ell,q)\longmapsto(s\ell,s^{-1}q),\qquad s\in\Gm.
+\tag{3.1}
+\]
+Let $v_\ell\in W$ be defined by $\iota_{v_\ell}\omega=\ell$, and put
+\[
+  \Res_\omega(\ell,q)=q(v_\ell).
+\tag{3.2}
+\]
+This is the linear-quadratic resultant.  It is nonzero exactly when the
+marked root is simple, and it has weight one under (3.1):
+\[
+\Res_\omega(s\ell,s^{-1}q)=s\Res_\omega(\ell,q).
+\]
+Therefore every coprime scaling orbit has a unique representative with
+resultant one.  Define
+\[
+M_{\omega,\tau}=
+\{(\ell,q):\Res_\omega(\ell,q)=1,
+\ \langle\tau,\ell q\rangle=1\}.
+\tag{3.3}
+\]
+Multiplication gives an isomorphism
+\[
+M_{\omega,\tau}\xrightarrow{\sim}X_\tau,
+\qquad(\ell,q)\longmapsto(\ell q,\PP(\ker\ell)).
+\tag{3.4}
+\]
+
+The same normalization has a useful root-gradient form.  If
+$r=v_\ell$, then
+\[
+  \dd(\ell q)_r=q(r)\ell
+  =\Res_\omega(\ell,q)\,\iota_r\omega.
+\tag{3.5}
+\]
+Thus resultant one means $\dd C_r=\iota_r\omega$.  This single equation says
+both that $r$ is a root, by Euler's identity, and that it is simple.
+
+\begin{proposition}[Why there is no local folding]\label{prop:etale}
+The forgetful map $X_\tau\to H_\tau$ is etale.
+\end{proposition}
+
+\begin{proof}
+Consider
+\[
+\Psi(\ell,q)=\bigl(\ell q,\Res_\omega(\ell,q)\bigr).
+\]
+If $\ell$ and $q$ are coprime and
+$\dot\ell q+\ell\dot q=0$, unique factorization gives
+$(\dot\ell,\dot q)=a(\ell,-q)$.  This is exactly the infinitesimal direction
+of the gauge (3.1).  Along that direction the derivative of the resultant is
+$a\Res_\omega(\ell,q)$, which is nonzero unless $a=0$.  Hence $\dd\Psi$ is an
+isomorphism.  The map in the proposition is its base change to the two levels
+in (3.3), so it is etale.
+\end{proof}
+
+It remains to see the exceptional global affine chart.  Choose an adapted
+basis $T,S$ and write
+\[
+\ell=xT+\beta S,\qquad
+q=\gamma T^2+\delta TS+\epsilon S^2.
+\]
+The two equations in (3.3) become
+\[
+x\delta+\beta\gamma=1,\qquad
+x^2\epsilon-x\beta\delta+\beta^2\gamma=1.
+\tag{3.6}
+\]
+The following formulas define an isomorphism $\A^3_{x,y,z}\to M_{\omega,\tau}$:
+\begin{align*}
+\beta&=1+xy,&
+\gamma&=\frac{2-3xy+x^2z}{2},\\
+\delta&=\frac{y+3xy^2-xz-x^2yz}{2},&
+\epsilon&=-z(1+xy)^2+y^2(4+3xy).
+\tag{3.7}
+\end{align*}
+Its inverse is polynomial and is evaluated in this order:
+\[
+  x=x,\qquad y_*=2\beta\delta-x\epsilon,\qquad
+  z_*=4y_*\delta+2\gamma y_*^2-\epsilon.
+\tag{3.8}
+\]
+Substitution verifies (3.6).  Conversely, (3.6) first gives
+$\beta=1+xy_*$ and then recovers the remaining three formulas in (3.7).
+Thus both source and target of the forgetful map are globally affine
+three-space; no divisor was silently removed from the chart.
+
+\section{Alp\"oge--Fable: recovering the displayed formula}
+
+The direct projective derivation uses a point $p=[u:v]$, its linear factor,
+and a residual quadratic
+\[
+L=vT-uS,\qquad Q=AT^2+BTS+CS^2.
+\]
+The two projective scalings have unique representatives satisfying
+\[
+  h:=vB-uA=-2,\qquad r:=Q(u,v)=2.
+\tag{4.1}
+\]
+This is exactly Lou's normalization in different signs and units.  Indeed set
+\[
+  \ell(T,S)=L(T,-S),\qquad q(T,S)=\frac12Q(T,-S).
+\tag{4.2}
+\]
+Then
+\[
+x=v,\quad\beta=u,\quad\gamma=\frac A2,\quad
+\delta=-\frac B2,\quad\epsilon=\frac C2,
+\tag{4.3}
+\]
+and the two left sides of (3.6) are respectively $-h/2$ and $r/2$.
+
+In the direct chart one writes
+\begin{align*}
+u&=1+xy,&v&=x,\\
+A&=2-3xy-x^2z,\\
+B&=-y-xz-3xy^2-x^2yz,\\
+C&=2\bigl((1+xy)^2z+y^2(4+3xy)\bigr).
+\tag{4.4}
+\end{align*}
+Equations (4.1) hold identically.  Comparing (4.4) with (3.7) shows that
+$z_{\mathrm{Lou}}=-z_{\mathrm{direct}}$.  Moreover,
+\[
+LQ=cT^3-2T^2S+bTS^2-2aS^3,
+\qquad
+a=\frac{uC}{2},\quad b=vC-uB,\quad c=vA.
+\tag{4.5}
+\]
+Substitution in (4.5) is precisely the map $F$ displayed on the first page.
+
+If $G$ denotes Lou's target order, define
+\[
+S_0(x,y,z)=(x,y,-z),\qquad R_0(a,b,c)=(c,b,a).
+\]
+Then the exact relation is
+\[
+  \boxed{G=R_0\circ F\circ S_0.}
+\tag{4.6}
+\]
+This is left-right linear equivalence: source and target coordinates change
+independently.  In particular, the displayed identification is not a
+dynamical conjugacy by one common coordinate change.
+
+Proposition~\ref{prop:etale} shows that $\det JF$ never vanishes.  A
+nowhere-zero polynomial on $\C^3$ is constant, and the linear part of $F$ at
+the origin is
+\[
+  (x,y,z)\longmapsto(z,y,2x).
+\]
+Its determinant is $-2$, proving $\det JF=-2$ without a large expansion.
+The three substitutions on the first page then prove noninjectivity.
+
+There is also a compact certificate that the formula really marks a root.
+For $F(x,y,z)=(a,b,c)$ set
+\[
+Q_{a,b,c}(U,V)=cU^3-2U^2V+bUV^2-2aV^3,
+\qquad (U,V)=(1+xy,x).
+\]
+Direct substitution gives
+\[
+Q_{a,b,c}(U,V)=0,\qquad
+(Q_U,Q_V)(U,V)=(2V,-2U).
+\tag{4.7}
+\]
+The marked projective point is therefore a simple root, normalized by its
+gradient.  After the sign and scale changes in (4.2)--(4.6), equation (4.7)
+is the coordinate form of (3.5).
+
+\section{Fibers, the discriminant, and escape to infinity}
+
+Identify a target point with its binary cubic as in (4.7).  Its fiber is then
+read directly from the cubic's roots:
+\[
+\#F^{-1}(C)=
+\begin{cases}
+3,&C\text{ has three simple roots},\\
+1,&C\text{ has a double root and a distinct simple root},\\
+0,&C\text{ has a triple root}.
+\end{cases}
+\tag{5.1}
+\]
+In the middle case only the simple root can be marked; at a triple root every
+possible marking lies in the deleted ramification divisor.
+
+Before deleting ramification, the full incidence
+\[
+\overline X_\tau=\{(C,[r])\in H_\tau\times\PP(W):C(r)=0\}
+\longrightarrow H_\tau
+\]
+is finite flat of degree three: every nonzero binary cubic has a projective
+zero divisor of length three, counted with multiplicity.  Its branch locus is
+the binary-cubic discriminant.  In the original target coordinates a
+convenient normalization is
+\[
+\Delta(a,b,c)=b^2-cb^3-16a+18abc-27a^2c^2.
+\tag{5.2}
+\]
+Off $V(\Delta)$, no point was deleted, so $F$ is finite and therefore proper
+there.  Every discriminant cubic has a repeated-root marking in $R$, and that
+boundary point is a limit of simple markings.  A sequence of simple markings
+converging to it cannot remain bounded in the global $\A^3$ chart: otherwise
+it would have an affine limit, although the limiting marking was deleted.
+Thus an inverse branch escapes to infinity over every point of $V(\Delta)$,
+whereas no branch can do so off it.  Hence the nonproperness set is exactly
+$V(\Delta)$.
+
+The image is larger than the complement of the discriminant.  Double-root
+cubics retain their one simple-root preimage.  Only triple-root cubics are
+missing.  In $(a,b,c)$ coordinates this omitted curve is
+\[
+  3bc=4,\qquad27ac^2=4,
+\]
+or, equivalently,
+\[
+  (a,b,c)=\left(\frac{t^2}{3},2t,\frac{2}{3t}\right),
+  \qquad t\in\C^*.
+\tag{5.3}
+\]
+This distinction is the whole mechanism: the map has no finite critical
+point, but some inverse branches disappear through the boundary.  It is
+etale and quasi-finite, yet neither finite, proper, surjective, nor injective.
+
+\section{Scope, history, and reproducibility}
+
+Keller's 1939 paper is the traditional source of the conjecture
+\cite{Keller}; Bass, Connell, and Wright established the standard reduction
+framework \cite{BCW}, and van den Essen's monograph is a broad reference
+\cite{Essen}.  Jelonek developed the modern algebraic study of nonproperness
+sets of polynomial maps \cite{Jelonek}.  For historical context immediately
+before the announcement, see Rodr\'iguez D\'iaz \cite{Rodriguez}; contemporary
+literature still described the conjecture as open even in dimension two
+\cite{Bisi}.
+
+The construction here concerns $\C^3$.  Adjoining identity coordinates gives
+$F\times\mathrm{id}_{\C^{n-3}}$ in every dimension $n\ge3$.  Nothing in this
+argument decides the separate two-dimensional case.  Visualizations in the
+repository show the real slice $\mathbb R^3\subset\C^3$; the full complex
+space has six real dimensions, so a three-dimensional animation is an
+illustration rather than the whole geometry.
+
+Exact symbolic certificates, source code, and this paper are maintained at
+\url{https://github.com/nasqret/jacobian-counterexample}.  The mathematical
+text and original repository graphics are released under the Creative
+Commons Attribution 4.0 International license.  Third-party posts and papers
+remain under their respective terms and are linked rather than republished.
+
+\begin{thebibliography}{9}
+
+\bibitem{Alpoge}
+L.~Alp\"oge,
+\newblock X post announcing the explicit polynomial map, determinant, and
+  three-point fiber, crediting Akhil for the question and Fable for the work,
+\newblock 20 July 2026, 02:19:17 UTC,
+\newblock \url{https://x.com/__alpoge__/status/2079028340955197566}
+  (accessed 20 July 2026).
+
+\bibitem{Jiang}
+A.~Jiang (@davikrehalt),
+\newblock X post giving the projective symmetric-product construction and
+  explicitly presenting it as GPT output,
+\newblock 20 July 2026, 12:02:19 UTC,
+\newblock \url{https://x.com/davikrehalt/status/2079175065695035442}
+  (accessed 20 July 2026).
+
+\bibitem{Lou}
+A.~Lou,
+\newblock \emph{Deriving an Explicit Polynomial Counterexample to the
+  Jacobian Conjecture: A Reproducible Cubic-Factor and Resultant Construction},
+\newblock research note, 20 July 2026,
+\newblock \url{https://aaronlou.com/jacobian_counterexample_derivation.pdf}.
+
+\bibitem{Keller}
+O.-H.~Keller,
+\newblock Ganze Cremona-Transformationen,
+\newblock \emph{Monatsh. Math. Phys.} \textbf{47} (1939), 299--306,
+\newblock \url{https://doi.org/10.1007/BF01695502}.
+
+\bibitem{BCW}
+H.~Bass, E.~H. Connell, and D.~Wright,
+\newblock The Jacobian conjecture: reduction of degree and formal expansion
+  of the inverse,
+\newblock \emph{Bull. Amer. Math. Soc. (N.S.)} \textbf{7} (1982), 287--330,
+\newblock \url{https://doi.org/10.1090/S0273-0979-1982-15032-7}.
+
+\bibitem{Essen}
+A.~van den Essen,
+\newblock \emph{Polynomial Automorphisms and the Jacobian Conjecture},
+\newblock Progress in Mathematics 190, Birkh\"auser, 2000.
+
+\bibitem{Jelonek}
+Z.~Jelonek,
+\newblock The set of points at which a polynomial map is not proper,
+\newblock \emph{Ann. Polon. Math.} \textbf{58} (1993), 259--266,
+\newblock \url{https://eudml.org/doc/262325}.
+
+\bibitem{Rodriguez}
+L.~O. Rodr\'iguez D\'iaz,
+\newblock On the origin of the Jacobian conjecture,
+\newblock \emph{Comptes Rendus Math\'ematique} \textbf{364} (2026), 363--370,
+\newblock \url{https://doi.org/10.5802/crmath.831}.
+
+\bibitem{Bisi}
+E.~Bisi, P.~Dyszewski, N.~Gantert, S.~G.~G. Johnston, J.~Prochno,
+and D.~Schmid,
+\newblock Random planar trees and the Jacobian conjecture,
+\newblock \emph{J. London Math. Soc.} \textbf{113} (2026), e70416,
+\newblock \url{https://doi.org/10.1112/jlms.70416}.
+
+\end{thebibliography}
+
+\end{document}

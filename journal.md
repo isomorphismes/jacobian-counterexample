@@ -219,3 +219,57 @@ all decisive outputs are also encoded as executable assertions.
   contains both credits and the explicit equivalence statement.
 - Rebuilt the Jupyter Book with zero warnings and reran the exact test suite:
   `24 passed`.
+
+## 2026-07-21 — unified paper and public explainer
+
+- Compared the direct-coordinate working draft with the retained intrinsic
+  paper and the three public presentations.  Designated
+  `src/distinguished_root_map.tex` as the canonical seven-page synthesis and
+  kept `marked_root_binary_cubic.pdf` as a labeled historical version 1.
+- Separated contribution roles throughout: Alpöge's post supplies the explicit
+  map and records its credit to Fable; Jiang's post supplies the projective
+  marked-root construction and explicitly labels it GPT output; Lou supplies
+  the factorization--resultant chart; Naskrecki is identified only with the
+  repository compilation, audit, exposition, and landing page.
+- Recorded the exact bridge between the two coordinate maps as
+  `G=R0 o F o S0`.  Tightened the language after independent review: this
+  displayed relation is left--right linear equivalence, not conjugacy by the
+  same coordinate change; the repository makes no unproved global
+  nonconjugacy claim.
+- Strengthened the short paper's root-gradient scaling explanation, finite-flat
+  degree-three sentence, and proof that the nonproperness set is precisely the
+  cubic discriminant.  The final two-pass LaTeX build has seven A4 pages, no
+  warnings or overfull boxes; every page was rendered and visually inspected.
+- Built a responsive static landing page with a plain-language marked-root
+  infographic, exact certificate, three-lens comparison, proof spine,
+  role-specific provenance timeline, historical literature, public-license
+  notices, and an accessible synchronized Three.js source/target viewer.
+  Exact curve coordinates remain available when WebGL is absent.
+- Generated a text-free abstract hero image for the project and preserved both
+  the source PNG, optimized WebP, and generation prompt.  All spatial artifacts
+  state that they show only `R^3` inside the six-real-dimensional `C^3`.
+- Implemented a fourteen-section Manim Voiceover explainer driven by the same
+  exact curve fixture as the browser.  Completed and inspected a 480p smoke
+  render and a 1920x1080/30 fps release render.  The embedded 275.732-second
+  MP4 uses a clearly disclosed offline Piper `en_US-libritts-high` speaker-0
+  draft, progressive MP4 layout, and 104 nonoverlapping WebVTT cues whose text
+  exactly equals the canonical narration.  Human narration remains preferred.
+- Added MIT licensing for software and CC BY 4.0 for the paper, prose, diagrams,
+  artwork, transcript, captions, and released film, while preserving distinct
+  third-party terms for Piper, its voice model, LibriTTS, software, posts, and
+  papers.
+- Added publication-contract, animation, caption, media-integrity, TypeScript,
+  browser, and Pages-assembly tests.  Browser QA covers desktop, a true
+  390-pixel mobile viewport, reduced motion, transcript keyboard access, and
+  the no-WebGL fallback with no unexpected console or request failures.
+- Corrected the landing-page Keller, Bass--Connell--Wright, and Druzkowski DOI
+  links against the canonical bibliography and verified the primary X posts,
+  Lou PDF, and historical DOI resolvers from the release environment.
+- Scanned every committed revision and the full release tree for common secret
+  patterns and sensitive filenames.  No credential was found; the only
+  personal metadata is the expected named Git commit identity already used by
+  the repository owner.
+- Closed the local release gate with all three exact algebra systems passing,
+  `69` Python tests and `11` Vitest tests passing, a clean paper and Jupyter
+  Book build, a zero-vulnerability npm audit, and desktop, mobile,
+  reduced-motion, and WebGL-fallback browser checks.

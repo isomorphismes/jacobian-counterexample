@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d19" />
+    <meta
+      name="description"
+      content="A visual, reproducible guide to the marked-root Keller map: a polynomial map of three-dimensional complex space with constant Jacobian and a three-point fiber."
+    />
+    <meta property="og:title" content="The marked-root map" />
+    <meta property="og:description" content="Three roots, one forgotten mark, and an explicit three-dimensional Keller map." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nasqret.github.io/jacobian-counterexample/" />
+    <meta property="og:image" content="https://nasqret.github.io/jacobian-counterexample/assets/hero-marked-roots.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://nasqret.github.io/jacobian-counterexample/" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <title>The marked-root map · a visual guide</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to the explanation</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="The marked-root map, home">
+        <span aria-hidden="true" class="wordmark-mark">∂</span>
+        <span>The marked-root map</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#idea">The idea</a>
+        <a href="#viewer">Explore</a>
+        <a href="#proof">Proof</a>
+        <a href="#provenance">Sources &amp; credit</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <img
+          class="hero-art"
+          src="./assets/hero-marked-roots.webp"
+          alt=""
+          width="1672"
+          height="941"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-copy page-width">
+          <p class="eyebrow">A constant-Jacobian map with a three-point fiber</p>
+          <h1 id="hero-title">Three roots.<br /><span>One forgotten mark.</span></h1>
+          <p class="hero-lede">
+            This explicit polynomial map’s derivative is invertible everywhere, yet three different
+            points have the same image. Its hidden mechanism is unexpectedly simple: mark one
+            root of a cubic, then forget which root was marked.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#idea">Understand the idea</a>
+            <a class="button button-quiet" href="./paper/one-map-three-descriptions.pdf">Read the short paper <span aria-hidden="true">↗</span></a>
+          </div>
+          <dl class="fact-strip" aria-label="Result at a glance">
+            <div><dt>Jacobian</dt><dd>det JF = −2</dd></div>
+            <div><dt>Generic fiber</dt><dd>3 points</dd></div>
+            <div><dt>Dimension</dt><dd>3 (and all n ≥ 3)</dd></div>
+            <div><dt>Dimension 2</dt><dd>still open</dd></div>
+          </dl>
+        </div>
+        <p class="hero-credit">
+          Artwork: an abstract view of three marked-root sheets converging on one coefficient space.
+        </p>
+      </section>
+
+      <section class="section section-light" id="idea" aria-labelledby="idea-title">
+        <div class="page-width narrow">
+          <p class="kicker">The idea in 30 seconds</p>
+          <h2 id="idea-title">A cubic remembers its roots, but not their names.</h2>
+          <p class="section-intro">
+            A typical cubic polynomial has three distinct roots. Pair the polynomial with a choice
+            of one root: that is a <dfn>marked cubic</dfn>. Now erase the mark. There are usually
+            three possible inputs—one for each chosen root—but only one unmarked output.
+          </p>
+
+          <figure class="root-infographic">
+            <svg viewBox="0 0 960 360" role="img" aria-labelledby="roots-title roots-desc">
+              <title id="roots-title">Three marked cubics become one unmarked cubic</title>
+              <desc id="roots-desc">Three rows contain the same three roots. A different root is ringed in each row. Arrows from all rows meet at one output containing the roots without a ring.</desc>
+              <defs>
+                <linearGradient id="arrow-gradient" x1="0" x2="1">
+                  <stop offset="0" stop-color="#5f50cf" />
+                  <stop offset="1" stop-color="#0f8f83" />
+                </linearGradient>
+                <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0 0L8 4L0 8Z" fill="#527672" />
+                </marker>
+              </defs>
+              <g class="svg-card">
+                <rect x="30" y="24" width="360" height="88" rx="16" />
+                <rect x="30" y="136" width="360" height="88" rx="16" />
+                <rect x="30" y="248" width="360" height="88" rx="16" />
+              </g>
+              <g class="root-line" aria-hidden="true">
+                <path d="M76 70H338" /><path d="M76 182H338" /><path d="M76 294H338" />
+              </g>
+              <g class="root-dot root-one" aria-hidden="true">
+                <circle cx="130" cy="70" r="9" /><circle cx="220" cy="70" r="9" /><circle cx="310" cy="70" r="9" />
+                <circle cx="130" cy="182" r="9" /><circle cx="220" cy="182" r="9" /><circle cx="310" cy="182" r="9" />
+                <circle cx="130" cy="294" r="9" /><circle cx="220" cy="294" r="9" /><circle cx="310" cy="294" r="9" />
+              </g>
+              <g class="root-ring" aria-hidden="true">
+                <circle cx="130" cy="70" r="21" /><circle cx="220" cy="182" r="21" /><circle cx="310" cy="294" r="21" />
+              </g>
+              <g class="svg-arrows" marker-end="url(#arrowhead)" aria-hidden="true">
+                <path d="M410 70C530 70 520 160 645 175" />
+                <path d="M410 182H645" />
+                <path d="M410 294C530 294 520 204 645 189" />
+              </g>
+              <g class="svg-output">
+                <rect x="668" y="119" width="260" height="128" rx="22" />
+                <path d="M708 184H888" />
+                <circle cx="750" cy="184" r="10" /><circle cx="798" cy="184" r="10" /><circle cx="846" cy="184" r="10" />
+              </g>
+              <g class="svg-labels">
+                <text x="52" y="50">mark root 1</text><text x="52" y="162">mark root 2</text><text x="52" y="274">mark root 3</text>
+                <text x="707" y="151">forget the mark</text><text x="704" y="224">one cubic</text>
+              </g>
+            </svg>
+            <figcaption>
+              The three inputs differ only by the circled choice. The output keeps the cubic and
+              forgets that choice. This “three-to-one” behavior is the entire global surprise.
+            </figcaption>
+          </figure>
+
+          <ol class="plain-steps" aria-label="The construction in four plain-language steps">
+            <li><span>1</span><div><strong>Start with three roots.</strong><p>Together they determine a cubic.</p></div></li>
+            <li><span>2</span><div><strong>Choose one root.</strong><p>The choice is extra information—a mark.</p></div></li>
+            <li><span>3</span><div><strong>Normalize the mark.</strong><p>A geometric scaling makes the source exactly three-dimensional affine space.</p></div></li>
+            <li><span>4</span><div><strong>Forget it.</strong><p>Locally nothing folds, but globally three choices can share one image.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section formula-section" aria-labelledby="formula-title">
+        <div class="page-width formula-grid">
+          <div>
+            <p class="kicker">The concrete map</p>
+            <h2 id="formula-title">No hidden numerical approximation.</h2>
+            <p>
+              Every claim is an exact polynomial identity. For complex coordinates
+              <span class="math-inline">(x,y,z)</span>, set:
+            </p>
+            <div class="formula" role="math" aria-label="The three coordinate formulas defining F">
+              <span>F₁ = (1 + xy)³z + y²(1 + xy)(4 + 3xy)</span>
+              <span>F₂ = y + 3x(1 + xy)²z + 3xy²(4 + 3xy)</span>
+              <span>F₃ = 2x − 3x²y − x³z</span>
+            </div>
+          </div>
+          <aside class="certificate-card" aria-label="Exact certificate">
+            <p class="certificate-label">Exact certificate</p>
+            <p class="determinant">det JF ≡ −2</p>
+            <p>and all three points</p>
+            <ul>
+              <li>(0, 0, −¼)</li>
+              <li>(1, −3⁄2, 13⁄2)</li>
+              <li>(−1, 3⁄2, 13⁄2)</li>
+            </ul>
+            <p>map to <strong>(−¼, 0, 0)</strong>.</p>
+            <a href="https://github.com/nasqret/jacobian-counterexample/tree/main/artifacts" rel="external">Run the exact certificates <span aria-hidden="true">→</span></a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section viewer-section" id="viewer" aria-labelledby="viewer-title">
+        <div class="page-width">
+          <div class="section-heading-row">
+            <div>
+              <p class="kicker">Explore the real slice</p>
+              <h2 id="viewer-title">Watch a source curve and its image together.</h2>
+            </div>
+            <p class="scope-note"><strong>Important:</strong> the theorem concerns complex 3-space (six real dimensions). These plots show only carefully chosen curves with real coordinates.</p>
+          </div>
+
+          <div class="viewer-shell" data-viewer>
+            <div class="viewer-toolbar">
+              <label for="curve-select">Example</label>
+              <select id="curve-select"></select>
+              <button class="icon-button" id="copy-view" type="button">Copy this view</button>
+              <button class="icon-button" id="download-data" type="button">Curve data (.json)</button>
+            </div>
+
+            <div class="viewer-copy" aria-live="polite">
+              <h3 id="curve-title"></h3>
+              <p id="curve-description"></p>
+            </div>
+
+            <div class="plot-grid">
+              <figure>
+                <figcaption><span>Source</span> A point plus its marked root</figcaption>
+                <div class="plot" id="source-plot"></div>
+              </figure>
+              <div class="map-arrow" aria-hidden="true"><span>F</span><b>→</b></div>
+              <figure>
+                <figcaption><span>Target</span> Cubic coefficients</figcaption>
+                <div class="plot" id="target-plot"></div>
+              </figure>
+            </div>
+            <p class="webgl-fallback" id="webgl-fallback" hidden>
+              The 3D canvas is unavailable in this browser. The exact coordinates remain available in the table below.
+            </p>
+
+            <div class="timeline-controls">
+              <button class="button button-small" id="play-curve" type="button" aria-pressed="false">Play</button>
+              <label class="sr-only" for="curve-progress">Position along the selected curve</label>
+              <input id="curve-progress" type="range" min="0" max="1000" value="0" />
+              <output id="curve-parameter" for="curve-progress"></output>
+            </div>
+
+            <div class="view-controls" aria-label="3D view controls">
+              <span>Shared view</span>
+              <button type="button" data-rotate="left" aria-label="Rotate both plots left">←</button>
+              <button type="button" data-rotate="right" aria-label="Rotate both plots right">→</button>
+              <button type="button" data-rotate="up" aria-label="Rotate both plots up">↑</button>
+              <button type="button" data-rotate="down" aria-label="Rotate both plots down">↓</button>
+              <label for="view-zoom">Zoom</label>
+              <input id="view-zoom" type="range" min="65" max="280" value="100" />
+              <button type="button" id="reset-view">Reset</button>
+            </div>
+
+            <p class="viewer-reading" id="curve-reading"></p>
+            <div class="coordinate-table-wrap">
+              <table class="coordinate-table">
+                <caption>Current numerical sample from the exact formulas (colors match the plots)</caption>
+                <thead><tr><th scope="col">Branch</th><th scope="col">Source (x, y, z)</th><th scope="col">Target F(x, y, z)</th></tr></thead>
+                <tbody id="coordinate-rows"></tbody>
+              </table>
+            </div>
+            <noscript><p>This interactive needs JavaScript. The formula and proof above do not.</p></noscript>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-light" id="lenses" aria-labelledby="lenses-title">
+        <div class="page-width">
+          <p class="kicker">One map, three lenses</p>
+          <h2 id="lenses-title">The approaches are equivalent—but they do different explanatory work.</h2>
+          <p class="section-intro compact">
+            They are not three unrelated counterexamples. They are three presentations of the same
+            marked-root morphism, after explicit source and target coordinate changes.
+          </p>
+
+          <div class="lens-cards">
+            <article>
+              <span class="lens-number">01</span>
+              <p class="lens-label">Coefficient lens</p>
+              <h3>The explicit formula</h3>
+              <p>Best for checking the determinant and the collision with a computer algebra system—or by hand.</p>
+              <p class="credit-line">Publicly posted by <a href="https://x.com/__alpoge__/status/2079028340955197566" rel="external noopener"><strong>Levent Alpöge</strong></a>, with <strong>Fable</strong> credited in the post.</p>
+            </article>
+            <article>
+              <span class="lens-number">02</span>
+              <p class="lens-label">Projective lens</p>
+              <h3>Mark, then forget a root</h3>
+              <p>Best for seeing degree three, the ramification locus, and the special affine slice.</p>
+              <p class="credit-line">Posted by <a href="https://x.com/davikrehalt/status/2079175065695035442" rel="external noopener"><strong>Andy Jiang (@davikrehalt)</strong></a>, explicitly labeled “GPT”.</p>
+            </article>
+            <article>
+              <span class="lens-number">03</span>
+              <p class="lens-label">Resultant lens</p>
+              <h3>Factor and fix the scale</h3>
+              <p>Best for a structural differential proof: write a cubic as a linear factor times a quadratic and normalize their resultant.</p>
+              <p class="credit-line">Derived and documented by <a href="https://aaronlou.com/jacobian_counterexample_derivation.pdf" rel="external noopener"><strong>Aaron Lou</strong></a>.</p>
+            </article>
+          </div>
+
+          <div class="comparison-wrap">
+            <table class="comparison-table">
+              <caption>What changes and what remains invariant across the three presentations</caption>
+              <thead><tr><th scope="col">Lens</th><th scope="col">Input remembers</th><th scope="col">Main strength</th><th scope="col">Coordinate cost</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Explicit F</th><td>Three affine numbers</td><td>Immediate exact certificate</td><td>Geometry is hidden by expansion</td></tr>
+                <tr><th scope="row">Marked root</th><td>A cubic and one simple projective root</td><td>Fibers become obvious</td><td>Requires projective language</td></tr>
+                <tr><th scope="row">Factor/resultant</th><td>A factorization C = ℓq with Res(ℓ,q)=1</td><td>Étaleness is structural</td><td>Requires choosing an affine chart</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="equivalence-note">
+            <div>
+              <p class="kicker">Precise relation</p>
+              <h3>Equivalent as source–target arrows, not as dynamics.</h3>
+            </div>
+            <div>
+              <p>If <span class="math-inline">G</span> is Lou’s displayed coordinate map, the audited formulas give</p>
+              <p class="equation">G = R₀ ∘ F ∘ S₀</p>
+              <p>with <span class="math-inline">S₀(x,y,z)=(x,y,−z)</span> and <span class="math-inline">R₀(a,b,c)=(c,b,a)</span>. The independent changes on source and target preserve étaleness, fiber sizes, generic degree, and nonproperness. The displayed relation is <em>not</em> a conjugacy by one common coordinate change.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section proof-section" id="proof" aria-labelledby="proof-title">
+        <div class="page-width">
+          <p class="kicker">The proof spine</p>
+          <h2 id="proof-title">Four statements carry the whole argument.</h2>
+          <ol class="proof-steps">
+            <li>
+              <span class="proof-index">1</span>
+              <div><h3>Package each output as a binary cubic.</h3><p>For a target (a,b,c), form <span class="math-inline">Q(U,V)=cU³−2U²V+bUV²−2aV³</span>.</p></div>
+            </li>
+            <li>
+              <span class="proof-index">2</span>
+              <div><h3>Find the marked root inside the source.</h3><p>At <span class="math-inline">(U,V)=(1+xy,x)</span>, exact identities give <span class="math-inline">Q=0</span>, <span class="math-inline">Qᵤ=2V</span>, and <span class="math-inline">Qᵥ=−2U</span>. The root is automatically simple.</p></div>
+            </li>
+            <li>
+              <span class="proof-index">3</span>
+              <div><h3>Forgetting the root is locally invertible.</h3><p>The gradient normalization removes the scaling ambiguity. Differentiation—or the resultant-one model—then gives <span class="math-inline">det JF=−2</span> everywhere.</p></div>
+            </li>
+            <li>
+              <span class="proof-index">4</span>
+              <div><h3>Globally, a generic cubic offers three choices.</h3><p>Each simple root gives one source point. Hence a generic fiber has three points; repeated-root limits make inverse branches escape rather than create affine ramification.</p></div>
+            </li>
+          </ol>
+          <div class="proof-actions">
+            <a class="button button-primary" href="./paper/one-map-three-descriptions.pdf">Read the unified paper</a>
+            <a class="button button-quiet" href="./paper/one-map-three-descriptions.tex">Download the LaTeX source</a>
+            <a class="button button-quiet" href="./book/">Browse the full knowledge book</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section film-section" id="film" aria-labelledby="film-title">
+        <div class="page-width film-grid">
+          <div>
+            <p class="kicker">Guided explainer</p>
+            <h2 id="film-title">Follow the construction, one moving idea at a time.</h2>
+            <p id="film-description">This 4:35 Manim film connects the roots, the projective picture, the exact formula, and the escaping branches. The embedded audio is a reproducibly configured offline Piper draft; its captions and the transcript below use the same canonical narration text. A human recording remains the preferred final voice.</p>
+            <details id="film-transcript">
+              <summary>Read the exact narration transcript</summary>
+              <div class="transcript" aria-label="Complete scrollable narration transcript" tabindex="0">
+                <p class="transcript-note">This is the complete narration, in scene order. Scroll this panel for all 14 scenes. Three-dimensional scenes show only the real slice R³ inside the complex map on C³.</p>
+
+                <article data-segment-id="credits">
+                  <p class="transcript-chapter">Provenance</p>
+                  <h3>Three public descriptions</h3>
+                  <p>This map reached the public in three distinct forms. Levent Alpöge posted the explicit polynomial formula, crediting Akhil for the question and Fable for the work. Later, Andy Jiang, at davikrehalt, posted the projective marked-root description and explicitly presented it as GPT output. Aaron Lou then gave a resultant-based derivation and global affine chart. This repository compiles, explains, visualizes, and checks those contributions.</p>
+                </article>
+
+                <article data-segment-id="local_global">
+                  <p class="transcript-chapter">The puzzle</p>
+                  <h3>Local invertibility can fail globally</h3>
+                  <p>The Jacobian condition is local: at every finite point, the derivative is invertible. Imagine a tiny neighborhood being moved without being pinched flat. The surprise is global. Different distant points can still acquire the same image if inverse branches disappear through infinity. That is the mechanism we will see.</p>
+                </article>
+
+                <article data-segment-id="formula">
+                  <p class="transcript-chapter">Levent and Fable</p>
+                  <h3>The explicit polynomial certificate</h3>
+                  <p>Alpöge's presentation begins with three explicit polynomials in x, y, and z. Exact symbolic expansion gives determinant minus two everywhere. The formula is the fastest certificate that the map is locally invertible, but by itself it gives little clue why these particular terms fit together.</p>
+                </article>
+
+                <article data-segment-id="three_points">
+                  <p class="transcript-chapter">Levent and Fable</p>
+                  <h3>Three points, one value</h3>
+                  <p>Now substitute these three source points. They are distinct, yet every one maps to negative one quarter, zero, zero. This already proves noninjectivity. The remaining descriptions explain the hidden object that each point is recording.</p>
+                </article>
+
+                <article data-segment-id="mark_roots">
+                  <p class="transcript-chapter">The common idea</p>
+                  <h3>Mark one root, then forget the mark</h3>
+                  <p>A cubic has three projective roots when multiplicity is counted. Temporarily mark one root and leave the other two unordered. For a cubic with three distinct roots, there are exactly three possible markings. If we now forget the mark, those three choices become one cubic. Generic degree three is therefore built into the construction.</p>
+                </article>
+
+                <article data-segment-id="projective_map">
+                  <p class="transcript-chapter">Jiang and GPT</p>
+                  <h3>The projective marked-root map</h3>
+                  <p>Jiang's post packages this as a projective map. A point p and an unordered pair q, r are sent to the unordered triple p, q, r. In symbols, projective one-space times its second symmetric power maps to its third symmetric power. This is simply the operation: forget which root was distinguished.</p>
+                </article>
+
+                <article data-segment-id="delete_ramification">
+                  <p class="transcript-chapter">Jiang and GPT</p>
+                  <h3>Delete only bad marked roots</h3>
+                  <p>The forgetful map ramifies only when the marked root collides with one of the two residual roots. Delete exactly that ramification divisor. The unmarked roots may still collide with each other. After deletion, the differential is invertible everywhere that remains, so the restricted map is étale.</p>
+                </article>
+
+                <article data-segment-id="affine_slice">
+                  <p class="transcript-chapter">Jiang and GPT</p>
+                  <h3>The affine-space miracle</h3>
+                  <p>Next choose a hyperplane tangent, but not osculating, to the small diagonal of triple roots. Its complement in projective three-space is affine three-space. Remarkably, the corresponding source complement is also affine three-space. Choosing coordinates on these two spaces turns the geometric forgetful map into Alpöge's polynomial map.</p>
+                </article>
+
+                <article data-segment-id="factorization">
+                  <p class="transcript-chapter">Lou</p>
+                  <h3>A marked root is a factor</h3>
+                  <p>Lou's description replaces a marked root by a factorization of the binary cubic: a linear factor ell for the marked root, times a quadratic factor q for the other two. But the factorization has a redundant scale. Multiplying ell by s and q by s inverse leaves the cubic unchanged.</p>
+                </article>
+
+                <article data-segment-id="resultant">
+                  <p class="transcript-chapter">Lou</p>
+                  <h3>The resultant fixes the scale</h3>
+                  <p>The linear-quadratic resultant detects whether the marked root is simple. It is nonzero exactly when ell and q have no common root. Under the redundant scaling, the resultant is multiplied by s. Requiring resultant one therefore chooses one and only one representative on every simple-root scaling orbit. This is the resultant gauge.</p>
+                </article>
+
+                <article data-segment-id="unified">
+                  <p class="transcript-chapter">Equivalence</p>
+                  <h3>Three languages for one arrow</h3>
+                  <p>These are not competing maps. They are three coordinate systems for one arrow. Alpöge gives the direct formula and collision certificate. Jiang and GPT expose the marked-root geometry. Lou supplies the normalized factor space and global affine chart. Lou's coordinate map G equals an output reversal after F and a sign change in the source. That is left-right equivalence, not dynamical conjugacy.</p>
+                </article>
+
+                <article data-segment-id="real_curves">
+                  <p class="transcript-chapter">Visualization</p>
+                  <h3>Exact curves on the real slice</h3>
+                  <p>Complex three-space has six real dimensions, so here we visualize only its real slice. Three elementary source curves are mapped exactly: the x-axis becomes a target line, the y-axis becomes a parabola, and the z-axis becomes another target line. The same formulas drive both this animation and the browser artifact.</p>
+                </article>
+
+                <article data-segment-id="escaping_sheets">
+                  <p class="transcript-chapter">Visualization</p>
+                  <h3>Two inverse branches escape</h3>
+                  <p>A more revealing target curve represents cubics with roots zero, s, and one minus s. Each possible marked root defines a different source curve, but all three map to the same target curve. As s approaches zero, two marked roots collide. Their two source branches run toward infinity, while the branch marking the remaining simple root stays finite. No finite critical point appears.</p>
+                </article>
+
+                <article data-segment-id="proof_scope">
+                  <p class="transcript-chapter">Conclusion</p>
+                  <h3>The proof spine and its scope</h3>
+                  <p>The proof now has a short spine. Both chosen complements are affine three-space. Removing marked-root ramification makes the forgetful map étale. A general cubic has three simple roots, so the map has generic degree three and cannot be injective. Constant Jacobian, three-point fibers, and escape at infinity are three views of the same geometry. Adding identity coordinates extends the construction to higher dimensions, while dimension two remains a separate problem.</p>
+                </article>
+
+                <p class="transcript-source">Narration text and captions are CC BY 4.0; linked sources retain their own terms.</p>
+              </div>
+            </details>
+            <p class="transcript-download"><a href="./media/marked-root-explainer-transcript.md">Open the complete text-first transcript (Markdown)</a></p>
+          </div>
+          <div class="video-frame">
+            <video controls preload="none" poster="./media/video-poster.svg" aria-label="Marked-root map animated explainer" aria-describedby="film-description film-production-note">
+              <source src="./media/marked-root-explainer.mp4" type="video/mp4" />
+              <track kind="captions" src="./media/marked-root-explainer.en.vtt" srclang="en" label="English" default />
+              Your browser cannot play this video. Use the transcript beside it.
+            </video>
+            <p class="production-note" id="film-production-note"><span aria-hidden="true">●</span> 4:35 offline draft voice: Piper TTS 1.4.2, <em>en_US-libritts-high</em>, speaker 0. The voice model was trained on LibriTTS <em>train-clean-360</em>. <a href="./legal/third-party-notices.md">Voice, dataset, and software notices</a>. A human-recorded final narration is planned.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section provenance-section" id="provenance" aria-labelledby="provenance-title">
+        <div class="page-width">
+          <p class="kicker">Provenance, without ambiguity</p>
+          <h2 id="provenance-title">Formula, explanation, and compilation are distinct contributions.</h2>
+          <p class="section-intro compact">The repository preserves the public sequence and cites each contribution where it is used. It does not transfer discovery credit to the compiler.</p>
+
+          <ol class="timeline">
+            <li>
+              <time datetime="2026-07-20T02:19:17Z">20 Jul 2026 · 02:19 UTC</time>
+              <div>
+                <h3>Levent Alpöge posts the explicit map.</h3>
+                <p>The earliest formula post located by this audit states the map, determinant, and three-point collision; it credits Akhil for the question and Fable in connection with the work.</p>
+                <a href="https://x.com/__alpoge__/status/2079028340955197566" rel="external noopener">Formula post by Levent Alpöge <span aria-hidden="true">↗</span></a>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-07-20T12:02:19Z">20 Jul 2026 · 12:02 UTC</time>
+              <div>
+                <h3>Andy Jiang posts the projective marked-root construction.</h3>
+                <p>The post, explicitly introduced as “GPT:”, explains the map as forgetting a marked point in <span class="math-inline">P¹ × Sym²(P¹) → Sym³(P¹)</span>, after removing ramification and choosing a tangent-but-not-osculating affine slice.</p>
+                <a href="https://x.com/davikrehalt/status/2079175065695035442" rel="external noopener">Projective post by Andy Jiang (@davikrehalt) <span aria-hidden="true">↗</span></a>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-07-20">20 Jul 2026</time>
+              <div>
+                <h3>Aaron Lou publishes a factorization–resultant derivation.</h3>
+                <p>Lou’s note gives a direct affine chart for a linear factor times a quadratic, normalized by resultant one. The audit identifies its exact left–right coordinate equivalence to the original formula.</p>
+                <a href="https://aaronlou.com/jacobian_counterexample_derivation.pdf" rel="external noopener">Read Aaron Lou’s derivation (PDF) <span aria-hidden="true">↗</span></a>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-07-21">21 Jul 2026 · repository release</time>
+              <div>
+                <h3>Bartosz Naskrecki compiles and independently audits the record.</h3>
+                <p>Bartosz Naskrecki is the repository compiler and landing-page author: exact certificates, comparison, documentation, visualization, and reproducible artifacts. He does not claim discovery of the formula or its geometric derivations.</p>
+                <a href="https://github.com/nasqret/jacobian-counterexample" rel="external noopener">Open the public repository <span aria-hidden="true">↗</span></a>
+              </div>
+            </li>
+          </ol>
+
+          <div class="source-grid" id="literature">
+            <div>
+              <h3>Primary sources for this construction</h3>
+              <ul class="source-list">
+                <li><a href="https://x.com/__alpoge__/status/2079028340955197566" rel="external noopener">Alpöge: original formula announcement</a></li>
+                <li><a href="https://x.com/davikrehalt/status/2079175065695035442" rel="external noopener">Jiang: projective marked-root formulation</a></li>
+                <li><a href="https://aaronlou.com/jacobian_counterexample_derivation.pdf" rel="external noopener">Lou: factorization–resultant derivation</a></li>
+                <li><a href="https://github.com/nasqret/jacobian-counterexample/blob/main/knowledge/literature-audit.md" rel="external noopener">Repository equivalence and provenance audit</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Historical context</h3>
+              <ul class="source-list">
+                <li><a href="https://doi.org/10.1007/BF01695502" rel="external noopener">Keller (1939): the classic formulation</a></li>
+                <li><a href="https://doi.org/10.1090/S0273-0979-1982-15032-7" rel="external noopener">Bass–Connell–Wright (1982): degree reduction</a></li>
+                <li><a href="https://doi.org/10.1007/BF01459126" rel="external noopener">Drużkowski (1983): cubic reduction</a></li>
+                <li><a href="https://doi.org/10.1007/978-3-0348-8440-2" rel="external noopener">van den Essen (2000): monograph</a></li>
+                <li><a href="https://doi.org/10.5802/crmath.831" rel="external noopener">Recent history of the conjecture (2026)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <aside class="status-caveat">
+            <h3>What this does—and does not—settle</h3>
+            <p>The displayed exact identities give a counterexample in dimension 3; adjoining identity coordinates gives one in every dimension n ≥ 3. The two-dimensional Jacobian conjecture is a separate case and remains open here. Mathematical validity, priority, and community reception are tracked as separate questions.</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="page-width footer-grid">
+        <div>
+          <p class="footer-title">The marked-root map</p>
+          <p>A public, reproducible mathematical record compiled by Bartosz Naskrecki.</p>
+        </div>
+        <div>
+          <p class="footer-label">Reuse</p>
+          <p>Code: <a href="./legal/license-code.txt">MIT</a>. Paper, prose, artwork, transcript, captions, and released film: <a href="./legal/license-content.txt">CC BY 4.0</a>. <a href="./legal/third-party-notices.md">Third-party materials retain their own terms.</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Verify</p>
+          <p><a href="https://github.com/nasqret/jacobian-counterexample">Source repository</a><br /><a href="./paper/one-map-three-descriptions.pdf">Unified paper</a><br /><a href="./book/">Knowledge book</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

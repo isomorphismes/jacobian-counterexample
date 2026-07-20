@@ -1,6 +1,6 @@
 # Research memory
 
-Last curated: 2026-07-20, Europe/Warsaw.
+Last curated: 2026-07-21, Europe/Warsaw.
 
 ## Durable conclusion
 
@@ -291,6 +291,42 @@ certificate excludes every pair represented by ambient polynomials of total
 degree at most two.  Any survivor must be mixed, symmetry-breaking, and at
 least cubic.
 
+## Canonical public exposition
+
+The current paper is `src/distinguished_root_map.tex`, compiled as
+`output/pdf/one_map_three_descriptions.pdf`.  It supersedes the retained
+historical version 1 and combines three complementary lenses without merging
+their provenance:
+
+```text
+Alpöge/Fable   explicit coefficients and collision
+Jiang/GPT      projective marked-root construction
+Lou            resultant-normalized global affine chart
+repository     comparison, exact audit, exposition, and visualization
+```
+
+The exact coordinate bridge is
+`G = R0 o F o S0`, with `S0(x,y,z)=(x,y,-z)` and
+`R0(a,b,c)=(c,b,a)`.  This is source--target, or left--right, equivalence;
+the displayed identification is not conjugacy by one common coordinate
+change.  The intrinsic common object is the étale
+degree-three morphism that forgets a marked simple root of a binary cubic in
+the chosen affine slice.
+
+The landing page contains a beginner infographic, the exact certificate, a
+synchronized source/target Three.js viewer, the comparison of the three
+lenses, the proof spine, a full ordinary-HTML transcript, and role-specific
+primary-source links.  All spatial graphics are labeled as views of the real
+slice `R^3` inside the six-real-dimensional complex space `C^3`.
+
+The canonical Manim source has fourteen named sections driven by the same
+exact curve fixture as the browser viewer.  Release validation includes both
+a 480p/15 fps smoke render and a 1920x1080/30 fps render with an offline Piper
+draft narration and 104 WebVTT cues.  The embedded progressive MP4 lasts
+275.732031 seconds.  The Piper/model/corpus provenance is separate from the
+human mathematical credits, and a clearly licensed human recording remains
+the preferred eventual narration.
+
 ## Verification state
 
 - SymPy exact determinant, points, both inverse charts, normalization, fiber
@@ -305,10 +341,10 @@ least cubic.
 - Lou left--right equivalence, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
   identities, and the quadratic-factor scaffold: passing in SymPy and Magma.
 - Sage normalized collision ideal through total degree three: unit ideal.
-- Pytest: twenty-four exact certificate tests after the resultant and
-  pseudo-plane Poisson artifacts were added.
+- Pytest: sixty-nine exact, publication-contract, animation, and Piper-service
+  tests after the public-explainer artifacts were added.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
-- Private GitHub repository published on branch `main`:
+- GitHub repository on branch `main`:
   `https://github.com/nasqret/jacobian-counterexample`.
 
 ## Source hygiene

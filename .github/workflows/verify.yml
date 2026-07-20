@@ -1,19 +1,81 @@
-name: exact certificates
+name: Verify publication
 
 on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  sympy:
+  verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install -r requirements.txt
-      - run: python artifacts/sympy/verify.py
-      - run: pytest -q
-      - run: jupyter-book build knowledge
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install the paper toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends \
+            lmodern \
+            texlive-fonts-recommended \
+            texlive-latex-extra
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install site dependencies
+        run: npm --prefix site ci
+
+      - name: Verify exact certificates
+        run: python artifacts/sympy/verify.py
+
+      - name: Run Python tests
+        run: pytest -q
+
+      - name: Run site tests
+        run: npm --prefix site test
+
+      - name: Build the paper
+        run: make paper
+
+      - name: Build the knowledge book
+        run: jupyter-book build knowledge
+
+      - name: Build and assemble the site
+        run: npm --prefix site run build
+
+      - name: Verify the assembled publication
+        run: |
+          test -s site/dist/index.html
+          test -s site/dist/paper/one-map-three-descriptions.pdf
+          test -s site/dist/paper/one-map-three-descriptions.tex
+          test -s site/dist/book/index.html
+          test -s site/dist/assets/hero-marked-roots.webp
+          test -s site/dist/media/marked-root-explainer.mp4
+          test -s site/dist/media/marked-root-explainer.en.vtt
+          test -s site/dist/media/marked-root-explainer-transcript.md
+          test -s site/dist/legal/third-party-notices.md
+          if grep -Eq '(href|src)="/(assets|book|media|paper|src)/' site/dist/index.html; then
+            echo "First-party site URLs must be relative under a GitHub Pages project path."
+            exit 1
+          fi

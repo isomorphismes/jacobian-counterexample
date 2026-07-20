@@ -1,8 +1,16 @@
-Creative Commons Attribution 4.0 International
+Dual-license notice
 
-Copyright (c) 2026 Repository contributors
+Copyright (c) 2026 Bartosz Naskrecki and the respective contributors.
 
-This work is licensed under the Creative Commons Attribution 4.0 International
-License. To view a copy of this license, visit
-https://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
-Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Software source code, build configuration, tests, and computer-algebra
+certificates in this repository are licensed under the MIT License. See
+LICENSE-CODE.
+
+The paper, documentation, website prose, original diagrams, generated hero
+artwork, transcript, captions, and released narration are licensed under the
+Creative Commons Attribution 4.0 International License. See LICENSE-CONTENT.
+
+Third-party works remain under their own licenses and are identified in
+THIRD_PARTY_NOTICES.md. Citations and mathematical attribution are not replaced
+by either copyright license; see the provenance statements in the paper and
+README.

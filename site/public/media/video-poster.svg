@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Marked-root animation poster</title>
+  <desc id="desc">Three colored root paths converge toward a central play symbol.</desc>
+  <defs>
+    <radialGradient id="glow"><stop stop-color="#332d68"/><stop offset="1" stop-color="#090d19"/></radialGradient>
+    <linearGradient id="g1"><stop stop-color="#ffb45e"/><stop offset="1" stop-color="#65e4ca"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M80 210C430 80 580 510 800 450S1210 160 1520 290" stroke="#ffb45e" stroke-width="15" opacity=".75"/>
+    <path d="M50 450C370 530 590 340 800 450S1240 600 1550 440" stroke="#65e4ca" stroke-width="15" opacity=".72"/>
+    <path d="M100 710C390 780 620 590 800 450S1200 700 1500 640" stroke="#a99bff" stroke-width="15" opacity=".7"/>
+  </g>
+  <circle cx="800" cy="450" r="92" fill="#0b1020" stroke="#eef3ff" stroke-width="3"/>
+  <path d="M775 395L865 450L775 505Z" fill="#eef3ff"/>
+  <text x="800" y="780" fill="#d5dced" font-family="system-ui,sans-serif" font-size="34" text-anchor="middle" letter-spacing="7">ANIMATED EXPLAINER</text>
+</svg>
