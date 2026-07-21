@@ -136,6 +136,26 @@ provenance, and scope.
 5. Update the literature page as a preprint, DOI, erratum, or priority claim
    appears.
 
+## Unified synthetic reconstruction paper
+
+- [x] Audit the main-branch geometric paper and the revised
+  `why-this-counterexample` coefficient paper against one common dependency
+  chain.
+- [x] Freeze six broad user questions leading from generic degree three to the
+  sixteen-equation, eleven-unknown exact solve.
+- [x] State on the first page that the dialogue is synthetic and not a
+  historical model transcript.
+- [x] Separate every genuine modeling choice from deductions and remaining
+  obligations with explicit checkpoints.
+- [x] Keep the main dialogue free of repository-specific terminology and move
+  the exact triangular Gr\"obner certificate to an appendix.
+- [x] End with the coordinate-light marked-root theorem and identify the
+  coefficient experiment as an audit rather than a fourth construction.
+- [x] Add a self-contained exact SymPy replay and a strict
+  `make dialogue-paper` build target.
+- [x] Complete publication regressions, full exact verification, clean-book
+  build, page-by-page PDF inspection, and main-branch integration.
+
 ## Research questions opened by the example
 
 - Reconstruct the low-parameter search family of maps linear in `z` from which

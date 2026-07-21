@@ -68,6 +68,11 @@ Beyond reproducing the announcement, the notes establish:
 
 ## Reading paths
 
+- For the short synthetic discovery dialogue that joins the geometry to the
+  exact coefficient reconstruction, read
+  [Could One Have Found It This Way?](../output/pdf/six_questions_keller_map.pdf).
+  It is explicitly a post-announcement reconstruction, not a historical
+  transcript.
 - For the shortest decisive argument, read [the map](map-definition.md),
   [the structural determinant proof](structural-certificate.md), and
   [the exact fiber](fiber-scheme.md).

@@ -154,3 +154,72 @@ def test_three_marked_root_sheets_have_one_target_curve() -> None:
         }
         difference = mapping.subs(source) - target
         assert all(sp.factor(value) == 0 for value in difference)
+
+
+def test_six_question_dialogue_has_an_explicit_information_contract() -> None:
+    paper = text("src/six_questions_keller_map.tex")
+    assert paper.count(r"\section{Question ") == 6
+    assert paper.count(r"\begin{userquestion}") == 6
+    assert paper.count(r"\begin{modelanswer}") == 6
+    assert paper.count(r"\begin{checkpoint}") == 6
+    assert paper.count(r"\chosen{") == 6
+    assert paper.count(r"\deduced{") == 6
+    assert paper.count(r"\owed{") == 6
+    assert "not a historical transcript" in paper
+    assert "neither a quotation nor a recovered record" in paper
+    assert "two substantial modeling choices" in paper
+    assert "No equation involving two source points was supplied" in paper
+
+
+def test_six_question_dialogue_records_the_exact_reconstruction_boundary() -> None:
+    paper = text("src/six_questions_keller_map.tex")
+    prose = " ".join(paper.split())
+    assert "7+6+3=16" in paper
+    assert "giving sixteen equations in the" in paper
+    assert "eleven variables" in paper
+    assert r"pq\ne0" in paper
+    assert r"\Q[\varepsilon]/(\varepsilon^2)" in paper
+    assert "returns one complex point" in prose
+    assert "not a consequence of the abstract Keller condition" in paper
+    assert "the boundary on" in paper and "is not being classified here" in paper
+    assert "The precise conclusion is conditional" in paper
+    assert r"2\beta\dot\delta-x\dot\epsilon=0" in paper
+    assert "minimizes the degree of the third component" in prose
+    assert r"\label{eq:error-monomials}" in paper
+    assert r"target order \((2c_3,2c_1,c_0)\)" in paper
+    for forbidden in (
+        r"M_{\omega,\tau}",
+        "neutral gauge",
+        "artificial-amnesia",
+        "error support",
+    ):
+        assert forbidden not in paper
+
+
+def test_six_question_dialogue_preserves_provenance_and_role_boundaries() -> None:
+    paper = text("src/six_questions_keller_map.tex")
+    for source in (
+        ALPOGE_POST,
+        JIANG_POST,
+        LOU_NOTE,
+        LOU_PROFILE,
+        LITT_BUNDLE_POST,
+        LITT_PENCIL_POST,
+        LITT_ASSISTANCE_POST,
+        LITT_COMPARISON_POST,
+    ):
+        assert source in paper
+    assert "@aaron\\_lou" in paper
+    assert "claims only this synthetic dialogue" in paper
+    assert "No claim" in paper and "private division of discovery credit" in paper
+
+
+def test_six_question_dialogue_build_and_exact_replay_are_published() -> None:
+    makefile = text("Makefile")
+    assert "dialogue-paper:" in makefile
+    assert "verify_dialogue_reconstruction.py" in makefile
+    replay = ROOT / "artifacts/sympy/verify_dialogue_reconstruction.py"
+    assert replay.is_file() and replay.stat().st_size > 5_000
+    pdf = ROOT / "output/pdf/six_questions_keller_map.pdf"
+    assert pdf.stat().st_size > 100_000
+    assert pdf.read_bytes()[:5] == b"%PDF-"

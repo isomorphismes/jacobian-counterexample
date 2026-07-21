@@ -48,6 +48,18 @@ with `make paper`; the
 [paper artifact index](output/pdf/README.md) distinguishes it from the
 historical version 1.
 
+The unified reconstruction paper
+[Could One Have Found It This Way?](output/pdf/six_questions_keller_map.pdf)
+combines that geometric construction with the exact coefficient audit from
+the why-this-counterexample branch.  It is written as six synthetic
+user--model exchanges, with every genuine choice, deduction, and remaining
+obligation labeled explicitly.  It is not presented as a historical
+transcript.  Its source is
+[src/six_questions_keller_map.tex](src/six_questions_keller_map.tex), its
+self-contained exact replay is
+[artifacts/sympy/verify_dialogue_reconstruction.py](artifacts/sympy/verify_dialogue_reconstruction.py),
+and `make dialogue-paper` rebuilds the warning-free PDF.
+
 The public visual guide is maintained in [site/](site/README.md) for deployment
 at [nasqret.github.io/jacobian-counterexample](https://nasqret.github.io/jacobian-counterexample/).
 Its 4:37 Manim film currently uses a clearly labeled offline Piper draft voice;
@@ -223,6 +235,9 @@ new way.
 - [plan.md](plan.md) records gates, completed work, and next research questions.
 - [output/pdf/one_map_three_descriptions.pdf](output/pdf/one_map_three_descriptions.pdf)
   is the current canonical paper; `make paper` rebuilds it.
+- [output/pdf/six_questions_keller_map.pdf](output/pdf/six_questions_keller_map.pdf)
+  is the unified six-question reconstruction paper; `make dialogue-paper`
+  rebuilds it.
 - [knowledge/](knowledge/index.md) is both an Obsidian vault and a Jupyter Book.
 - [artifacts/magma/](artifacts/magma/README.md) contains compilable Magma certificates.
 - [artifacts/sympy/verify.py](artifacts/sympy/verify.py) and

@@ -365,3 +365,28 @@ all decisive outputs are also encoded as executable assertions.
   and affine-plane parametrization.  The verifier and all 78 Pytests pass;
   the Jupyter Book rebuilds cleanly, and the warning-free eight-page PDF was
   rendered and inspected page by page.
+
+## 2026-07-21 — six-question synthetic reconstruction paper
+
+- Compared the main-branch marked-root exposition with the revised
+  `why-this-counterexample` paper and isolated a six-exchange dependency
+  chain: first non-Galois generic degree, marked cubic, linear affine chart,
+  global polynomial chart, sixteen-slot coefficient form, and exact
+  eleven-variable solve.
+- Added a detailed claim-audited plan in
+  `research/dialogue_reconstruction/PLAN.md`.  The central scope boundary is
+  explicit: the marked-cubic model and the class of linear charts are two
+  natural choices, not consequences of degree three alone.
+- Drafted `src/six_questions_keller_map.tex` as a synthetic user--model
+  dialogue.  Each exchange ends with `Chosen`, `Deduced`, and `Still owed`,
+  combining objection-driven discovery with a visible proof dependency
+  structure.
+- Added `artifacts/sympy/verify_dialogue_reconstruction.py`, a self-contained
+  exact replay of the factor determinant, global chart, sixteen monomial
+  slots, reduced determinant, two-sided Gr\"obner ideal certificate, ungauged
+  family, final map, Jacobian, and collision.
+- Added `make dialogue-paper`; the final twelve-page PDF builds twice without
+  LaTeX warnings or overfull boxes.  All SymPy, SageMath, and Magma
+  certificates pass, all 82 Pytests pass, the Jupyter Book rebuilds cleanly,
+  and every PDF page was rendered with Poppler and inspected at original
+  resolution.
