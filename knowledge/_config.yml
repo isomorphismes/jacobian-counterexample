@@ -29,3 +29,5 @@ sphinx:
   config:
     html_last_updated_fmt: "%Y-%m-%d"
     bibtex_reference_style: author_year
+    html_theme_options:
+      navigation_with_keys: false

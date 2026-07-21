@@ -18,9 +18,9 @@ drop a variable: in the plane, geometric degrees $2,3,4,5$ are excluded in
 the established literature, so the first possible degree of a noninvertible
 Keller map is
 
-\[
+$$
 \mu=[\mathbb C(x,y):\mathbb C(P,Q)]\geq 6.
-\]
+$$
 
 The low-sheeted conclusion is cited through Żołądek's Theorem 6.12 and is used
 as established input by Makar-Limanov's refereed 2021 paper
@@ -37,10 +37,10 @@ The factorization route in this repository produces exactly such an
 intermediate-cover framework.  Its degree-two top extension is the standard
 Galois affine pseudo-covering
 
-\[
+$$
 \mathbb A^2\longrightarrow
 S(2,2,1)=\{u(1+uv)=w^2\}.
-\]
+$$
 
 A second etale map from this pseudo-plane to $\mathbb A^2$ would compose to
 a non-Galois plane Keller map of even geometric degree.  Since total degrees
@@ -56,15 +56,15 @@ Borisov--Gabber--Vasiu manuscript {cite}`borisovgabbervasiu2026`.
 The strongest quantitative degree statement located is the 2022 preprint of
 Guccione--Guccione--Horruitiner--Valqui.  It reports that either
 
-\[
+$$
 \max(\deg P,\deg Q)\geq 125
-\]
+$$
 
 or, up to exchanging the coordinates, the single pair
 
-\[
+$$
 (\deg P,\deg Q)=(72,108)
-\]
+$$
 
 survives below $125$ {cite}`guccione2022`.  In particular, its safe headline is a lower bound of
 $108$, but it remains a preprint and is labeled that way throughout this
@@ -75,11 +75,11 @@ ratio $2:3$.  Chau's theorem on the nonproper value set then forces all its
 branches to share one point at infinity and gives a cusp-type leading
 resultant of the form {cite}`chau2004`
 
-\[
+$$
 C\left(A^3u^3-B^2v^2\right)^M
 \quad+
 \text{terms of lower }(2,3)\text{-weight}.
-\]
+$$
 
 This is why the degree-six cusp cover in
 [Plane near-models](plane-near-models.md) is not an arbitrary toy: it matches

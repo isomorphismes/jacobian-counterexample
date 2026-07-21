@@ -3,9 +3,9 @@ import "./styles/layout.css";
 import "./styles/components.css";
 import "./styles/viewer.css";
 
-import { canonicalCurveFixture, curvePresets, frameAt, presetById, type CurveFrame, type CurvePreset } from "./math/curves";
+import { curvePresets, frameAt, presetById, type CurveFrame, type CurvePreset } from "./math/curves";
 import { formatVec3 } from "./math/map";
-import { DualSpaceViewer } from "./viewer/dual-space-viewer";
+import type { DualSpaceViewer as DualSpaceViewerInstance } from "./viewer/dual-space-viewer";
 
 function required<T extends Element>(selector: string): T {
   const element = document.querySelector<T>(selector);
@@ -32,22 +32,44 @@ for (const preset of curvePresets) {
 }
 
 const query = new URLSearchParams(window.location.search);
-let activePreset: CurvePreset = presetById(query.get("curve") ?? "collision");
+let activePreset: CurvePreset = presetById(query.get("curve") ?? "pencil");
 let normalizedProgress = Math.min(1, Math.max(0, Number(query.get("p") ?? 0) || 0));
-let viewer: DualSpaceViewer | undefined;
+let viewer: DualSpaceViewerInstance | undefined;
+let viewerLoad: Promise<void> | undefined;
+let renderedFrame: CurveFrame | undefined;
 let playing = false;
 let animationFrame = 0;
 let lastTime = 0;
 
-try {
-  viewer = new DualSpaceViewer(
-    required<HTMLElement>("#source-plot"),
-    required<HTMLElement>("#target-plot"),
-  );
-} catch (error) {
+function showViewerFallback(error: unknown): void {
   required<HTMLElement>("#webgl-fallback").hidden = false;
   document.querySelectorAll<HTMLElement>(".plot").forEach((plot) => plot.classList.add("plot-unavailable"));
   console.info("3D viewer unavailable; using the coordinate fallback.", error);
+}
+
+function ensureViewer(): Promise<void> {
+  viewerLoad ??= import("./viewer/dual-space-viewer")
+    .then(({ DualSpaceViewer }) => {
+      viewer = new DualSpaceViewer(
+        required<HTMLElement>("#source-plot"),
+        required<HTMLElement>("#target-plot"),
+      );
+      viewer.setPreset(activePreset);
+      viewer.setFrame(frameAt(activePreset, normalizedProgress));
+    })
+    .catch(showViewerFallback);
+  return viewerLoad;
+}
+
+if ("IntersectionObserver" in window) {
+  const viewerObserver = new IntersectionObserver((entries, observer) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    observer.disconnect();
+    void ensureViewer();
+  }, { rootMargin: "700px 0px" });
+  viewerObserver.observe(required<HTMLElement>("#viewer"));
+} else {
+  void ensureViewer();
 }
 
 function colorCss(color: number): string {
@@ -83,10 +105,14 @@ function writePermalink(): void {
 
 function updateFrame(updateUrl = true): void {
   const frame = frameAt(activePreset, normalizedProgress);
-  progress.value = String(Math.round(normalizedProgress * 1000));
-  parameterOutput.textContent = frame.parameterText;
-  viewer?.setFrame(frame);
-  updateTable(frame);
+  const progressValue = String(Math.round(normalizedProgress * 1000));
+  if (progress.value !== progressValue) progress.value = progressValue;
+  if (frame !== renderedFrame) {
+    renderedFrame = frame;
+    parameterOutput.textContent = frame.parameterText;
+    viewer?.setFrame(frame);
+    updateTable(frame);
+  }
   if (updateUrl) writePermalink();
 }
 
@@ -119,6 +145,7 @@ function setPreset(next: CurvePreset): void {
   stopPlaying();
   activePreset = next;
   normalizedProgress = 0;
+  renderedFrame = undefined;
   select.value = next.id;
   title.textContent = next.title;
   description.textContent = next.description;
@@ -126,6 +153,7 @@ function setPreset(next: CurvePreset): void {
   const isStatic = next.id === "collision";
   progress.disabled = isStatic;
   playButton.disabled = isStatic;
+  zoom.value = "100";
   viewer?.setPreset(next);
   updateFrame();
 }
@@ -191,10 +219,14 @@ required<HTMLButtonElement>("#copy-view").addEventListener("click", async (event
 });
 
 required<HTMLButtonElement>("#download-data").addEventListener("click", () => {
-  const payload = JSON.stringify(canonicalCurveFixture, null, 2);
+  const payload = JSON.stringify({
+    schema_version: 1,
+    scope: "Sampled real slice of a polynomial map on complex three-space",
+    preset: activePreset,
+  }, null, 2);
   const link = document.createElement("a");
   link.href = URL.createObjectURL(new Blob([payload], { type: "application/json" }));
-  link.download = "marked-root-curve-fixtures.json";
+  link.download = `marked-root-${activePreset.id}-samples.json`;
   link.click();
   window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
 });

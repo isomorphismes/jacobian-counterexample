@@ -316,16 +316,22 @@ the chosen affine slice.
 The landing page contains a beginner infographic, the exact certificate, a
 synchronized source/target Three.js viewer, the comparison of the three
 lenses, the proof spine, a full ordinary-HTML transcript, and role-specific
-primary-source links.  All spatial graphics are labeled as views of the real
-slice `R^3` inside the six-real-dimensional complex space `C^3`.
+primary-source links.  Its default viewer preset follows an eleven-line pencil
+simultaneously; a second preset maps a sampled 25-by-31 surface mesh and three
+true rulings.  Three.js is deferred until the section approaches the viewport,
+frames are memoized, and the renderer caps both device-pixel ratio and canvas
+pixel count.  All spatial graphics are labeled as views of the real slice
+`R^3` inside the six-real-dimensional complex space `C^3`.
 
-The canonical Manim source has fourteen named sections driven by the same
-exact curve fixture as the browser viewer.  Release validation includes both
-a 480p/15 fps smoke render and a 1920x1080/30 fps render with an offline Piper
-draft narration and 104 WebVTT cues.  The embedded progressive MP4 lasts
-275.732031 seconds.  The Piper/model/corpus provenance is separate from the
-human mathematical credits, and a clearly licensed human recording remains
-the preferred eventual narration.
+The canonical Manim source has fourteen named sections.  Mathematical content
+is rendered by Manim `MathTex`/`Tex` from a canonical thirty-formula registry;
+Pango text is reserved for prose and attribution.  All thirty formulas pass a
+standalone TeX-to-SVG preflight.  Release validation includes a low-resolution
+smoke render and a 1920x1080/30 fps render with an offline Piper draft
+narration and 104 WebVTT cues.  The embedded progressive MP4 lasts 278.231380
+seconds.  The Piper/model/corpus provenance is separate from the human
+mathematical credits, and a clearly licensed human recording remains the
+preferred eventual narration.
 
 ## Verification state
 
@@ -341,8 +347,10 @@ the preferred eventual narration.
 - Lou left--right equivalence, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
   identities, and the quadratic-factor scaffold: passing in SymPy and Magma.
 - Sage normalized collision ideal through total degree three: unit ideal.
-- Pytest: sixty-nine exact, publication-contract, animation, and Piper-service
-  tests after the public-explainer artifacts were added.
+- Pytest: seventy-five exact, publication-contract, documentation-math,
+  animation, and Piper-service tests after the rendering revision.
+- Vitest: seventeen geometry, content, and viewer-performance tests passing;
+  strict TypeScript checking and the production Vite assembly also pass.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
 - Public GitHub repository on branch `main`:
   `https://github.com/nasqret/jacobian-counterexample`.

@@ -2,8 +2,8 @@
 
 Render in deterministic silent mode (the default) for CI, set
 ``JACOBIAN_VOICE_SERVICE=piper`` for reproducible offline draft narration, or
-use ``recorder`` for the final human narration. Formula cards use Pango
-``Text`` rather than ``MathTex``, so the scene does not depend on ``dvisvgm``.
+use ``recorder`` for the final human narration. Mathematical displays use
+``MathTex``/``Tex``; Pango ``Text`` is reserved for prose and attribution.
 """
 
 from __future__ import annotations
@@ -27,9 +27,12 @@ from manim import (
     LaggedStart,
     LEFT,
     Line,
+    MathTex,
     ParametricFunction,
     RIGHT,
     RoundedRectangle,
+    Tex,
+    TexTemplate,
     Text,
     ThreeDAxes,
     ThreeDScene,
@@ -45,6 +48,7 @@ from manim_voiceover.helper import remove_bookmarks
 from manim_voiceover.services.base import SpeechService
 
 try:
+    from animations.formula_data import DISPLAY_FORMULAS
     from animations.math_core import (
         BRANCHES,
         elementary_source,
@@ -54,6 +58,7 @@ try:
     )
     from animations.story_data import segment_by_id, spoken_word_count
 except ModuleNotFoundError:  # Allow ``manim`` invocation from animations/.
+    from formula_data import DISPLAY_FORMULAS  # type: ignore[no-redef]
     from math_core import (  # type: ignore[no-redef]
         BRANCHES,
         elementary_source,
@@ -78,6 +83,15 @@ BRANCH_COLORS = {
     "moving": MAGENTA,
     "remaining": GREEN,
 }
+
+# The default Manim template uses standalone.cls, which is absent from many
+# minimal TeX installations.  An empty article page converts to the same
+# tightly bounded SVG through dvisvgm while needing only base LaTeX + AMS.
+MATH_TEX_TEMPLATE = TexTemplate(
+    description="Jacobian film base-LaTeX template",
+    documentclass=r"\documentclass{article}",
+    post_doc_commands=r"\pagestyle{empty}",
+)
 
 
 class DeterministicSilenceService(SpeechService):
@@ -239,6 +253,74 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         content.move_to(panel)
         return VGroup(panel, content)
 
+    @staticmethod
+    def _math(
+        formula_key: str,
+        color: str = INK,
+        font_size: int = 34,
+    ) -> MathTex:
+        """Build a canonical mathematical display with TeX semantics."""
+
+        return MathTex(
+            DISPLAY_FORMULAS[formula_key],
+            color=color,
+            font_size=font_size,
+            tex_template=MATH_TEX_TEMPLATE,
+        )
+
+    @classmethod
+    def _formula_card(
+        cls,
+        title: str,
+        formula_keys: tuple[str, ...],
+        color: str = BLUE,
+        width: float = 4.0,
+        formula_size: int = 30,
+        note_lines: tuple[str, ...] = (),
+    ) -> VGroup:
+        """Place MathTex formulas and optional prose inside a standard panel."""
+
+        title_text = Text(title, color=color, font_size=27, weight="BOLD")
+        formulas = VGroup(
+            *[
+                cls._math(key, color=INK, font_size=formula_size)
+                for key in formula_keys
+            ]
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.14)
+        notes = VGroup(
+            *[Text(line, color=MUTED, font_size=20) for line in note_lines]
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.1)
+        content_parts = [title_text, formulas]
+        if note_lines:
+            content_parts.append(notes)
+        content = VGroup(*content_parts).arrange(
+            DOWN,
+            aligned_edge=LEFT,
+            buff=0.18,
+        )
+        content.scale_to_fit_width(min(content.width, width - 0.45))
+        height = max(1.35, content.height + 0.48)
+        panel = RoundedRectangle(
+            width=width,
+            height=height,
+            corner_radius=0.16,
+            stroke_color=color,
+            stroke_width=2,
+            fill_color=PANEL,
+            fill_opacity=0.92,
+        )
+        content.move_to(panel)
+        return VGroup(panel, content)
+
+    @classmethod
+    def _space_label(cls, word: str, formula_key: str) -> VGroup:
+        """Compose a prose space name with a TeX-rendered ambient space."""
+
+        return VGroup(
+            Text(word, color=INK, font_size=28),
+            cls._math(formula_key, color=INK, font_size=34),
+        ).arrange(RIGHT, buff=0.18)
+
     def _clear(self, run_time: float = 0.45) -> None:
         visible = list(self.mobjects)
         if visible:
@@ -287,12 +369,27 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
     def _explicit_certificate(self) -> None:
         self.next_section("02-local-versus-global")
         heading = self._heading("Locally invertible. Globally surprising.")
-        source = self._card("SOURCE  C³", ("three distant points",), BLUE, width=4.2)
-        target = self._card("TARGET  C³", ("one shared value",), GREEN, width=4.2)
+        source = self._formula_card(
+            "SOURCE",
+            ("complex_space",),
+            BLUE,
+            width=4.2,
+            note_lines=("three distant points",),
+        )
+        target = self._formula_card(
+            "TARGET",
+            ("complex_space",),
+            GREEN,
+            width=4.2,
+            note_lines=("one shared value",),
+        )
         source.shift(LEFT * 3.5 + DOWN * 0.2)
         target.shift(RIGHT * 3.5 + DOWN * 0.2)
         arrow = Arrow(source.get_right(), target.get_left(), color=GOLD, buff=0.2)
-        jacobian = Text("det DF = -2  everywhere", color=GOLD, font_size=34).shift(DOWN * 2.25)
+        jacobian = VGroup(
+            self._math("jacobian", color=GOLD, font_size=42),
+            Text("everywhere", color=MUTED, font_size=23),
+        ).arrange(RIGHT, buff=0.28).shift(DOWN * 2.25)
         infinity = Text(
             "inverse branches can leave through infinity",
             color=MUTED,
@@ -308,15 +405,16 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         self.next_section("03-explicit-formula")
         heading = self._heading("Levent's explicit formula", "The quickest exact certificate")
         formula_lines = VGroup(
-            Text("F₁ = (1+xy)³z + y²(1+xy)(4+3xy)", color=BLUE, font_size=27),
-            Text("F₂ = y + 3x(1+xy)²z + 3xy²(4+3xy)", color=GREEN, font_size=27),
-            Text("F₃ = 2x - 3x²y - x³z", color=MAGENTA, font_size=27),
+            self._math("f1", color=BLUE, font_size=34),
+            self._math("f2", color=GREEN, font_size=34),
+            self._math("f3", color=MAGENTA, font_size=34),
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.22).shift(DOWN * 0.15)
-        determinant = self._card(
+        determinant = self._formula_card(
             "Exact symbolic identity",
-            ("det DF = -2", "no pointwise approximation"),
+            ("jacobian",),
             GOLD,
             width=4.2,
+            note_lines=("no pointwise approximation",),
         ).to_edge(DOWN, buff=0.45)
         with self._voice("formula") as tracker:
             self.play(FadeIn(heading), run_time=self._run_time(tracker, 0.12))
@@ -330,18 +428,26 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         self.next_section("04-three-point-fiber")
         heading = self._heading("Three points, one image", "An exact noninjectivity certificate")
         colors = (BLUE, MAGENTA, GREEN)
-        point_text = (
-            "(0, 0, -1/4)",
-            "(1, -3/2, 13/2)",
-            "(-1, 3/2, 13/2)",
-        )
+        point_keys = ("p0", "p1", "p2")
         points = VGroup(
             *[
-                self._card(f"P{index}", (label,), color, width=3.2, font_size=21)
-                for index, (label, color) in enumerate(zip(point_text, colors))
+                self._formula_card(
+                    "source point",
+                    (formula_key,),
+                    color,
+                    width=3.5,
+                    formula_size=25,
+                )
+                for formula_key, color in zip(point_keys, colors)
             ]
         ).arrange(DOWN, buff=0.2).shift(LEFT * 3.5 + DOWN * 0.2)
-        target = self._card("F(P₀) = F(P₁) = F(P₂)", ("(-1/4, 0, 0)",), GOLD, width=4.3)
+        target = self._formula_card(
+            "one shared image",
+            ("fiber_equality", "fiber_target"),
+            GOLD,
+            width=4.6,
+            formula_size=27,
+        )
         target.shift(RIGHT * 3.3 + DOWN * 0.2)
         arrows = VGroup(
             *[
@@ -374,16 +480,22 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         )
         labels = VGroup(
             *[
-                Text(name, color=color, font_size=27).next_to(dot, UP, buff=0.12)
+                MathTex(
+                    name,
+                    color=color,
+                    font_size=34,
+                    tex_template=MATH_TEX_TEMPLATE,
+                ).next_to(dot, UP, buff=0.12)
                 for name, color, dot in zip(root_names, colors, roots)
             ]
         )
         mark = Circle(radius=0.24, color=GOLD, stroke_width=5).move_to(roots[0])
-        cubic = self._card(
+        cubic = self._formula_card(
             "one cubic",
-            ("unordered roots {p, q, r}", "the mark is forgotten"),
+            ("unordered_roots",),
             GOLD,
             width=4.5,
+            note_lines=("the mark is forgotten",),
         ).shift(RIGHT * 3.2 + DOWN * 0.2)
         forget = Arrow(root_circle.get_right(), cubic.get_left(), color=GOLD, buff=0.35)
         with self._voice("mark_roots") as tracker:
@@ -396,8 +508,13 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
 
         self.next_section("06-projective-map")
         heading = self._heading("Jiang's projective formulation", "Posted as GPT output")
-        map_text = Text("P¹ × Sym²(P¹)  →  Sym³(P¹)", color=INK, font_size=42)
-        point_text = Text("(p, {q,r})  ↦  {p,q,r}", color=GOLD, font_size=38).next_to(map_text, DOWN, buff=0.5)
+        map_text = self._math("projective_map", color=INK, font_size=42)
+        map_text.scale_to_fit_width(11.5)
+        point_text = self._math(
+            "projective_point_map",
+            color=GOLD,
+            font_size=42,
+        ).next_to(map_text, DOWN, buff=0.5)
         explanation = self._card(
             "Plain language",
             ("remember a cubic and one chosen root", "then forget which root was chosen"),
@@ -418,11 +535,31 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
             Dot(RIGHT * 2.2, color=GREEN, radius=0.14),
         ).shift(DOWN * 0.25)
         root_labels = VGroup(
-            Text("marked p", color=BLUE, font_size=24).next_to(before[0], UP),
-            Text("q", color=MAGENTA, font_size=24).next_to(before[1], UP),
-            Text("r", color=GREEN, font_size=24).next_to(before[2], UP),
+            Tex(
+                r"marked $p$",
+                color=BLUE,
+                font_size=30,
+                tex_template=MATH_TEX_TEMPLATE,
+            ).next_to(before[0], UP),
+            MathTex(
+                "q",
+                color=MAGENTA,
+                font_size=31,
+                tex_template=MATH_TEX_TEMPLATE,
+            ).next_to(before[1], UP),
+            MathTex(
+                "r",
+                color=GREEN,
+                font_size=31,
+                tex_template=MATH_TEX_TEMPLATE,
+            ).next_to(before[2], UP),
         )
-        deleted = Text("deleted boundary  R", color=RED, font_size=30).to_edge(DOWN, buff=0.8)
+        deleted = Tex(
+            r"deleted boundary $\mathcal R$",
+            color=RED,
+            font_size=34,
+            tex_template=MATH_TEX_TEMPLATE,
+        ).to_edge(DOWN, buff=0.8)
         etale = self._card("After deletion", ("differential invertible everywhere", "restricted map is étale"), GREEN, width=5.2).to_edge(DOWN, buff=0.45)
         with self._voice("delete_ramification") as tracker:
             self.play(FadeIn(heading), FadeIn(before), FadeIn(root_labels), run_time=self._run_time(tracker, 0.2))
@@ -439,10 +576,28 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
             color=MAGENTA,
         ).shift(UP * 0.2)
         tangent = Line(LEFT * 3.2 + UP * 0.2, RIGHT * 3.2 + UP * 0.2, color=GOLD)
-        geometry_label = Text("H: tangent, not osculating", color=GOLD, font_size=25).next_to(tangent, UP, buff=0.25)
+        geometry_label = Tex(
+            r"$H$: tangent, not osculating",
+            color=GOLD,
+            font_size=31,
+            tex_template=MATH_TEX_TEMPLATE,
+        ).next_to(tangent, UP, buff=0.25)
         spaces = VGroup(
-            self._card("target complement", ("P³ minus H  ≅  A³",), BLUE, width=4.8),
-            self._card("source complement", ("marked simple roots  ≅  A³",), GREEN, width=4.8),
+            self._formula_card(
+                "target complement",
+                ("target_affine",),
+                BLUE,
+                width=4.8,
+                formula_size=30,
+            ),
+            self._formula_card(
+                "source complement",
+                ("source_affine",),
+                GREEN,
+                width=4.8,
+                formula_size=30,
+                note_lines=("marked simple roots",),
+            ),
         ).arrange(RIGHT, buff=0.45).to_edge(DOWN, buff=0.38)
         with self._voice("affine_slice") as tracker:
             self.play(FadeIn(heading), Create(twisted), run_time=self._run_time(tracker, 0.24))
@@ -456,13 +611,40 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
     def _resultant_route(self) -> None:
         self.next_section("09-factorization")
         heading = self._heading("Lou's factorization route", "A marked root becomes a linear factor")
-        ell = self._card("linear factor  ell", ("the marked root",), BLUE, width=3.6)
-        times = Text("×", color=GOLD, font_size=48)
-        quad = self._card("quadratic factor  q", ("the other two roots",), GREEN, width=3.6)
-        equals = Text("=", color=GOLD, font_size=48)
-        cubic = self._card("binary cubic  C", ("C = ell · q",), MAGENTA, width=3.6)
+        ell = self._formula_card(
+            "linear factor",
+            ("linear_factor",),
+            BLUE,
+            width=3.6,
+            note_lines=("the marked root",),
+        )
+        times = MathTex(
+            r"\times",
+            color=GOLD,
+            font_size=54,
+            tex_template=MATH_TEX_TEMPLATE,
+        )
+        quad = self._formula_card(
+            "quadratic factor",
+            ("quadratic_factor",),
+            GREEN,
+            width=3.6,
+            note_lines=("the other two roots",),
+        )
+        equals = MathTex(
+            "=",
+            color=GOLD,
+            font_size=54,
+            tex_template=MATH_TEX_TEMPLATE,
+        )
+        cubic = self._formula_card(
+            "binary cubic",
+            ("factor_product",),
+            MAGENTA,
+            width=3.6,
+        )
         factors = VGroup(ell, times, quad, equals, cubic).arrange(RIGHT, buff=0.25).shift(UP * 0.15)
-        scale = Text("(ell, q)  ~  (s ell, s⁻¹ q)", color=INK, font_size=34).shift(DOWN * 2.05)
+        scale = self._math("factor_scale", color=INK, font_size=42).shift(DOWN * 2.05)
         with self._voice("factorization") as tracker:
             self.play(FadeIn(heading), run_time=self._run_time(tracker, 0.12))
             self.play(
@@ -477,17 +659,22 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         orbit = Circle(radius=1.65, color=MUTED, stroke_width=4).shift(LEFT * 2.9 + DOWN * 0.1)
         orbit_label = Text("scaling orbit", color=MUTED, font_size=25).next_to(orbit, DOWN, buff=0.2)
         chosen = Dot(orbit.point_at_angle(0.45), color=GOLD, radius=0.14)
-        chosen_label = Text("Res = 1", color=GOLD, font_size=27).next_to(chosen, RIGHT, buff=0.18)
-        rules = self._card(
+        chosen_label = self._math(
+            "resultant_one",
+            color=GOLD,
+            font_size=32,
+        ).next_to(chosen, RIGHT, buff=0.18)
+        rules = self._formula_card(
             "Resultant gauge",
             (
-                "Res(ell,q) ≠ 0  ⇔  marked root simple",
-                "Res(s ell,s⁻¹q) = s Res(ell,q)",
-                "set Res(ell,q) = 1",
+                "resultant_nonzero",
+                "resultant_scale",
+                "resultant_one",
             ),
             GREEN,
             width=6.1,
-            font_size=20,
+            formula_size=26,
+            note_lines=("nonzero exactly when the marked root is simple",),
         ).shift(RIGHT * 3.0 + DOWN * 0.1)
         with self._voice("resultant") as tracker:
             self.play(FadeIn(heading), Create(orbit), FadeIn(orbit_label), run_time=self._run_time(tracker, 0.22))
@@ -500,20 +687,45 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         self.next_section("11-unification")
         heading = self._heading("Three languages for one arrow", "Equivalent, but not literally identical formulas")
         cards = VGroup(
-            self._card("Alpöge + Fable", ("explicit F", "collision certificate"), BLUE, width=3.7, font_size=19),
-            self._card("Jiang + GPT", ("marked-root moduli", "forget the mark"), MAGENTA, width=3.7, font_size=19),
-            self._card("Lou", ("Res = 1 factors", "global affine chart"), GREEN, width=3.7, font_size=19),
+            self._formula_card(
+                "Alpöge + Fable",
+                ("explicit_map",),
+                BLUE,
+                width=3.7,
+                formula_size=24,
+                note_lines=("collision certificate",),
+            ),
+            self._formula_card(
+                "Jiang + GPT",
+                ("projective_point_map",),
+                MAGENTA,
+                width=3.7,
+                formula_size=24,
+                note_lines=("forget the mark",),
+            ),
+            self._formula_card(
+                "Lou",
+                ("resultant_one",),
+                GREEN,
+                width=3.7,
+                formula_size=24,
+                note_lines=("global affine chart",),
+            ),
         ).arrange(RIGHT, buff=0.32).shift(UP * 0.4)
-        common = self._card(
+        common = self._formula_card(
             "one morphism",
-            ("cubic + normalized simple root  →  cubic",),
+            ("common_morphism",),
             GOLD,
             width=6.6,
+            formula_size=27,
         ).shift(DOWN * 1.55)
         arrows = VGroup(
             *[Arrow(card.get_bottom(), common.get_top(), color=card[0].get_stroke_color(), buff=0.12) for card in cards]
         )
-        relation = Text("G = R₀ ∘ F ∘ S₀   ·   left-right equivalence", color=INK, font_size=26).to_edge(DOWN, buff=0.32)
+        relation = VGroup(
+            self._math("left_right", color=INK, font_size=34),
+            Text("left–right equivalence", color=MUTED, font_size=22),
+        ).arrange(RIGHT, buff=0.35).to_edge(DOWN, buff=0.32)
         with self._voice("unified") as tracker:
             self.play(FadeIn(heading), run_time=self._run_time(tracker, 0.1))
             self.play(
@@ -568,12 +780,17 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
                 for curve_id, domain in domains.items()
             ]
         )
-        source_label = Text("SOURCE  R³", color=INK, font_size=28).shift(LEFT * 3.55 + UP * 3.2)
-        target_label = Text("TARGET  R³", color=INK, font_size=28).shift(RIGHT * 3.55 + UP * 3.2)
-        caveat = Text(
-            "Visualization only: R³ inside the map on C³",
+        source_label = self._space_label("SOURCE", "real_space").shift(
+            LEFT * 3.55 + UP * 3.2
+        )
+        target_label = self._space_label("TARGET", "real_space").shift(
+            RIGHT * 3.55 + UP * 3.2
+        )
+        caveat = Tex(
+            r"Visualization only: $\mathbb R^3$ inside the map on $\mathbb C^3$",
             color=GOLD,
-            font_size=23,
+            font_size=27,
+            tex_template=MATH_TEX_TEMPLATE,
         ).to_edge(DOWN, buff=0.25)
         self.add_fixed_in_frame_mobjects(source_label, target_label, caveat)
         with self._voice("real_curves") as tracker:
@@ -655,7 +872,11 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         )
         sheet_title = Text("three marked-root branches", color=INK, font_size=27).shift(LEFT * 3.4 + UP * 3.2)
         target_title = Text("one target curve", color=INK, font_size=27).shift(RIGHT * 3.55 + UP * 3.2)
-        polynomial = Text("P_s(T) = 2T(T-s)(T-(1-s))", color=GOLD, font_size=24).to_edge(DOWN, buff=0.25)
+        polynomial = self._math(
+            "sheet_polynomial",
+            color=GOLD,
+            font_size=30,
+        ).to_edge(DOWN, buff=0.25)
         self.add_fixed_in_frame_mobjects(sheet_title, target_title)
         with self._voice("escaping_sheets") as tracker:
             self.play(
@@ -695,15 +916,22 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         self.next_section("14-proof-and-scope")
         heading = self._heading("The proof spine", "Constant Jacobian, three roots, and infinity")
         cards = VGroup(
-            self._card("1 · affine spaces", ("source ≅ A³", "target ≅ A³"), BLUE, width=3.7, font_size=20),
+            self._formula_card(
+                "1 · affine spaces",
+                ("source_a3", "target_a3"),
+                BLUE,
+                width=3.7,
+                formula_size=24,
+            ),
             self._card("2 · remove ramification", ("marked root stays simple", "map becomes étale"), GREEN, width=3.7, font_size=20),
             self._card("3 · count roots", ("three generic markings", "generic degree three"), MAGENTA, width=3.7, font_size=20),
         ).arrange(RIGHT, buff=0.32).shift(UP * 0.35)
-        conclusion = Text(
-            "local invertibility  +  escape at infinity  =  global noninjectivity",
+        conclusion = self._math(
+            "proof_conclusion",
             color=GOLD,
-            font_size=29,
+            font_size=31,
         ).shift(DOWN * 1.55)
+        conclusion.scale_to_fit_width(min(conclusion.width, 11.7))
         scope = Text(
             "Higher dimensions follow by adjoining identities · dimension two is separate",
             color=MUTED,

@@ -5,10 +5,10 @@ tags: [faq, audit, objections]
 
 # Adversarial checks and common objections
 
-## “The determinant is \(-2\), not \(1\)”
+## “The determinant is $-2$, not $1$”
 
 The standard hypothesis is any nonzero constant.  In any case,
-[the normalized map](normalization.md) has determinant exactly \(1\), integer
+[the normalized map](normalization.md) has determinant exactly $1$, integer
 coefficients, and identity linear part.
 
 ## “A nonzero Jacobian only gives local injectivity”
@@ -32,7 +32,7 @@ identity, while three CAS implementations independently expand it.
 
 ## “Perhaps the three points are equal in disguise”
 
-Their \(x\)-coordinates are \(0,1,-1\), so they are distinct over
+Their $x$-coordinates are $0,1,-1$, so they are distinct over
 characteristic zero.  The fiber Gröbner basis proves they are exactly the three
 reduced points over the target.
 
@@ -45,7 +45,7 @@ image even omits an explicit curve.
 
 ## “Known degree-three or prime-degree theorems forbid it”
 
-The coordinate degrees are \((7,6,4)\).  Cubic-homogeneous reductions raise
+The coordinate degrees are $(7,6,4)$.  Cubic-homogeneous reductions raise
 dimension, and the recent prime field-extension result often mentioned in this
 context is explicitly two-dimensional.  Neither applies to this map.
 

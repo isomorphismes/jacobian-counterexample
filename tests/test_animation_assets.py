@@ -1,6 +1,7 @@
 """Manim-free certificates for the narrated and browser visualization assets."""
 
 from fractions import Fraction
+import ast
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -24,6 +25,7 @@ from animations.math_core import (
     sheet_point,
     target_family,
 )
+from animations.formula_data import DISPLAY_FORMULAS, KEY_DISPLAY_FORMULAS
 from animations.srt_to_vtt import convert_srt_text, parse_srt
 from animations.story_data import (
     CREDITS,
@@ -180,7 +182,7 @@ def test_embedded_webvtt_is_complete_ordered_and_exactly_canonical():
     assert cues[0][1] == 0
     assert all(start < end for _, start, end, _ in cues)
     assert all(previous[2] <= current[1] for previous, current in zip(cues, cues[1:]))
-    assert cues[-1][2] < 275.733
+    assert 277 < cues[-1][2] < 278.232
 
     caption_text = " ".join(cue[3] for cue in cues)
     canonical_text = " ".join(segment.narration for segment in SEGMENTS)
@@ -235,25 +237,102 @@ def test_srt_conversion_rejects_overlaps():
         parse_srt(source)
 
 
-def test_scene_references_every_segment_and_avoids_latex_runtime():
+def _called_name(node: ast.Call) -> str | None:
+    if isinstance(node.func, ast.Name):
+        return node.func.id
+    if isinstance(node.func, ast.Attribute):
+        return node.func.attr
+    return None
+
+
+def test_scene_references_every_segment_and_uses_tex_for_key_formulas():
     source = (ROOT / "animations" / "jacobian_story.py").read_text(encoding="utf-8")
+    tree = ast.parse(source)
     assert "class JacobianStory(ThreeDScene, VoiceoverScene)" in source
     assert "RecorderService(transcription_model=None)" in source
     assert "DeterministicSilenceService" in source
     assert 'mode == "piper"' in source
     assert "PiperSpeechService" in source
-    assert "MathTex(" not in source
-    assert " Tex(" not in source
+    assert "return MathTex(" in source
+    assert "Tex(" in source
+    assert "MarkupText(" not in source
+    assert 'documentclass=r"\\documentclass{article}"' in source
+    assert "tex_template=MATH_TEX_TEMPLATE" in source
+
+    rendered_formula_keys: set[str] = set()
+    text_literals: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        name = _called_name(node)
+        if name == "_math" and node.args and isinstance(node.args[0], ast.Constant):
+            rendered_formula_keys.add(str(node.args[0].value))
+        if name == "_formula_card" and len(node.args) >= 2:
+            keys = node.args[1]
+            if isinstance(keys, (ast.Tuple, ast.List)):
+                rendered_formula_keys.update(
+                    str(item.value)
+                    for item in keys.elts
+                    if isinstance(item, ast.Constant)
+                )
+        if name == "Text" and node.args and isinstance(node.args[0], ast.Constant):
+            text_literals.append(str(node.args[0].value))
+
+    assert set(KEY_DISPLAY_FORMULAS) <= rendered_formula_keys
+    assert set(rendered_formula_keys) <= set(DISPLAY_FORMULAS)
+    assert all(f'"{key}"' in source for key in DISPLAY_FORMULAS)
+    forbidden_plain_math = (
+        "det DF",
+        "F₁ =",
+        "F₂ =",
+        "F₃ =",
+        "Sym²",
+        "Res(",
+        "P_s(T)",
+        "G = R₀",
+    )
+    assert not any(
+        token in literal
+        for literal in text_literals
+        for token in forbidden_plain_math
+    )
     for segment in SEGMENTS:
         assert f'_voice("{segment.id}")' in source
+
+
+def test_canonical_tex_formula_registry_has_the_exact_map_and_bridge():
+    assert DISPLAY_FORMULAS["jacobian"] == r"\det DF=-2"
+    assert DISPLAY_FORMULAS["f1"] == r"F_1=(1+xy)^3z+y^2(1+xy)(4+3xy)"
+    assert DISPLAY_FORMULAS["f2"] == r"F_2=y+3x(1+xy)^2z+3xy^2(4+3xy)"
+    assert DISPLAY_FORMULAS["f3"] == r"F_3=2x-3x^2y-x^3z"
+    assert DISPLAY_FORMULAS["left_right"] == r"G=R_0\circ F\circ S_0"
+    assert DISPLAY_FORMULAS["resultant_one"] == r"\operatorname{Res}(\ell,q)=1"
+
+
+def test_tex_preflight_uses_the_scene_template_and_can_require_svg():
+    source = (ROOT / "animations" / "verify_tex_formulas.py").read_text(
+        encoding="utf-8"
+    )
+    assert "from animations.jacobian_story import MATH_TEX_TEMPLATE" in source
+    assert "tex_template=MATH_TEX_TEMPLATE" in source
+    assert "convert_to_svg" in source
+    assert '"--svg"' in source
 
 
 def test_animation_environment_pins_verified_versions():
     environment = (ROOT / "environment-animation.yml").read_text(encoding="utf-8")
     assert "manim=0.20.1" in environment
+    assert "texlive-core=20260301" in environment
     assert '"manim-voiceover[recorder]==0.4.0"' in environment
     assert '"piper-tts==1.4.2"' in environment
     assert "python=3.12" in environment
     assert "pip>=26.1.2" in environment
     assert "portaudio>=19,<20" in environment
     assert "sox>=14.4,<15" in environment
+
+    animation_readme = (ROOT / "animations" / "README.md").read_text(
+        encoding="utf-8"
+    )
+    assert "MathTex" in animation_readme
+    assert "brew install dvisvgm" in animation_readme
+    assert "sudo apt-get install dvisvgm" in animation_readme

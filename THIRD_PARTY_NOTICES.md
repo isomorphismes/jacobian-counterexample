@@ -53,7 +53,7 @@ files outside the checkout. Human final narration recorded with
 `RecorderService` is independent of this model and should carry the human
 contributor's explicit CC BY 4.0 or CC0 grant.
 
-The landing page's published 4:35 draft is identified there as synthesized
+The landing page's published 4:38 draft is identified there as synthesized
 with Piper TTS `1.4.2`, `en_US-libritts-high`, speaker `0`. Its spoken script is
 the repository's CC BY 4.0 canonical narration; the Piper runtime, voice model,
 and LibriTTS source data retain the distinct terms recorded above. The page

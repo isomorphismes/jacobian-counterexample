@@ -281,3 +281,33 @@ all decisive outputs are also encoded as executable assertions.
   captions, and HTTP byte-range delivery of the MP4.  Repeated the complete
   browser suite against the live Pages URL in clean desktop, 390-pixel mobile,
   reduced-motion, and no-WebGL contexts with no console or request failures.
+
+## 2026-07-21 — formula rendering and real-slice viewer revision
+
+- Replaced formula-shaped Pango strings in the fourteen-section film with
+  genuine Manim `MathTex`/`Tex` objects backed by one thirty-formula registry.
+  All formulas passed TeX-to-SVG preflight, a formula-card render, and a full
+  low-resolution scene smoke test.
+- Rendered and inspected a new 1920-by-1080, 30 fps Piper-narrated release.
+  The progressive H.264/AAC MP4 lasts 278.231380 seconds, decodes without
+  errors, and remains synchronized with 104 nonoverlapping WebVTT cues.
+- Converted the root README and twenty-one Jupyter Book chapters from raw
+  parenthesis/bracket delimiters to GitHub- and MyST-native dollar math.  Added
+  regressions for unmatched/nested delimiters, math-like code spans, malformed
+  spacing commands, and bibliography math; the clean book build has no
+  warnings.
+- Rebuilt the real-slice viewer around a simultaneous eleven-line pencil and a
+  775-vertex mapped surface mesh with three actual rulings.  Thick cores,
+  additive halos, collision markers, improved lighting, and synchronized
+  source/target framing make the geometry legible.
+- Reduced viewer cost through intersection-triggered Three.js loading,
+  event-driven rendering, memoized discretization, a capped device-pixel
+  ratio, and a 1.35-million-pixel canvas budget.
+- Independent integration review found and prompted fixes for nested display
+  delimiters, missing TeX command slashes, mislabeled mesh rulings, and a zoom
+  control state mismatch.  Dedicated regression tests now cover each class.
+- Closed the nonvisual local gates with 75 Pytests, 17 Vitest tests, strict
+  TypeScript, production assembly, clean Jupyter Book, and exact SymPy,
+  SageMath, and Magma certificates passing.  The in-app browser exposed no
+  session during this revision, so fresh interactive screenshots remain a
+  clearly recorded follow-up rather than an inferred pass.

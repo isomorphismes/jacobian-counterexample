@@ -24,20 +24,20 @@ The strongest new scaffold in
 [The factorization--resultant route](resultant-factor-route.md) is a polynomial
 map to the smooth surface
 
-\[
+$$
 \Phi=(a,\mathcal B,\mathcal C):\mathbb A^2
 \longrightarrow
 \{\mathcal B^2=a+a^2\mathcal C\}\subset\mathbb A^3
-\]
+$$
 
 with an exact two-point collision.  Its rational deck involution has Jacobian
 $+1$, so it evades the collision-tangent obstruction.  The task is
 
-\[
+$$
 \text{find }U,V\in
 \mathbb C[a,\mathcal B,\mathcal C]/(\mathcal B^2-a-a^2\mathcal C)
 \quad\text{with}\quad \{U,V\}_{x,y}=1.
-\]
+$$
 
 A solution is a plane counterexample.  No linear pair works, although an exact
 sum of three quadratic brackets equals $1$, so de Rham cohomology alone cannot
@@ -51,11 +51,11 @@ $X^2Y=Z^2-1$, followed by its $\mathbb Z/2$ quotient.  The canonical class
 obstruction that rules out most pseudo-planes vanishes at type $r=2$.
 Dubouloz--Palka's etale self-maps give the exact rational Darboux pair
 
-\[
+$$
 x(1+x^2y),\qquad
 \frac{2y(2+x^2y)}{(1+x^2y)^2},
 \qquad J=4,
-\]
+$$
 
 but its double pole is genuine.  A two-divisor valuation argument proves that
 the first coordinate $\mathcal B$ has no regular constant Poisson mate, so

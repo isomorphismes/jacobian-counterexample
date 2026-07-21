@@ -76,9 +76,22 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
   report.viewports[label] = geometry;
 
   if (label === "desktop") {
-    assert.equal(await page.locator("#curve-select option").count(), 4);
+    assert.equal(await page.locator("#curve-select option").count(), 6);
+    assert.equal(await page.locator("#curve-select").inputValue(), "pencil");
+    assert.equal(await page.locator("#coordinate-rows tr").count(), 11);
+    await page.locator("[data-viewer]").scrollIntoViewIfNeeded();
+    await page.locator("#source-plot canvas").waitFor();
     assert.equal(await page.locator("#source-plot canvas").count(), 1);
     assert.equal(await page.locator("#target-plot canvas").count(), 1);
+    assert.equal(await page.locator("#source-plot").getAttribute("data-curve-tracks"), "11");
+    const pixelRatio = Number(await page.locator("#source-plot").getAttribute("data-pixel-ratio"));
+    assert.ok(pixelRatio >= 1 && pixelRatio <= 1.8, `viewer DPR ${pixelRatio} exceeds its cap`);
+    await page.locator("[data-viewer]").screenshot({ path: resolve(outputDir, "desktop-viewer-pencil.png") });
+
+    await page.locator("#curve-select").selectOption("surface");
+    assert.equal(await page.locator("#source-plot").getAttribute("data-surface-vertices"), "775");
+    assert.equal(await page.locator("#coordinate-rows tr").count(), 3);
+    await page.locator("[data-viewer]").screenshot({ path: resolve(outputDir, "desktop-viewer-surface.png") });
 
     await page.locator("#curve-select").selectOption("sheets");
     assert.equal(await page.locator("#coordinate-rows tr").count(), 3);
@@ -101,7 +114,10 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
     }
     await transcript.screenshot({ path: resolve(outputDir, "desktop-film-transcript.png") });
     report.interaction = {
-      presets: 4,
+      presets: 6,
+      pencilRows: 11,
+      surfaceVertices: 775,
+      pixelRatio,
       sheetRows: 3,
       coincidentTarget: targets[0],
       transcriptSegments: 14,
@@ -146,10 +162,11 @@ try {
   const page = await context.newPage();
   monitor(page, "fallback", { allowWebglErrors: true });
   await page.goto(siteUrl, { waitUntil: "networkidle" });
+  await page.locator("[data-viewer]").scrollIntoViewIfNeeded();
   await page.locator("#webgl-fallback").waitFor({ state: "visible" });
-  assert.equal(await page.locator("#coordinate-rows tr").count(), 3);
+  assert.equal(await page.locator("#coordinate-rows tr").count(), 11);
   await page.locator("[data-viewer]").screenshot({ path: resolve(outputDir, "webgl-fallback.png") });
-  report.fallback = { visible: true, coordinateRows: 3 };
+  report.fallback = { visible: true, coordinateRows: 11 };
   await context.close();
 } finally {
   await fallbackBrowser.close();

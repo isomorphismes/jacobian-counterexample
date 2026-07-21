@@ -7,6 +7,9 @@ dependencies:
   - ffmpeg>=7,<9
   - cairo>=1.18,<2
   - pango>=1.56,<2
+  # MathTex/Tex compilation.  The dvisvgm converter remains an explicit
+  # system prerequisite because conda-forge has no standalone dvisvgm package.
+  - texlive-core=20260301
   - portaudio>=19,<20
   - sox>=14.4,<15
   - pkg-config>=0.29,<1

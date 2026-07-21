@@ -6,6 +6,8 @@ import {
   disposeObject,
   lineObject,
   pointsForTrack,
+  surfaceGeometry,
+  surfaceGridGeometry,
   trackPoint,
   type Space,
   type ViewBounds,
@@ -17,6 +19,7 @@ type Panel = {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
+  surfaces: THREE.Group;
   curves: THREE.Group;
   markers: THREE.Group;
   grid: THREE.GridHelper;
@@ -26,15 +29,18 @@ type Panel = {
 };
 
 const neutralTarget = 0xe8edf7;
+const defaultView = { yaw: -0.72, pitch: 0.47 } as const;
+const maxCanvasPixels = 1_350_000;
 
 export class DualSpaceViewer {
   private panels: readonly [Panel, Panel];
   private preset: CurvePreset | undefined;
-  private yaw = -0.72;
-  private pitch = 0.47;
+  private yaw: number = defaultView.yaw;
+  private pitch: number = defaultView.pitch;
   private zoom = 1;
   private dirty = false;
   private frameRequest = 0;
+  private readonly cameraDirection = new THREE.Vector3();
 
   constructor(sourceHost: HTMLElement, targetHost: HTMLElement) {
     if (!window.WebGLRenderingContext) throw new Error("WebGL is unavailable.");
@@ -46,14 +52,57 @@ export class DualSpaceViewer {
 
   setPreset(preset: CurvePreset): void {
     this.preset = preset;
+    this.yaw = preset.camera?.yaw ?? defaultView.yaw;
+    this.pitch = preset.camera?.pitch ?? defaultView.pitch;
     this.zoom = 1;
     for (const panel of this.panels) {
+      this.clear(panel.surfaces);
       this.clear(panel.curves);
       this.clear(panel.markers);
       panel.bounds = boundsForPreset(preset, panel.space);
       const guideScale = Math.max(1, panel.bounds.radius / 4);
       panel.grid.scale.setScalar(guideScale);
+      const gridZ = panel.bounds.min.z <= 0 && panel.bounds.max.z >= 0
+        ? 0
+        : panel.bounds.min.z;
+      panel.grid.position.set(panel.bounds.center.x, panel.bounds.center.y, gridZ);
       panel.axes.scale.setScalar(guideScale);
+      panel.scene.fog = new THREE.Fog(
+        0x07101d,
+        panel.bounds.radius * 2.5,
+        panel.bounds.radius * 6.4,
+      );
+
+      for (const surface of preset.surfaces ?? []) {
+        const fill = new THREE.Mesh(
+          surfaceGeometry(surface, panel.space),
+          new THREE.MeshStandardMaterial({
+            color: surface.color,
+            transparent: true,
+            opacity: surface.opacity,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+            roughness: 0.38,
+            metalness: 0.08,
+          }),
+        );
+        fill.name = `${surface.id}-fill`;
+        fill.renderOrder = 1;
+        const grid = new THREE.LineSegments(
+          surfaceGridGeometry(surface, panel.space),
+          new THREE.LineBasicMaterial({
+            color: surface.color,
+            transparent: true,
+            opacity: 0.58,
+            depthWrite: false,
+            toneMapped: false,
+          }),
+        );
+        grid.name = `${surface.id}-grid`;
+        grid.renderOrder = 2;
+        panel.surfaces.add(fill, grid);
+      }
+
       const firstFrame = preset.samples[0]!;
       const allTargetsCoincide = panel.space === "target" && firstFrame.tracks.length > 1 && preset.samples.every((frame) => {
         const first = frame.tracks[0]?.target;
@@ -63,24 +112,52 @@ export class DualSpaceViewer {
       firstFrame.tracks.forEach((track, index) => {
         if (!(allTargetsCoincide && index > 0)) {
           const path = pointsForTrack(preset, track.id, panel.space);
-          const line = lineObject(path, allTargetsCoincide ? neutralTarget : track.color);
+          const line = lineObject(
+            path,
+            allTargetsCoincide ? neutralTarget : track.color,
+            panel.bounds.radius,
+          );
           panel.curves.add(line);
         }
 
-        const markerRadius = Math.max(0.045, panel.bounds.radius * 0.018);
-        const marker = new THREE.Mesh(
-          new THREE.SphereGeometry(markerRadius, 20, 14),
+        const markerRadius = Math.max(0.04, panel.bounds.radius * 0.021);
+        const marker = new THREE.Group();
+        marker.name = track.id;
+        const scale = allTargetsCoincide ? 1 + index * 0.62 : 1;
+        const core = new THREE.Mesh(
+          allTargetsCoincide
+            ? new THREE.IcosahedronGeometry(markerRadius * scale, 2)
+            : new THREE.SphereGeometry(markerRadius, 18, 12),
           new THREE.MeshBasicMaterial({
             color: track.color,
             wireframe: allTargetsCoincide,
-            transparent: true,
-            opacity: 0.98,
+            toneMapped: false,
           }),
         );
-        marker.name = track.id;
-        if (allTargetsCoincide) marker.scale.setScalar(1 + index * 0.55);
+        core.renderOrder = 6;
+        marker.add(core);
+        if (!allTargetsCoincide) {
+          const halo = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(markerRadius * 1.72, 1),
+            new THREE.MeshBasicMaterial({
+              color: track.color,
+              wireframe: true,
+              transparent: true,
+              opacity: 0.35,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending,
+              toneMapped: false,
+            }),
+          );
+          halo.renderOrder = 5;
+          marker.add(halo);
+        }
         panel.markers.add(marker);
       });
+      panel.host.dataset.surfaceVertices = String(
+        (preset.surfaces ?? []).reduce((total, surface) => total + surface.source.length, 0),
+      );
+      panel.host.dataset.curveTracks = String(firstFrame.tracks.length);
     }
     this.setFrame(preset.samples[0]!);
   }
@@ -89,7 +166,8 @@ export class DualSpaceViewer {
     for (const panel of this.panels) {
       for (const track of frame.tracks) {
         const marker = panel.markers.getObjectByName(track.id);
-        marker?.position.copy(asVector(trackPoint(track, panel.space)));
+        const point = trackPoint(track, panel.space);
+        marker?.position.set(point[0], point[1], point[2]);
       }
     }
     this.renderSoon();
@@ -107,8 +185,8 @@ export class DualSpaceViewer {
   }
 
   resetView(): void {
-    this.yaw = -0.72;
-    this.pitch = 0.47;
+    this.yaw = this.preset?.camera?.yaw ?? defaultView.yaw;
+    this.pitch = this.preset?.camera?.pitch ?? defaultView.pitch;
     this.zoom = 1;
     this.renderSoon();
   }
@@ -122,38 +200,60 @@ export class DualSpaceViewer {
     );
     host.append(canvas);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: false,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(1);
+    renderer.setClearColor(0x07101d, 1);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.14;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x090d19, 0.012);
-    const camera = new THREE.PerspectiveCamera(36, 1, 0.01, 5000);
+    scene.fog = new THREE.Fog(0x07101d, 5, 18);
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.01, 5000);
+
+    const hemisphere = new THREE.HemisphereLight(0xb9ddff, 0x090b17, 2.1);
+    const key = new THREE.DirectionalLight(0xffffff, 2.35);
+    key.position.set(4, -5, 7);
+    const rim = new THREE.DirectionalLight(0x61f0dc, 1.5);
+    rim.position.set(-5, 3, 2);
+    scene.add(hemisphere, key, rim);
 
     const grid = new THREE.GridHelper(12, 12, 0x46506a, 0x252d40);
     grid.rotation.x = Math.PI / 2;
     grid.material.transparent = true;
-    grid.material.opacity = 0.42;
+    grid.material.opacity = 0.3;
     scene.add(grid);
 
     const axes = new THREE.AxesHelper(3.3);
     axes.material.transparent = true;
-    axes.material.opacity = 0.68;
+    axes.material.opacity = 0.78;
     scene.add(axes);
 
+    const surfaces = new THREE.Group();
     const curves = new THREE.Group();
     const markers = new THREE.Group();
-    scene.add(curves, markers);
+    scene.add(surfaces, curves, markers);
 
     let panel!: Panel;
     const resizeObserver = new ResizeObserver(() => {
       const rect = host.getBoundingClientRect();
       const width = Math.max(1, Math.round(rect.width));
       const height = Math.max(1, Math.round(rect.height));
+      const pixelRatio = Math.min(
+        window.devicePixelRatio || 1,
+        1.8,
+        Math.sqrt(maxCanvasPixels / (width * height)),
+      );
+      renderer.setPixelRatio(Math.max(1, pixelRatio));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      host.dataset.pixelRatio = renderer.getPixelRatio().toFixed(2);
       this.renderSoon();
     });
 
@@ -163,11 +263,17 @@ export class DualSpaceViewer {
       scene,
       camera,
       renderer,
+      surfaces,
       curves,
       markers,
       grid,
       axes,
-      bounds: { center: new THREE.Vector3(), radius: 2 },
+      bounds: {
+        center: new THREE.Vector3(),
+        radius: 2,
+        min: new THREE.Vector3(-1, -1, -1),
+        max: new THREE.Vector3(1, 1, 1),
+      },
       resizeObserver,
     };
     resizeObserver.observe(host);
@@ -197,13 +303,13 @@ export class DualSpaceViewer {
   }
 
   private updateCamera(panel: Panel): void {
-    const direction = new THREE.Vector3(
+    this.cameraDirection.set(
       Math.cos(this.pitch) * Math.cos(this.yaw),
       Math.cos(this.pitch) * Math.sin(this.yaw),
       Math.sin(this.pitch),
     );
-    const distance = (panel.bounds.radius * 3.35) / this.zoom;
-    panel.camera.position.copy(panel.bounds.center).addScaledVector(direction, distance);
+    const distance = (panel.bounds.radius * 3.28) / this.zoom;
+    panel.camera.position.copy(panel.bounds.center).addScaledVector(this.cameraDirection, distance);
     panel.camera.up.set(0, 0, 1);
     panel.camera.lookAt(panel.bounds.center);
     panel.camera.near = Math.max(0.005, distance / 200);

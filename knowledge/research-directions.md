@@ -10,19 +10,19 @@ concrete research program.
 
 ## Recover the search family
 
-The map is affine-linear in \(z\):
+The map is affine-linear in $z$:
 
-\[
+$$
 F(x,y,z)=A(x,y)z+B(x,y).
-\]
+$$
 
-Its \(z\)-coefficient row
+Its $z$-coefficient row
 
-\[
+$$
 ((1+xy)^3,\,3x(1+xy)^2,\,-x^3)
-\]
+$$
 
-is built from the unimodular pair \(x,1+xy\).  Understanding the parameter
+is built from the unimodular pair $x,1+xy$.  Understanding the parameter
 space of such rows and solving the constant-Jacobian equations coefficient by
 coefficient may yield smaller examples or a classification.
 
@@ -36,9 +36,9 @@ Natural optimization targets are:
 - a homogeneous or sparse normal form;
 - the dimension introduced by cubic stabilization.
 
-The present normalized example has coordinate degrees \((4,6,7)\) and integral
-coefficients.  Classical results show that maximum degree \(2\) is impossible,
-but the gap between \(2\) and \(7\) in dimension three is now concrete.
+The present normalized example has coordinate degrees $(4,6,7)$ and integral
+coefficients.  Classical results show that maximum degree $2$ is impossible,
+but the gap between $2$ and $7$ in dimension three is now concrete.
 
 ## Make stabilization explicit
 
@@ -61,7 +61,7 @@ two-space as a proper étale open.  See
 ## Geometry and topology
 
 - Compute the topology and stratification of the discriminant complement.
-- Describe the \(S_3\) monodromy of the three inverse branches.
+- Describe the $S_3$ monodromy of the three inverse branches.
 - Study the embedding of the marked-root space into compactifications and the
   divisors responsible for escape.
 - Write the induced rank-three Weyl algebra endomorphism explicitly.

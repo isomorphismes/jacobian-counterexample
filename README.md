@@ -35,87 +35,87 @@ historical version 1.
 
 The public visual guide is maintained in [site/](site/README.md) for deployment
 at [nasqret.github.io/jacobian-counterexample](https://nasqret.github.io/jacobian-counterexample/).
-Its 4:35 Manim film currently uses a clearly labeled offline Piper draft voice;
+Its 4:38 Manim film currently uses a clearly labeled offline Piper draft voice;
 the [complete canonical narration](animations/transcript.md), synchronized
 captions, and [animation source and build instructions](animations/README.md)
 remain available independently of audio or video playback.
 
-\[
+$$
 \begin{aligned}
 F_1&=(1+xy)^3z+y^2(1+xy)(4+3xy),\\
 F_2&=y+3x(1+xy)^2z+3xy^2(4+3xy),\\
 F_3&=2x-3x^2y-x^3z
 \end{aligned}
-\]
+$$
 
 satisfies
 
-\[
+$$
 \det JF=-2
-\]
+$$
 
-as a polynomial identity over `Z`, while the scheme-theoretic fiber over
-\((-1/4,0,0)\) is
+as a polynomial identity over $\mathbb Z$, while the scheme-theoretic fiber over
+$(-1/4,0,0)$ is
 
-\[
+$$
 \left(F_1+\frac14,F_2,F_3\right)
 =\left(z-\frac{27}{4}x^2+\frac14,
         y+\frac32x,
         x^3-x\right).
-\]
+$$
 
 Consequently that fiber consists of exactly the three reduced points
 
-\[
+$$
 (0,0,-1/4),\qquad(1,-3/2,13/2),\qquad(-1,3/2,13/2).
-\]
+$$
 
 Thus, for the standard characteristic-zero statement, this map is a
-counterexample in dimension `3`.  Taking its product with the identity gives a
-counterexample in every dimension `n >= 3`.  This is a mathematical conclusion
+counterexample in dimension $3$.  Taking its product with the identity gives a
+counterexample in every dimension $n\geq 3$.  This is a mathematical conclusion
 from the displayed identities; attribution, priority, and peer-review status are
 tracked separately in the [literature audit](knowledge/literature-audit.md).
 
 ## Determinant-one integral normalization
 
-The linearly normalized map below has integer coefficients, determinant `1`,
-and identity linear part.  Put `U = 1 + 2XY` and define
+The linearly normalized map below has integer coefficients, determinant $1$,
+and identity linear part.  Put $U=1+2XY$ and define
 
-\[
+$$
 \begin{aligned}
 H_1&=X-3X^2Y-2X^3Z,\\
 H_2&=Y+6XU^2Z+6XY^2(4+6XY),\\
 H_3&=U^3Z+Y^2U(4+6XY).
 \end{aligned}
-\]
+$$
 
-Then `det JH = 1`, but
+Then $\det JH=1$, but
 
-\[
+$$
 H(0,0,-1/4)=H(1/2,-3/2,13/2)=H(-1/2,3/2,13/2)=(0,0,-1/4).
-\]
+$$
 
 This normalization removes any ambiguity about whether “nonzero constant” or
 “equal to one” is intended in the conjecture.
 
 ## Hidden cubic: why the example works
 
-For a target `(a,b,c)`, form the binary cubic
+For a target $(a,b,c)$, form the binary cubic
 
-\[
+$$
 Q_{a,b,c}(U,V)=cU^3-2U^2V+bUV^2-2aV^3.
-\]
+$$
 
-With `(A,B,C)=F(x,y,z)`, `U=1+xy`, and `V=x`, there are global polynomial
+With $(A,B,C)=F(x,y,z)$, $U=1+xy$, and $V=x$, there are global polynomial
 identities
 
-\[
+$$
 Q_{A,B,C}(U,V)=0,\qquad Q_U=2V,\qquad Q_V=-2U.
-\]
+$$
 
 Thus a source point is exactly a target cubic together with a marked simple
-projective root; `F` forgets the root.  A generic cubic has three such roots,
-so `F` has geometric degree `3`.  Cubics with a triple root have no preimage,
+projective root; $F$ forgets the root.  A generic cubic has three such roots,
+so $F$ has geometric degree $3$.  Cubics with a triple root have no preimage,
 and the cubic discriminant is exactly the nonproperness hypersurface.  The full
 inverse formulas and proofs are in [the binary-cubic chapter](knowledge/generic-fiber.md).
 Andy Jiang (@davikrehalt) subsequently posted this
@@ -160,9 +160,9 @@ rigorously excludes the following natural direct-descent routes:
 - no linear combination of the three outputs is a lowering coordinate.
 
 Two exact near-models identify the next construction boundary.  The
-`C*`-quotient of the threefold map is noninjective with Jacobian
-`-2*(2-3*u-v)^2`.  An independent octahedral degree-six cusp cover has
-Jacobian `108*x^3`, the first covering degree not excluded by established
+$\mathbb C^*$-quotient of the threefold map is noninjective with Jacobian
+$-2(2-3u-v)^2$.  An independent octahedral degree-six cusp cover has
+Jacobian $108x^3$, the first covering degree not excluded by established
 plane results.  Both are certified in SymPy and Magma, and both fail precisely
 because their ramification divisor remains affine.  See
 [the plane status](knowledge/plane-status.md),
@@ -176,24 +176,26 @@ The factorization attack adds a sharper survivor.  An explicit affine-plane
 chart of normalized quadratic factors has a two-point collision and a
 symplectic rational deck involution.  It would become a plane counterexample
 exactly if two regular functions on the smooth surface
-`B^2 = a + a^2*C` have Poisson bracket `1`.  No linear pair works; in the
+$B^2=a+a^2C$ have Poisson bracket $1$.  No linear pair works; in the
 smaller product-coefficient ring, no target-degree-three bracket combination
 works.  The unrestricted Poisson equation remains open.
 
 That surface is exactly Miyanishi's exceptional affine pseudo-plane
-`S(2,2,1)`, and the source map is its classical degree-two Galois affine
-pseudo-covering.  Its universal cover is `X^2*Y=Z^2-1`, with the source plane
-obtained by deleting `{X=0,Z=-1}`.  Dubouloz--Palka's nonproper etale
+$S(2,2,1)$, and the source map is its classical degree-two Galois affine
+pseudo-covering.  Its universal cover is $X^2Y=Z^2-1$, with the source plane
+obtained by deleting $\{X=0,Z=-1\}$.  Dubouloz--Palka's nonproper etale
 self-maps produce the striking rational near-solution
 
-```text
-U = x*(1+x^2*y)
-V = 2*y*(2+x^2*y)/(1+x^2*y)^2
-J(U,V) = 4
-```
+$$
+\begin{aligned}
+U&=x(1+x^2y),\\
+V&=\frac{2y(2+x^2y)}{(1+x^2y)^2},\\
+J(U,V)&=4.
+\end{aligned}
+$$
 
 but the denominator is a genuine boundary pole.  A valuation argument rules
-out every constant Poisson mate for `U=B`, and the full published
+out every constant Poisson mate for $U=B$, and the full published
 Chebyshev/Belyi--Shabat family fails the same boundary-avoidance test.  A
 successful construction must mix the pseudo-plane coordinates in a genuinely
 new way.

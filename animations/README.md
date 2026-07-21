@@ -1,7 +1,7 @@
 # Narrated explainer
 
 `JacobianStory` is the attribution-first Manim explainer for the explicit
-three-dimensional map. The published offline Piper draft runs 4 minutes 35
+three-dimensional map. The published offline Piper draft runs 4 minutes 38
 seconds; the conservative human-narration planning estimate is about 5 minutes
 45 seconds.
 The scene uses three descriptions of one morphism:
@@ -41,9 +41,35 @@ conda env create -f environment-animation.yml
 conda run -n jacobian-animation manim checkhealth
 ```
 
-The scene deliberately uses Pango `Text`, not `Tex` or `MathTex`; rendering
-does not require `dvisvgm`. FFmpeg, Cairo, Pango, and the Voiceover plugin are
-still required.
+The scene uses Pango `Text` for prose and attribution, and Manim `MathTex` or
+`Tex` for mathematical displays. The environment pins conda-forge
+`texlive-core=20260301` for LaTeX. Manim also requires a `dvisvgm` executable;
+conda-forge does not currently publish it as a standalone package, so install
+that converter at the system level before rendering.
+
+On macOS:
+
+```bash
+brew install dvisvgm
+conda env create -f environment-animation.yml
+conda run -n jacobian-animation sh -c \
+  'latex --version >/dev/null && dvisvgm --version'
+```
+
+On Debian or Ubuntu, install `dvisvgm` with the system package manager before
+creating the conda environment:
+
+```bash
+sudo apt-get update
+sudo apt-get install dvisvgm
+conda env create -f environment-animation.yml
+conda run -n jacobian-animation sh -c \
+  'latex --version >/dev/null && dvisvgm --version'
+```
+
+An existing environment can be updated with
+`conda env update -f environment-animation.yml --prune`. A render is not
+validated unless both executable checks above succeed.
 
 ## Voice modes
 

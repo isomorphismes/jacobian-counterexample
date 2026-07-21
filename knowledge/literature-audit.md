@@ -29,11 +29,11 @@ At 12:02:19 UTC the same day, Andy Jiang (@davikrehalt) posted the
 [projective symmetric-product formulation](https://x.com/davikrehalt/status/2079175065695035442):
 restrict the map
 
-\[
+$$
 \mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)
 \longrightarrow \operatorname{Sym}^3(\mathbb P^1),
 \qquad (p,D)\longmapsto p+D,
-\]
+$$
 
 after deleting its ramification divisor and the inverse image of a hyperplane
 tangent but not osculating to the small diagonal.  Jiang explicitly presented
@@ -64,29 +64,29 @@ are not canonical.
 
 Let
 
-\[
+$$
 \mu:\mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)
 \longrightarrow\operatorname{Sym}^3(\mathbb P^1)
-\]
+$$
 
 be Jiang's map, let $R$ be its ramification divisor, and let $H_\infty$ be a
 hyperplane tangent but not osculating to the small diagonal.  If $\lambda$
 defines $H_\infty$, normalization gives
 
-\[
+$$
 [C]\longmapsto \frac{C}{\lambda(C)}:
 \operatorname{Sym}^3(\mathbb P^1)\setminus H_\infty
 \xrightarrow{\sim}\{C:\lambda(C)=1\}=H_\tau.
-\]
+$$
 
 Upstairs, deleting $R$ says precisely that the marked root is simple; the two
 unmarked roots may still coincide.  Therefore
 
-\[
+$$
 \bigl(\mathbb P^1\times\operatorname{Sym}^2(\mathbb P^1)\bigr)
 \setminus\bigl(R\cup\mu^{-1}(H_\infty)\bigr)
 \simeq X_\tau,
-\]
+$$
 
 and $\mu$ becomes the forgetful map $X_\tau\to H_\tau$.  A tangent,
 nonosculating hyperplane meets the twisted cubic in $2p+q$ with $p\ne q$; all
@@ -98,10 +98,10 @@ conditions fix the projective and factor-rescaling gauges and give an explicit
 global $\mathbb A^3$ chart on the same open incidence.  If $G$ is Lou's
 coordinate map and $F$ is Alpöge's, the exact relation is
 
-\[
+$$
 G=R_0\circ F\circ S_0,
 \qquad S_0(x,y,z)=(x,y,-z),\quad R_0(A,B,C)=(C,B,A).
-\]
+$$
 
 This is **left--right linear equivalence**, or an isomorphism of morphisms, not
 strict conjugacy: the source and target changes are independent.  Etaleness,
@@ -122,7 +122,7 @@ critical obstruction in reduced classes {cite}`truong2026`.
 
 The dedicated [plane status chapter](plane-status.md) contains the extended
 2026 audit: geometric degree at least six, the provisional degree-108 bound,
-the surviving `(72,108)` Newton configuration, and the exact distinction
+the surviving $(72,108)$ Newton configuration, and the exact distinction
 between peer-reviewed restrictions and recent preprints.
 
 These papers establish the immediate pre-announcement context; they naturally
@@ -141,9 +141,9 @@ reduction of de Bondt--van den Essen {cite}`debondt2005`.
 The quadratic-factor scaffold in this repository is exactly the affine
 pseudo-plane
 
-\[
+$$
 S(2,2,1)=\{u(1+uv)=w^2\}.
-\]
+$$
 
 Miyanishi developed affine pseudo-coverings specifically to study a possible
 factorization of a plane Keller map through such an intermediate surface

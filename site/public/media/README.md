@@ -17,11 +17,11 @@ repository-level `THIRD_PARTY_NOTICES.md`.
 Release inspection values:
 
 ```text
-duration     275.732031 seconds
+duration     278.231380 seconds
 video        H.264, 1920 x 1080, 30 fps, yuv420p
 audio        AAC, 48 kHz, stereo
-MP4 SHA-256  5c1c1a1be8f9fe53687aeeda71e434d79bd8b743f747157acebee7a38d28e318
-VTT SHA-256  b0a684027cad8dabe70de85655ed4d86b0112bb5a3a38f3a0f5167a3d0d0f09c
+MP4 SHA-256  c7ecb99fc2000da11cb95311897135b840fac768571b4c22de6c198bfa2a1d95
+VTT SHA-256  876328b40312f024703fe2d75c96dbd08b68b94499b205154bf61f8490cc0316
 ```
 
 The MP4 is arranged for progressive web playback (`moov` before `mdat`).

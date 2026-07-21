@@ -83,12 +83,21 @@ provenance, and scope.
 - [x] Add a synchronized source/target curve viewer, an accessible numeric
   fallback, and a permanent warning that the plots show only
   \(\mathbb R^3\subset\mathbb C^3\).
+- [x] Replace the default single-curve display with an eleven-line pencil,
+  add a mapped 25-by-31 surface mesh with genuine rulings, and enforce lazy
+  loading, memoized samples, and bounded render resolution.
 - [x] Add a native SVG/HTML beginner infographic whose meaning is not encoded
   by color alone.
 - [x] Generate a text-free abstract hero image and preserve its project-bound
   source asset.
 - [x] Implement the Manim Voiceover explainer, canonical transcript, captions,
   reproducible environment, and shared exact curve data.
+- [x] Route every mathematical animation card through Manim `MathTex`/`Tex`,
+  compile all thirty canonical formulas to SVG in preflight, and release the
+  validated 1920-by-1080 progressive replacement film.
+- [x] Convert README and Jupyter Book mathematics to their native dollar
+  delimiters, add delimiter regressions, and complete a warning-free clean
+  MathJax book build.
 - [x] Add dual public licensing: MIT for code and CC BY 4.0 for paper, prose,
   diagrams, artwork, transcript, captions, and released narration.
 - [x] Add Pages build/deployment automation, link/attribution checks, algebra
@@ -97,6 +106,10 @@ provenance, and scope.
   motion and the WebGL fallback. The in-app browser was unavailable, so the
   same checks were run in installed Chrome through Playwright Core, including
   a true 390-pixel viewport and console/network assertions.
+- [ ] Repeat the interactive desktop/mobile/WebGL screenshot gate for the
+  revised pencil-and-mesh viewer when an in-app browser session is available.
+  Geometry, performance contracts, strict TypeScript, and production assembly
+  are already passing; this item is the remaining visual release check.
 - [x] Audit the full Git history and generated artifacts for secrets and
   unintended personal information before changing repository visibility.
 - [x] Make the GitHub repository public only after all preceding release gates
