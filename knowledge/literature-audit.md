@@ -40,8 +40,9 @@ tangent but not osculating to the small diagonal.  Jiang explicitly presented
 the formulation in the post as GPT output.  It is exactly the projective form
 of the marked-simple-root construction developed here {cite}`jiang2026x`.
 
-Later the same day, Aaron Lou hosted
-[a self-contained factorization--resultant derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf).
+Later the same day, Aaron Lou ([@aaron_lou](https://x.com/aaron_lou)) hosted
+[a self-contained factorization--resultant derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
+{cite}`lou2026note`.
 Exact left--right linear equivalence shows that its map is the announced map
 after $z\mapsto-z$ in the source and reversal of the three outputs in the
 target.  It is valuable independent reconstruction and motivation, not a

@@ -1,7 +1,7 @@
 # Narrated explainer
 
 `JacobianStory` is the attribution-first Manim explainer for the explicit
-three-dimensional map. The published offline Piper draft runs 4 minutes 38
+three-dimensional map. The published offline Piper draft runs 4 minutes 37
 seconds; the conservative human-narration planning estimate is about 5 minutes
 45 seconds.
 The scene uses three descriptions of one morphism:
@@ -12,7 +12,8 @@ The scene uses three descriptions of one morphism:
    gives the projective marked-root description and explicitly presents it as
    GPT output.
 3. [Aaron Lou's note](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
-   gives the factorization-resultant derivation and a global affine chart.
+   ([@aaron_lou](https://x.com/aaron_lou)) gives the factorization-resultant
+   derivation and a global affine chart.
 
 The repository contributors claim only compilation, checking, exposition,
 animation, and web presentation.
@@ -25,6 +26,12 @@ animation, and web presentation.
 - `transcript.md`: text-first transcript generated from the canonical records.
 - `math_core.py`: exact map, exact curve families, and sampled JSON export.
 - `srt_to_vtt.py`: strict conversion of Manim SRT captions to browser WebVTT.
+- `assets/fonts/Inter-VariableFont_opsz-wght.ttf`: the pinned upstream typeface.
+- `assets/fonts/JacobianCounterexampleFilmText-Regular.ttf` and
+  `assets/fonts/JacobianCounterexampleFilmText-Bold.ttf`: the active,
+  repository-unique static OFL derivatives used for film prose.
+- `assets/fonts/OFL.txt`: the bundled typeface's SIL Open Font License.
+- `build_font_asset.py`: deterministic FontTools derivation of the active font.
 - `../shared/curve-fixtures.json`: deterministic samples shared with the site.
 - `../environment-animation.yml`: pinned animation environment.
 
@@ -33,16 +40,35 @@ can be tested on a machine without Manim.
 
 ## Environment
 
-Current pins are Manim Community `0.20.1`, Manim Voiceover `0.4.0`, and
-Piper TTS `1.4.2`.
+Current pins are Manim Community `0.20.1`, ManimPango `0.6.1`, Pango
+`1.56.4`, Cairo `1.18.4`, Pycairo `1.29.0`, FontTools `4.51.0`, Manim
+Voiceover `0.4.0`, and Piper TTS `1.4.2`.
 
 ```bash
 conda env create -f environment-animation.yml
 conda run -n jacobian-animation manim checkhealth
 ```
 
-The scene uses Pango `Text` for prose and attribution, and Manim `MathTex` or
-`Tex` for mathematical displays. The environment pins conda-forge
+The scene uses `Jacobian Counterexample Film Text`, a repository-unique pair of
+static Inter 4.001 instances, for Pango prose and attribution, and Manim
+`MathTex` or `Tex` for mathematical displays. Every prose object is shaped at
+four times its requested size and then uniformly scaled down. This avoids the
+coarse glyph-position quantization that makes small Manim/Pango labels appear
+to have missing or uneven spaces. Both faces are registered from
+`animations/assets/fonts/`, so a separately installed Inter cannot shadow the
+pinned bytes. Before rendering, the scene verifies the actual Regular and Bold
+glyph outlines against Pango's missing-family fallback. Exact input and output
+hashes, static instance locations, derivation, license, and non-endorsement
+notice are recorded in `THIRD_PARTY_NOTICES.md`.
+
+Manim's prose SVG cache keys on the family, style, text, and size, not on the
+font bytes. Any future typeface change must therefore bump the unique Manim
+text-cache family name (and the probe's embedded hash prefixes), or explicitly
+clear the text SVG cache before rendering. Renaming `Film Sans` to `Film Text`
+invalidates the cache created during this correction; the hash-bearing probe
+protects the preflight itself, but cannot invalidate every production label.
+
+The environment pins conda-forge
 `texlive-core=20260301` for LaTeX. Manim also requires a `dvisvgm` executable;
 conda-forge does not currently publish it as a standalone package, so install
 that converter at the system level before rendering.

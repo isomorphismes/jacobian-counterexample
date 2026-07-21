@@ -10,7 +10,7 @@ This is the canonical narration transcript. The three-dimensional scenes show th
 - **Fable:** Credited in Alpöge's announcement for work on the explicit construction.
 - **[Andy Jiang (@davikrehalt)](https://x.com/davikrehalt/status/2079175065695035442):** Posted the projective symmetric-product marked-root description, explicitly presenting it in the post as GPT output.
 - **GPT:** Credited by Jiang's post for the projective marked-root formulation.
-- **[Aaron Lou](https://aaronlou.com/jacobian_counterexample_derivation.pdf):** Gave the factorization-resultant derivation and a global affine chart.
+- **[Aaron Lou (@aaron_lou)](https://aaronlou.com/jacobian_counterexample_derivation.pdf):** Gave the factorization-resultant derivation and a global affine chart.
 - **Repository contributors:** Compilation, independent checking, exposition, animation, and landing page; no claim to the discoveries above.
 
 ## Narration

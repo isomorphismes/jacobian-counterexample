@@ -120,7 +120,7 @@ class PiperSpeechService(SpeechService):
         super().__init__(transcription_model=None, **kwargs)
 
     def _cache_input(self, clean_text: str) -> dict[str, object]:
-        return {
+        cache_input: dict[str, object] = {
             "input_text": clean_text,
             "service": "piper-tts",
             "service_version": PIPER_VERSION,
@@ -128,14 +128,20 @@ class PiperSpeechService(SpeechService):
             "model_sha256": self.model_sha256,
             "config_name": self.config_path.name,
             "config_sha256": self.config_sha256,
-            "speaker_id": self.speaker_id,
-            "length_scale": self.length_scale,
-            "noise_scale": self.noise_scale,
-            "noise_w_scale": self.noise_w_scale,
             "normalize_audio": self.normalize_audio,
             "volume": self.volume,
             "use_cuda": self.use_cuda,
         }
+        optional_values = {
+            "speaker_id": self.speaker_id,
+            "length_scale": self.length_scale,
+            "noise_scale": self.noise_scale,
+            "noise_w_scale": self.noise_w_scale,
+        }
+        cache_input.update(
+            {key: value for key, value in optional_values.items() if value is not None}
+        )
+        return cache_input
 
     def _load_voice(self) -> Any:
         if self._voice is None:

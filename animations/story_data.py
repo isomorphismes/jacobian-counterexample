@@ -58,7 +58,7 @@ CREDITS: tuple[Credit, ...] = (
         "Credited by Jiang's post for the projective marked-root formulation.",
     ),
     Credit(
-        "Aaron Lou",
+        "Aaron Lou (@aaron_lou)",
         "Gave the factorization-resultant derivation and a global affine chart.",
         "https://aaronlou.com/jacobian_counterexample_derivation.pdf",
     ),
@@ -85,7 +85,7 @@ SEGMENTS: tuple[StorySegment, ...] = (
         (
             "Levent Alpöge + credited Fable — explicit formula",
             "Andy Jiang (@davikrehalt) + credited GPT — projective model",
-            "Aaron Lou — resultant derivation and affine chart",
+            "Aaron Lou (@aaron_lou) — resultant derivation and affine chart",
         ),
     ),
     StorySegment(

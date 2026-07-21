@@ -9,6 +9,8 @@ On 20 July 2026, Levent Alpöge publicly announced a concrete polynomial map of
 affine three-space as a counterexample to the Jacobian conjecture
 {cite}`alpoge2026x`.  Later that day Andy Jiang (@davikrehalt) posted its
 projective symmetric-product marked-root formulation {cite}`jiang2026x`.
+Aaron Lou ([@aaron_lou](https://x.com/aaron_lou)) then published a
+factorization--resultant derivation and affine chart {cite}`lou2026note`.
 This book records an independent exact audit, a short hand proof, and a
 structural interpretation that turns the example into the forgetful map from a
 binary cubic with a marked simple root to its coefficients.
@@ -28,8 +30,9 @@ $\mathbb Q$.  It has been checked in SymPy, SageMath, and Magma, but the
 short proof in [Structural determinant certificate](structural-certificate.md)
 does not require trusting a determinant expansion.
 
-The explicit formula, Jiang's projective restriction, Lou's
-resultant-normalized chart, and the incidence model used in this book are
+The explicit formula, Jiang's projective restriction, Aaron Lou's
+([@aaron_lou](https://x.com/aaron_lou)) resultant-normalized chart, and the
+incidence model used in this book are
 isomorphic presentations of one degree-three etale morphism.  They are not
 literal coordinate identities: Lou's formula is left--right linearly
 equivalent to the announced map, while the projective-to-affine

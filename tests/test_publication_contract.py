@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ALPOGE_POST = "https://x.com/__alpoge__/status/2079028340955197566"
 JIANG_POST = "https://x.com/davikrehalt/status/2079175065695035442"
 LOU_NOTE = "https://aaronlou.com/jacobian_counterexample_derivation.pdf"
+LOU_PROFILE = "https://x.com/aaron_lou"
 KELLER_DOI = "https://doi.org/10.1007/BF01695502"
 BCW_DOI = "https://doi.org/10.1090/S0273-0979-1982-15032-7"
 DRUZKOWSKI_DOI = "https://doi.org/10.1007/BF01459126"
@@ -32,6 +33,19 @@ def test_critical_primary_sources_are_present_across_public_exposition() -> None
         assert ALPOGE_POST in contents, path
         assert JIANG_POST in contents, path
         assert LOU_NOTE in contents, path
+        assert "@aaron_lou" in contents.replace(r"\_", "_"), path
+
+    linked_profile_sources = (
+        "README.md",
+        "src/distinguished_root_map.tex",
+        "site/index.html",
+        "knowledge/index.md",
+        "knowledge/literature-audit.md",
+        "knowledge/paper-comparison.md",
+        "knowledge/resultant-factor-route.md",
+    )
+    for path in linked_profile_sources:
+        assert LOU_PROFILE in text(path), path
 
 
 def test_compiler_role_is_not_presented_as_discovery_authorship() -> None:

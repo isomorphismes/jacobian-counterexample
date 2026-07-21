@@ -49,7 +49,7 @@ The release page embeds these publication files:
 - `site/public/media/marked-root-explainer.mp4`
 - `site/public/media/marked-root-explainer.en.vtt`
 
-The 4:38 MP4 is a 1080p H.264/AAC Manim render with reproducibly configured offline draft
+The 4:37 MP4 is a 1080p H.264/AAC Manim render with reproducibly configured offline draft
 narration from Piper TTS `1.4.2`, `en_US-libritts-high`, speaker `0`. The human
 recording described in [`animations/README.md`](../animations/README.md)
 remains the preferred final voice. The page identifies this distinction beside

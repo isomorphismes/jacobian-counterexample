@@ -4,9 +4,12 @@ channels:
 dependencies:
   - python=3.12
   - manim=0.20.1
+  - manimpango=0.6.1
+  - fonttools=4.51.0
   - ffmpeg>=7,<9
-  - cairo>=1.18,<2
-  - pango>=1.56,<2
+  - cairo=1.18.4
+  - pycairo=1.29.0
+  - pango=1.56.4
   # MathTex/Tex compilation.  The dvisvgm converter remains an explicit
   # system prerequisite because conda-forge has no standalone dvisvgm package.
   - texlive-core=20260301

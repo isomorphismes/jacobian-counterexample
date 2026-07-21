@@ -7,8 +7,8 @@ tags: [dimension-two, resultant, factorization, poisson, search]
 
 :::{admonition} Verdict
 :class: warning
-Aaron Lou's 20 July 2026
-[derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
+Aaron Lou ([@aaron_lou](https://x.com/aaron_lou)) published a 20 July 2026
+[derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf) that
 reconstructs exactly the same three-dimensional map already audited in this
 repository, after one source sign change and reversal of the outputs.  It does
 not solve the plane case.  Its factorization viewpoint nevertheless yields two

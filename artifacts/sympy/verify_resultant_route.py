@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Exact certificates for the factorization/resultant plane attack.
 
-The identities in this file extract the reusable mechanism from Aaron Lou's
-2026-07-20 derivation.  They do *not* solve the two-dimensional Jacobian
-conjecture.  In particular, the final quartic construction is a noninjective
-map to a coefficient surface; finding two functions on that surface with
-constant Poisson bracket remains open.
+The identities in this file extract the reusable mechanism from the 2026-07-20
+derivation of Aaron Lou (@aaron_lou).  They do *not* solve the two-dimensional
+Jacobian conjecture.  In particular, the final quartic construction is a
+noninjective map to a coefficient surface; finding two functions on that
+surface with constant Poisson bracket remains open.
 """
 
 from __future__ import annotations

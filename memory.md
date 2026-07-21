@@ -220,8 +220,9 @@ claims and their peer-review labels are recorded in
 
 ## Factorization--resultant extraction
 
-Aaron Lou's 2026-07-20 PDF gives a map exactly left--right linearly equivalent
-to the canonical map, by the source change `z -> -z` and target reversal
+Aaron Lou ([@aaron_lou](https://x.com/aaron_lou)) gives, in his 2026-07-20 PDF,
+a map exactly left--right linearly equivalent to the canonical map, by the
+source change `z -> -z` and target reversal
 `(A,B,C) -> (C,B,A)`.  Its reusable core is the general identity
 
 ```text
@@ -301,7 +302,7 @@ their provenance:
 ```text
 Alpöge/Fable   explicit coefficients and collision
 Jiang/GPT      projective marked-root construction
-Lou            resultant-normalized global affine chart
+Lou (@aaron_lou)  resultant-normalized global affine chart
 repository     comparison, exact audit, exposition, and visualization
 ```
 
@@ -325,13 +326,18 @@ pixel count.  All spatial graphics are labeled as views of the real slice
 
 The canonical Manim source has fourteen named sections.  Mathematical content
 is rendered by Manim `MathTex`/`Tex` from a canonical thirty-formula registry;
-Pango text is reserved for prose and attribution.  All thirty formulas pass a
-standalone TeX-to-SVG preflight.  Release validation includes a low-resolution
-smoke render and a 1920x1080/30 fps render with an offline Piper draft
-narration and 104 WebVTT cues.  The embedded progressive MP4 lasts 278.231380
-seconds.  The Piper/model/corpus provenance is separate from the human
-mathematical credits, and a clearly licensed human recording remains the
-preferred eventual narration.
+prose and attribution use repository-unique Regular and Bold static instances
+of pinned Inter 4.001 under the family `Jacobian Counterexample Film Text`,
+shaped at four times the requested size before geometric downscaling to
+preserve accurate Pango advances.  Explicit typographic family records and a
+runtime outline comparison prevent silent platform-font fallback.  All thirty
+formulas pass a standalone TeX-to-SVG preflight.
+Release validation includes a low-resolution smoke render and a
+1920x1080/30 fps render with an offline Piper draft narration and 104 WebVTT
+cues.  The embedded progressive MP4 lasts 276.598698 seconds.  The
+Piper/model/corpus provenance is separate from the human mathematical credits,
+and a clearly licensed human recording remains the preferred eventual
+narration.
 
 ## Verification state
 
@@ -347,9 +353,9 @@ preferred eventual narration.
 - Lou left--right equivalence, the `(1,2)` and `(2,3)` resultant Jacobians, quintic slice
   identities, and the quadratic-factor scaffold: passing in SymPy and Magma.
 - Sage normalized collision ideal through total degree three: unit ideal.
-- Pytest: seventy-five exact, publication-contract, documentation-math,
+- Pytest: seventy-seven exact, publication-contract, documentation-math,
   animation, and Piper-service tests after the rendering revision.
-- Vitest: seventeen geometry, content, and viewer-performance tests passing;
+- Vitest: eighteen geometry, content, and viewer-performance tests passing;
   strict TypeScript checking and the production Vite assembly also pass.
 - Jupyter Book 1.0.0 HTML build: passing with zero warnings.
 - Public GitHub repository on branch `main`:

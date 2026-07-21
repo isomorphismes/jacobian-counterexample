@@ -155,7 +155,42 @@ def test_piper_synthesizes_once_then_reuses_content_addressed_cache(
     assert len(cache_input["model_sha256"]) == 64
     assert len(cache_input["config_sha256"]) == 64
     assert cache_input["speaker_id"] == 17
+    assert "length_scale" not in cache_input
+    assert "noise_scale" not in cache_input
+    assert "noise_w_scale" not in cache_input
     assert str(tmp_path) not in json.dumps(cache_input, sort_keys=True)
+
+
+def test_piper_cache_identity_omits_unset_values_and_keeps_explicit_controls(
+    mocked_piper_service, tmp_path
+):
+    module, _ = mocked_piper_service
+    model, config = _voice_files(tmp_path)
+
+    defaults = module.PiperSpeechService(
+        model_path=model,
+        config_path=config,
+        cache_dir=tmp_path / "cache-defaults",
+    )._cache_input("same words")
+    assert "speaker_id" not in defaults
+    assert "length_scale" not in defaults
+    assert "noise_scale" not in defaults
+    assert "noise_w_scale" not in defaults
+    assert None not in defaults.values()
+
+    controlled = module.PiperSpeechService(
+        model_path=model,
+        config_path=config,
+        cache_dir=tmp_path / "cache-controls",
+        speaker_id=0,
+        length_scale=1.1,
+        noise_scale=0.4,
+        noise_w_scale=0.5,
+    )._cache_input("same words")
+    assert controlled["speaker_id"] == 0
+    assert controlled["length_scale"] == 1.1
+    assert controlled["noise_scale"] == 0.4
+    assert controlled["noise_w_scale"] == 0.5
 
 
 def test_piper_cache_identity_changes_when_model_contents_change(

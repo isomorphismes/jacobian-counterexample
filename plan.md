@@ -35,8 +35,8 @@ Status date: 2026-07-21.
   square Jacobian defect.
 - [x] Construct and certify the octahedral degree-six cusp near-model and
   exclude its full function-field extension by normalization.
-- [x] Audit Aaron Lou's factorization derivation and prove its exact left--right
-  linear equivalence to the canonical threefold map.
+- [x] Audit Aaron Lou's factorization derivation (@aaron_lou) and prove its
+  exact left--right linear equivalence to the canonical threefold map.
 - [x] Verify and document that Alpöge's formula, Jiang's projective
   symmetric-product model, Lou's resultant chart, and the intrinsic
   marked-root model present the same morphism up to source--target
@@ -71,7 +71,8 @@ provenance, and scope.
 - [x] Compare the elementary projective draft with the intrinsic paper and
   record the exact left--right equivalence of the three public approaches.
 - [x] Freeze role-specific attribution: Alpöge/Fable for the posted formula,
-  Jiang/GPT for the projective marked-root post, Lou for the resultant chart,
+  Jiang/GPT for the projective marked-root post, Lou (@aaron_lou) for the
+  resultant chart,
   and Bartosz Naskrecki for compilation, audit, repository, and landing page.
 - [x] Replace the two competing drafts with one clearly designated canonical
   short paper and retain the older paper as a labeled historical version.
@@ -95,6 +96,11 @@ provenance, and scope.
 - [x] Route every mathematical animation card through Manim `MathTex`/`Tex`,
   compile all thirty canonical formulas to SVG in preflight, and release the
   validated 1920-by-1080 progressive replacement film.
+- [x] Replace low-resolution Pango prose shaping with uniquely named,
+  repository-bundled Regular/Bold static instances of pinned Inter 4.001,
+  shape at four times display size, reject Pango fallback at runtime, pin the
+  text stack, and visually audit all fourteen sections at 1920 by 1080 for
+  spacing and collision regressions.
 - [x] Convert README and Jupyter Book mathematics to their native dollar
   delimiters, add delimiter regressions, and complete a warning-free clean
   MathJax book build.

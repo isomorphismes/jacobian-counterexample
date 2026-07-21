@@ -4,8 +4,9 @@ The current canonical paper is
 [One Map, Three Descriptions](one_map_three_descriptions.pdf). Its LaTeX source
 is [src/distinguished_root_map.tex](../../src/distinguished_root_map.tex).
 It gives the short, beginner-first synthesis of the Alpöge--Fable coordinate
-presentation, the Jiang--GPT projective presentation, and Lou's resultant
-presentation, together with their exact source--target equivalence.
+presentation, the Jiang--GPT projective presentation, and the resultant
+presentation of Aaron Lou (@aaron_lou), together with their exact
+source--target equivalence.
 
 Rebuild the canonical PDF from the repository root with:
 
@@ -19,3 +20,5 @@ and writes the finished PDF to `output/pdf/one_map_three_descriptions.pdf`.
 [marked_root_binary_cubic.pdf](marked_root_binary_cubic.pdf) is retained as
 historical version 1. It records the earlier coordinate-free audit, but it is
 not the current paper and does not supersede the canonical synthesis above.
+That frozen historical artifact predates the recording of Lou's X handle; the
+canonical paper carries the corrected attribution and profile link.

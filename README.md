@@ -19,7 +19,8 @@ The three public descriptions have distinct sources:
   gives the projective marked-root construction and explicitly presents its
   text as GPT output.
 - [Aaron Lou's derivation](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
-  gives the factorization--resultant gauge and global affine chart.
+  ([@aaron_lou](https://x.com/aaron_lou)) gives the factorization--resultant
+  gauge and global affine chart.
 
 Bartosz Naskrecki is the compiler and independent auditor of this repository
 and the author of its landing page and visual exposition. He does **not** claim
@@ -35,7 +36,7 @@ historical version 1.
 
 The public visual guide is maintained in [site/](site/README.md) for deployment
 at [nasqret.github.io/jacobian-counterexample](https://nasqret.github.io/jacobian-counterexample/).
-Its 4:38 Manim film currently uses a clearly labeled offline Piper draft voice;
+Its 4:37 Manim film currently uses a clearly labeled offline Piper draft voice;
 the [complete canonical narration](animations/transcript.md), synchronized
 captions, and [animation source and build instructions](animations/README.md)
 remain available independently of audio or video playback.
@@ -120,7 +121,8 @@ and the cubic discriminant is exactly the nonproperness hypersurface.  The full
 inverse formulas and proofs are in [the binary-cubic chapter](knowledge/generic-fiber.md).
 Andy Jiang (@davikrehalt) subsequently posted this
 [projective symmetric-product formulation](https://x.com/davikrehalt/status/2079175065695035442),
-and Aaron Lou gave its resultant-normalized affine chart.  These are
+and Aaron Lou ([@aaron_lou](https://x.com/aaron_lou)) gave its
+resultant-normalized affine chart.  These are
 isomorphic presentations of the same marked-root morphism, not literally the
 same coordinate formula; see the precise
 [equivalence and provenance audit](knowledge/literature-audit.md#equivalence-of-the-four-presentations).

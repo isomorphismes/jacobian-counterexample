@@ -18,6 +18,8 @@ describe("publication content", () => {
     expect(html).toContain("https://x.com/__alpoge__/status/2079028340955197566");
     expect(html).toContain("https://x.com/davikrehalt/status/2079175065695035442");
     expect(html).toContain("https://aaronlou.com/jacobian_counterexample_derivation.pdf");
+    expect(html).toContain("https://x.com/aaron_lou");
+    expect(html).toContain("@aaron_lou");
     expect(html).toMatch(/Bartosz Naskrecki[\s\S]*does not claim discovery/);
     expect(html).toContain("earliest formula post located by this audit");
     expect(html).toContain('datetime="2026-07-21">21 Jul 2026 · repository release');

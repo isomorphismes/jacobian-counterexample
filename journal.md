@@ -311,3 +311,35 @@ all decisive outputs are also encoded as executable assertions.
   SageMath, and Magma certificates passing.  The in-app browser exposed no
   session during this revision, so fresh interactive screenshots remain a
   clearly recorded follow-up rather than an inferred pass.
+
+## 2026-07-21 — film typography revision
+
+- Recorded Aaron Lou's X handle, [@aaron_lou](https://x.com/aaron_lou), in the
+  canonical paper, knowledge book, website, transcript metadata, and visible
+  film credits while leaving the spoken narration unchanged.
+- Traced the film's irregular letter and word spacing to ManimPango shaping
+  19--42 point prose at a very small internal size, which quantized glyph
+  advances before the vectors reached the 1080p renderer.
+- Bundled pinned Inter 4.001 with its SIL OFL 1.1 license and SHA-256, then
+  generated reproducible `opsz=14`, `wght=400/700` static Modified Versions
+  with the repository-unique family `Jacobian Counterexample Film Text`.
+  OpenType names 16 and 17 make Pango select both faces; a render-time outline
+  probe rejects silent fallback.  Registered both files from the repository
+  and routed every prose object through one renderer that shapes at four times
+  display size before uniform downscaling.  Mathematical formulas remain
+  native `MathTex`/`Tex`.
+- Pinned ManimPango, Pango, Cairo, and Pycairo to the versions used for the
+  release.  Added source-policy, exact-font-integrity, and runtime-pin
+  regressions so later edits cannot silently reintroduce platform-dependent
+  prose or the undersampled path.
+- Inspected a complete low-resolution smoke render, native 1080p samples from
+  all fourteen sections, the densest labels, and the credits.  Also moved the
+  resultant-one label away from a pre-existing card collision found during the
+  audit.
+- Fixed the Piper cache identity so unset optional synthesis controls survive
+  Manim Voiceover's JSON normalization.  A real-cache probe now finds the
+  stored clip without loading the voice model.
+- Released a progressive 1920-by-1080, 30 fps H.264/AAC replacement lasting
+  276.598698 seconds with 104 regenerated, nonoverlapping WebVTT cues.  The
+  full media stream decodes without error and the caption text remains exactly
+  equal to the canonical narration.

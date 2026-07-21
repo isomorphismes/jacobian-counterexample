@@ -120,6 +120,9 @@ def test_story_metadata_has_unique_complete_segments_and_precise_credit_links():
     assert credit_by_name["Andy Jiang (@davikrehalt)"].url == (
         "https://x.com/davikrehalt/status/2079175065695035442"
     )
+    assert credit_by_name["Aaron Lou (@aaron_lou)"].url == (
+        "https://aaronlou.com/jacobian_counterexample_derivation.pdf"
+    )
     assert "Fable" in credit_by_name["Levent Alpöge"].role
     assert "GPT output" in credit_by_name["Andy Jiang (@davikrehalt)"].role
     assert "no claim" in credit_by_name["Repository contributors"].role
@@ -134,6 +137,7 @@ def test_planned_narration_is_short_and_close_to_target_duration():
 def test_committed_transcript_is_generated_from_canonical_story_data():
     committed = (ROOT / "animations" / "transcript.md").read_text(encoding="utf-8")
     assert committed == render_transcript_markdown()
+    assert "Aaron Lou (@aaron_lou)" in committed
 
 
 def test_landing_page_contains_every_canonical_narration_segment_as_html():
@@ -182,7 +186,7 @@ def test_embedded_webvtt_is_complete_ordered_and_exactly_canonical():
     assert cues[0][1] == 0
     assert all(start < end for _, start, end, _ in cues)
     assert all(previous[2] <= current[1] for previous, current in zip(cues, cues[1:]))
-    assert 277 < cues[-1][2] < 278.232
+    assert 275 < cues[-1][2] < 276.599
 
     caption_text = " ".join(cue[3] for cue in cues)
     canonical_text = " ".join(segment.narration for segment in SEGMENTS)
@@ -275,7 +279,9 @@ def test_scene_references_every_segment_and_uses_tex_for_key_formulas():
                     for item in keys.elts
                     if isinstance(item, ast.Constant)
                 )
-        if name == "Text" and node.args and isinstance(node.args[0], ast.Constant):
+        if name in {"Text", "prose_text"} and node.args and isinstance(
+            node.args[0], ast.Constant
+        ):
             text_literals.append(str(node.args[0].value))
 
     assert set(KEY_DISPLAY_FORMULAS) <= rendered_formula_keys
@@ -300,6 +306,77 @@ def test_scene_references_every_segment_and_uses_tex_for_key_formulas():
         assert f'_voice("{segment.id}")' in source
 
 
+def test_scene_uses_one_bundled_supersampled_prose_renderer() -> None:
+    source = (ROOT / "animations" / "jacobian_story.py").read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call)]
+    # One production renderer plus two direct outline probes.  Scene prose may
+    # not bypass ``prose_text`` anywhere else.
+    assert sum(_called_name(node) == "Text" for node in calls) == 3
+    assert sum(_called_name(node) == "prose_text" for node in calls) >= 15
+    assert 'PROSE_FONT_NAME = "Jacobian Counterexample Film Text"' in source
+    assert "PROSE_LAYOUT_SCALE = 4.0" in source
+    assert "font_size=font_size * PROSE_LAYOUT_SCALE" in source
+    assert ").scale(1 / PROSE_LAYOUT_SCALE)" in source
+    assert "register_font(PROSE_FONT_PATHS[0])" in source
+    assert "PROSE_FONT_PATHS[1]" in source
+    assert "Text.font_list.cache_clear()" in source
+    assert "assert_prose_font_selected()" in source
+    assert 'for weight in ("NORMAL", "BOLD")' in source
+    assert "np.array_equal(bundled, fallback)" in source
+    assert "np.array_equal(selected[0], selected[1])" in source
+    assert "Deliberately Missing" in source
+    assert "font=PROSE_FONT_NAME" in source
+    assert "disable_ligatures=False" in source
+    assert "warn_missing_font=True" in source
+
+    font_dir = ROOT / "animations" / "assets" / "fonts"
+    faces = {
+        "JacobianCounterexampleFilmText-Regular.ttf": (
+            341_712,
+            "2282daa5748d02c1ac3703811c778a5e4775d13f4563fc9957db7ab8402d664d",
+        ),
+        "JacobianCounterexampleFilmText-Bold.ttf": (
+            343_388,
+            "11ca1dd863323d2ab533be2e4094266b838f56040d18f9fbaa633b360585cb28",
+        ),
+    }
+    for filename, (size, digest) in faces.items():
+        face = font_dir / filename
+        assert face.stat().st_size == size
+        assert hashlib.sha256(face.read_bytes()).hexdigest() == digest
+
+    upstream = font_dir / "Inter-VariableFont_opsz-wght.ttf"
+    assert upstream.stat().st_size == 876_576
+    assert hashlib.sha256(upstream.read_bytes()).hexdigest() == (
+        "29160a80ff49ddcab2c97711247e08b1"
+        "fab27a484a329ce8b813d820dc559031"
+    )
+    license_text = (font_dir / "OFL.txt").read_text(encoding="utf-8")
+    assert "SIL OPEN FONT LICENSE Version 1.1" in license_text
+    notices = (ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+    for filename, (_, digest) in faces.items():
+        assert filename in notices
+        assert digest in notices
+    assert upstream.name in notices
+    assert hashlib.sha256(upstream.read_bytes()).hexdigest() in notices
+    derivation = (ROOT / "animations" / "build_font_asset.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'FONTTOOLS_VERSION = "4.51.0"' in derivation
+    assert "recalcTimestamp=False" in derivation
+    assert "instantiateVariableFont" in derivation
+    assert 'INSTANCE_LOCATION = {"opsz": 14.0}' in derivation
+    assert '"weight": 400.0' in derivation
+    assert '"weight": 700.0' in derivation
+    assert "Jacobian Counterexample Film Text" in derivation
+    assert "setName(FAMILY, 16" in derivation
+    assert "setName(style, 17" in derivation
+    assert "reference_tables" in derivation
+    assert '"Aaron Lou (@aaron_lou)"' in source
+    assert '"@__alpoge__ · @davikrehalt · @aaron_lou"' in source
+
+
 def test_canonical_tex_formula_registry_has_the_exact_map_and_bridge():
     assert DISPLAY_FORMULAS["jacobian"] == r"\det DF=-2"
     assert DISPLAY_FORMULAS["f1"] == r"F_1=(1+xy)^3z+y^2(1+xy)(4+3xy)"
@@ -322,6 +399,11 @@ def test_tex_preflight_uses_the_scene_template_and_can_require_svg():
 def test_animation_environment_pins_verified_versions():
     environment = (ROOT / "environment-animation.yml").read_text(encoding="utf-8")
     assert "manim=0.20.1" in environment
+    assert "manimpango=0.6.1" in environment
+    assert "fonttools=4.51.0" in environment
+    assert "pango=1.56.4" in environment
+    assert "cairo=1.18.4" in environment
+    assert "pycairo=1.29.0" in environment
     assert "texlive-core=20260301" in environment
     assert '"manim-voiceover[recorder]==0.4.0"' in environment
     assert '"piper-tts==1.4.2"' in environment
@@ -334,5 +416,17 @@ def test_animation_environment_pins_verified_versions():
         encoding="utf-8"
     )
     assert "MathTex" in animation_readme
+    assert "four times" in animation_readme
+    assert (
+        "assets/fonts/JacobianCounterexampleFilmText-Regular.ttf"
+        in animation_readme
+    )
+    assert "assets/fonts/JacobianCounterexampleFilmText-Bold.ttf" in animation_readme
+    assert "cache keys on the family, style, text, and size" in animation_readme
+    assert "not on the\nfont bytes" in animation_readme
+    assert (
+        "must therefore bump the unique Manim\ntext-cache family name"
+        in animation_readme
+    )
     assert "brew install dvisvgm" in animation_readme
     assert "sudo apt-get install dvisvgm" in animation_readme

@@ -24,8 +24,8 @@ The public roles are distinct:
    gives the projective symmetric-product construction and labels the text as
    GPT output.
 3. [Aaron Lou's note](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
-   gives a factorization--resultant derivation and an explicit global affine
-   chart.
+   ([@aaron_lou](https://x.com/aaron_lou)) gives a
+   factorization--resultant derivation and an explicit global affine chart.
 4. This repository compares, verifies, and explains these presentations. Its
    compiler does not claim discovery of the formula or either construction.
 

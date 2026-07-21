@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 import wave
 
+import numpy as np
+
 from manim import (
     Arrow,
     Circle,
@@ -46,6 +48,7 @@ from manim import (
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.helper import remove_bookmarks
 from manim_voiceover.services.base import SpeechService
+from manim.mobject.text.text_mobject import register_font
 
 try:
     from animations.formula_data import DISPLAY_FORMULAS
@@ -92,6 +95,82 @@ MATH_TEX_TEMPLATE = TexTemplate(
     documentclass=r"\documentclass{article}",
     post_doc_commands=r"\pagestyle{empty}",
 )
+
+PROSE_FONT_NAME = "Jacobian Counterexample Film Text"
+PROSE_FONT_PATHS = (
+    Path(__file__).resolve().parent
+    / "assets"
+    / "fonts"
+    / "JacobianCounterexampleFilmText-Regular.ttf",
+    Path(__file__).resolve().parent
+    / "assets"
+    / "fonts"
+    / "JacobianCounterexampleFilmText-Bold.ttf",
+)
+PROSE_LAYOUT_SCALE = 4.0
+PROSE_FONT_PROBE = "Film font probe AV To WMW iii 2282daa5 11ca1dd8"
+
+
+def prose_text(
+    text: str,
+    *,
+    font_size: float = 48,
+    **kwargs: object,
+) -> Text:
+    """Render deterministic, supersampled Pango prose with stable spacing.
+
+    ManimPango shapes requested text at a small internal pixel size.  The old
+    19--42 point labels therefore suffered visibly quantized advances.  Shape
+    at four times the requested size, then scale geometrically so the on-screen
+    dimensions remain unchanged while kerning and word spaces stay precise.
+    """
+
+    return Text(
+        text,
+        font=PROSE_FONT_NAME,
+        font_size=font_size * PROSE_LAYOUT_SCALE,
+        disable_ligatures=False,
+        warn_missing_font=True,
+        **kwargs,
+    ).scale(1 / PROSE_LAYOUT_SCALE)
+
+
+def assert_prose_font_selected() -> None:
+    """Fail before a render if Pango silently substitutes another family.
+
+    Merely finding a family in Pango's font list is insufficient: malformed
+    variable-font metadata can still make a requested face fall through to the
+    platform sans serif.  Compare actual glyph outlines for both weights with
+    the outlines returned for a deliberately nonexistent family.  The probe
+    includes both asset-hash prefixes so a changed font cannot reuse an older
+    Manim text-cache entry.
+    """
+
+    selected: list[np.ndarray] = []
+    for weight in ("NORMAL", "BOLD"):
+        bundled = Text(
+            PROSE_FONT_PROBE,
+            font=PROSE_FONT_NAME,
+            font_size=168,
+            weight=weight,
+            warn_missing_font=True,
+        ).get_all_points()
+        fallback = Text(
+            PROSE_FONT_PROBE,
+            font="Jacobian Counterexample Deliberately Missing 2282daa5",
+            font_size=168,
+            weight=weight,
+            warn_missing_font=False,
+        ).get_all_points()
+        if np.array_equal(bundled, fallback):
+            raise RuntimeError(
+                f"Pango substituted its fallback for the bundled {weight} face"
+            )
+        selected.append(bundled)
+    if np.array_equal(selected[0], selected[1]):
+        raise RuntimeError(
+            "Pango did not distinguish the bundled Regular and Bold faces"
+        )
 
 
 class DeterministicSilenceService(SpeechService):
@@ -196,15 +275,22 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
     """Approximately six-minute, attribution-first visual proof guide."""
 
     def construct(self) -> None:
-        self.camera.background_color = BACKGROUND
-        self.set_speech_service(build_speech_service(), create_subcaption=True)
-        self._provenance()
-        self._explicit_certificate()
-        self._marked_roots()
-        self._resultant_route()
-        self._unification()
-        self._curve_visualization()
-        self._proof_and_credits()
+        with register_font(PROSE_FONT_PATHS[0]), register_font(
+            PROSE_FONT_PATHS[1]
+        ):
+            # ``font_list`` is cached globally by Manim.  Refresh it only after
+            # both temporary faces have been registered.
+            Text.font_list.cache_clear()
+            assert_prose_font_selected()
+            self.camera.background_color = BACKGROUND
+            self.set_speech_service(build_speech_service(), create_subcaption=True)
+            self._provenance()
+            self._explicit_certificate()
+            self._marked_roots()
+            self._resultant_route()
+            self._unification()
+            self._curve_visualization()
+            self._proof_and_credits()
 
     def _voice(self, segment_id: str):
         segment = segment_by_id(segment_id)
@@ -221,10 +307,10 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
 
     @staticmethod
     def _heading(title: str, subtitle: str | None = None) -> VGroup:
-        heading = Text(title, color=INK, font_size=42, weight="BOLD")
+        heading = prose_text(title, color=INK, font_size=42, weight="BOLD")
         if subtitle is None:
             return VGroup(heading).to_edge(UP, buff=0.35)
-        subheading = Text(subtitle, color=MUTED, font_size=24)
+        subheading = prose_text(subtitle, color=MUTED, font_size=24)
         return VGroup(heading, subheading).arrange(DOWN, buff=0.13).to_edge(UP, buff=0.3)
 
     @staticmethod
@@ -235,8 +321,10 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         width: float = 4.0,
         font_size: int = 22,
     ) -> VGroup:
-        title_text = Text(title, color=color, font_size=27, weight="BOLD")
-        body_lines = [Text(line, color=INK, font_size=font_size) for line in lines]
+        title_text = prose_text(title, color=color, font_size=27, weight="BOLD")
+        body_lines = [
+            prose_text(line, color=INK, font_size=font_size) for line in lines
+        ]
         body = VGroup(*body_lines).arrange(DOWN, aligned_edge=LEFT, buff=0.12)
         content = VGroup(title_text, body).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
         content.scale_to_fit_width(min(content.width, width - 0.45))
@@ -280,7 +368,7 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
     ) -> VGroup:
         """Place MathTex formulas and optional prose inside a standard panel."""
 
-        title_text = Text(title, color=color, font_size=27, weight="BOLD")
+        title_text = prose_text(title, color=color, font_size=27, weight="BOLD")
         formulas = VGroup(
             *[
                 cls._math(key, color=INK, font_size=formula_size)
@@ -288,7 +376,7 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
             ]
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.14)
         notes = VGroup(
-            *[Text(line, color=MUTED, font_size=20) for line in note_lines]
+            *[prose_text(line, color=MUTED, font_size=20) for line in note_lines]
         ).arrange(DOWN, aligned_edge=LEFT, buff=0.1)
         content_parts = [title_text, formulas]
         if note_lines:
@@ -317,7 +405,7 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         """Compose a prose space name with a TeX-rendered ambient space."""
 
         return VGroup(
-            Text(word, color=INK, font_size=28),
+            prose_text(word, color=INK, font_size=28),
             cls._math(formula_key, color=INK, font_size=34),
         ).arrange(RIGHT, buff=0.18)
 
@@ -345,14 +433,14 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
                 font_size=19,
             ),
             self._card(
-                "Aaron Lou",
+                "Aaron Lou (@aaron_lou)",
                 ("resultant normalization", "global affine chart"),
                 GREEN,
                 width=4.15,
                 font_size=19,
             ),
         ).arrange(RIGHT, buff=0.25).shift(DOWN * 0.25)
-        footer = Text(
+        footer = prose_text(
             "Repository role: compile · explain · visualize · check",
             color=MUTED,
             font_size=24,
@@ -388,9 +476,9 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         arrow = Arrow(source.get_right(), target.get_left(), color=GOLD, buff=0.2)
         jacobian = VGroup(
             self._math("jacobian", color=GOLD, font_size=42),
-            Text("everywhere", color=MUTED, font_size=23),
+            prose_text("everywhere", color=MUTED, font_size=23),
         ).arrange(RIGHT, buff=0.28).shift(DOWN * 2.25)
-        infinity = Text(
+        infinity = prose_text(
             "inverse branches can leave through infinity",
             color=MUTED,
             font_size=23,
@@ -657,13 +745,15 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         self.next_section("10-resultant-gauge")
         heading = self._heading("The resultant fixes the scale", "One representative on each simple-root orbit")
         orbit = Circle(radius=1.65, color=MUTED, stroke_width=4).shift(LEFT * 2.9 + DOWN * 0.1)
-        orbit_label = Text("scaling orbit", color=MUTED, font_size=25).next_to(orbit, DOWN, buff=0.2)
+        orbit_label = prose_text("scaling orbit", color=MUTED, font_size=25).next_to(
+            orbit, DOWN, buff=0.2
+        )
         chosen = Dot(orbit.point_at_angle(0.45), color=GOLD, radius=0.14)
         chosen_label = self._math(
             "resultant_one",
             color=GOLD,
             font_size=32,
-        ).next_to(chosen, RIGHT, buff=0.18)
+        ).next_to(chosen, LEFT, buff=0.18)
         rules = self._formula_card(
             "Resultant gauge",
             (
@@ -724,7 +814,7 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
         )
         relation = VGroup(
             self._math("left_right", color=INK, font_size=34),
-            Text("left–right equivalence", color=MUTED, font_size=22),
+            prose_text("left–right equivalence", color=MUTED, font_size=22),
         ).arrange(RIGHT, buff=0.35).to_edge(DOWN, buff=0.32)
         with self._voice("unified") as tracker:
             self.play(FadeIn(heading), run_time=self._run_time(tracker, 0.1))
@@ -870,8 +960,12 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
                 color=GOLD,
             )
         )
-        sheet_title = Text("three marked-root branches", color=INK, font_size=27).shift(LEFT * 3.4 + UP * 3.2)
-        target_title = Text("one target curve", color=INK, font_size=27).shift(RIGHT * 3.55 + UP * 3.2)
+        sheet_title = prose_text(
+            "three marked-root branches", color=INK, font_size=27
+        ).shift(LEFT * 3.4 + UP * 3.2)
+        target_title = prose_text(
+            "one target curve", color=INK, font_size=27
+        ).shift(RIGHT * 3.55 + UP * 3.2)
         polynomial = self._math(
             "sheet_polynomial",
             color=GOLD,
@@ -932,16 +1026,33 @@ class JacobianStory(ThreeDScene, VoiceoverScene):
             font_size=31,
         ).shift(DOWN * 1.55)
         conclusion.scale_to_fit_width(min(conclusion.width, 11.7))
-        scope = Text(
+        scope = prose_text(
             "Higher dimensions follow by adjoining identities · dimension two is separate",
             color=MUTED,
             font_size=23,
         ).shift(DOWN * 2.25)
         credits = VGroup(
-            Text("Sources and exact links", color=GOLD, font_size=28, weight="BOLD"),
-            Text("@__alpoge__ · @davikrehalt · Aaron Lou's derivation", color=INK, font_size=23),
-            Text("Paper · code · transcript · checks: this repository", color=INK, font_size=23),
-            Text("Original animation and text: CC BY 4.0", color=MUTED, font_size=21),
+            prose_text(
+                "Sources and exact links",
+                color=GOLD,
+                font_size=28,
+                weight="BOLD",
+            ),
+            prose_text(
+                "@__alpoge__ · @davikrehalt · @aaron_lou",
+                color=INK,
+                font_size=23,
+            ),
+            prose_text(
+                "Paper · code · transcript · checks: this repository",
+                color=INK,
+                font_size=23,
+            ),
+            prose_text(
+                "Original animation and text: CC BY 4.0",
+                color=MUTED,
+                font_size=21,
+            ),
         ).arrange(DOWN, buff=0.16)
         self.add_fixed_in_frame_mobjects(heading)
         with self._voice("proof_scope") as tracker:
