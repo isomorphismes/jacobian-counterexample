@@ -306,6 +306,19 @@ Lou (@aaron_lou)  resultant-normalized global affine chart
 repository     comparison, exact audit, exposition, and visualization
 ```
 
+Daniel Litt ([@littmath](https://x.com/littmath)) subsequently explained the
+same source as an `A^1`-bundle over `A^2`, using a limiting family of pencils
+whose deleted parameters are a horizontal section and the diagonal
+([thread](https://x.com/littmath/status/2079347618417971212),
+[full gloss](https://x.com/littmath/status/2079353531430289734)).  He described
+the gloss as prepared with substantial ChatGPT help
+([source](https://x.com/littmath/status/2079414119720165633)) and later
+stressed that Jiang's and Alpöge's posts are the same construction
+([comment](https://x.com/littmath/status/2079475742401003816)).  This is a
+conceptual explanation of the three presentations, not a fourth construction.
+The canonical paper now uses this picture to motivate the affine chart, whose
+explicit inverse remains the global trivialization proof.
+
 The exact coordinate bridge is
 `G = R0 o F o S0`, with `S0(x,y,z)=(x,y,-z)` and
 `R0(a,b,c)=(c,b,a)`.  This is source--target, or left--right, equivalence;

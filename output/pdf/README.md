@@ -6,7 +6,15 @@ is [src/distinguished_root_map.tex](../../src/distinguished_root_map.tex).
 It gives the short, beginner-first synthesis of the Alpöge--Fable coordinate
 presentation, the Jiang--GPT projective presentation, and the resultant
 presentation of Aaron Lou (@aaron_lou), together with their exact
-source--target equivalence.
+source--target equivalence.  The current revision also incorporates Daniel
+Litt's ([@littmath](https://x.com/littmath))
+[affine-line-bundle observation](https://x.com/littmath/status/2079347618417971212)
+and [pencil gloss](https://x.com/littmath/status/2079353531430289734),
+which he described as developed
+[with substantial ChatGPT help](https://x.com/littmath/status/2079414119720165633).
+Litt's later [comparison comment](https://x.com/littmath/status/2079475742401003816)
+emphasizes that this is an explanation of the same construction, not a fourth
+construction.  The explicit chart remains the global trivialization proof.
 
 Rebuild the canonical PDF from the repository root with:
 

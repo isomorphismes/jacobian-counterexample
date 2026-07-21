@@ -52,7 +52,7 @@
   \large Marked roots of binary cubics and a three-dimensional Keller map}
 \author{Repository compilation, exposition, and independent audit\\
   Bartosz Naskrecki}
-\date{20 July 2026}
+\date{21 July 2026}
 
 \begin{document}
 
@@ -65,7 +65,8 @@ looks mysterious; its geometry is not.  A general binary cubic has three
 distinct projective roots.  Mark one simple root and then forget which root
 was marked.  A special
 affine slice makes both the space of cubics and the space of marked cubics
-isomorphic to affine three-space.  This note unifies three public
+isomorphic to affine three-space.  A pencil-bundle description explains
+geometrically why the marked space is affine three-space.  This note unifies three public
 presentations of that map: the formula posted by Levent Alp\"oge, with credit
 to Fable; the symmetric-product description posted by Andy Jiang
 (@davikrehalt), explicitly presented there as GPT output; and the
@@ -107,7 +108,7 @@ through the usual refereeing process.
 
 \section{Provenance and the three viewpoints}
 
-The public record available on 20 July 2026 separates naturally into the
+The public record used here, from 20--21 July 2026, separates naturally into the
 following roles.
 
 \begin{itemize}
@@ -126,6 +127,12 @@ following roles.
   linear and a quadratic factor, normalizing their resultant, and finding a
   global affine chart \cite{Lou}.
 \end{itemize}
+
+Daniel Litt (@littmath) subsequently explained the affine source through a
+family of pencils of lines, exhibiting it as an affine-line bundle over an
+affine plane \cite{LittBundle}.  Litt reported substantial ChatGPT assistance
+with that geometric gloss.  We use it below to illuminate the same
+Jiang--GPT/Alp\"oge--Fable construction, not as a fourth construction.
 
 This repository compiles, compares, and independently checks those public
 descriptions.  Its maintainer does not claim discovery authorship for any of
@@ -207,8 +214,10 @@ X_{\mathrm{proj}}&=
 \setminus\bigl(R\cup\mu^{-1}(H_\infty)\bigr).
 \end{align*}
 Since the complement of a hyperplane in $\PP^3$ is affine space,
-$Y_{\mathrm{proj}}\simeq\A^3$.  The surprising statement is that this
-particular $X_{\mathrm{proj}}$ is also $\A^3$.
+$Y_{\mathrm{proj}}\simeq\A^3$.  The target is therefore visibly affine
+three-space.  Section~3 explains geometrically why the source is an
+affine-line bundle over $\A^2$, and then gives an explicit global
+trivialization.
 
 Here is an intrinsic affine version.  Let $W$ be two-dimensional and choose a
 tensor $\tau\in\Sym^3W$ of multiplicity type $(2,1)$.  The projective
@@ -295,27 +304,100 @@ isomorphism.  The map in the proposition is its base change to the two levels
 in (3.3), so it is etale.
 \end{proof}
 
-It remains to see the exceptional global affine chart.  Choose an adapted
-basis $T,S$ and write
+\subsection*{The pencil bundle behind the affine chart}
+
+The following pencil-bundle picture makes explicit a geometric observation
+of Litt \cite{LittBundle}.  It explains the global affine chart rather than
+merely verifying its formulas.  Choose an adapted basis $T,S$ and write
 \[
-\ell=xT+\beta S,\qquad
-q=\gamma T^2+\delta TS+\epsilon S^2.
+  \ell=xT+\beta S,\qquad
+  q=\gamma T^2+\delta TS+\epsilon S^2.
 \]
-The two equations in (3.3) become
+Before fixing the two affine levels in (3.3), project to
 \[
-x\delta+\beta\gamma=1,\qquad
-x^2\epsilon-x\beta\delta+\beta^2\gamma=1.
+  \lambda=[\ell]=[x:\beta]\in\PP^1,
+  \qquad [q]=[\gamma:\delta:\epsilon]\in\PP^2.
+\]
+For fixed $\lambda$, the pullback of the hyperplane at infinity and the resultant
+divisor are the two lines
+\begin{align*}
+  \mathcal H_\lambda(q)&=\beta\gamma+x\delta=0,\\
+  \mathcal R_\lambda(q)&=\beta^2\gamma-x\beta\delta+x^2\epsilon=0.
+\end{align*}
+Put $\mathcal K_\lambda(q)=-2\beta\delta+x\epsilon$.  The elementary identity
+\[
+  \mathcal R_\lambda=\beta\mathcal H_\lambda+x\mathcal K_\lambda
+\]
+contains the geometry of the chart.  In particular,
+$\mathcal H_\lambda(\ell^2)=3x^2\beta$: $x=0$ is the double, tangent
+contact, while $\beta=0$ is the remaining transverse contact.  At $x=0$ the
+two deleted lines coincide, but $\mathcal H_\lambda$ and
+$\mathcal K_\lambda$ retain the limiting pencil.
+
+Write a pencil member as
+\[
+  n\mathcal H_\lambda+m\mathcal K_\lambda=0,
+  \qquad [m:n]\in\PP^1.
+\]
+The line $\mathcal H_\lambda$ is the horizontal section $[m:n]=[0:1]$, while
+$\mathcal R_\lambda$ is the diagonal $[m:n]=[x:\beta]$.  Thus the allowed pencil
+parameters form
+\[
+  B=(\PP^1\times\PP^1)
+  \setminus(\text{horizontal section}\cup\text{diagonal})
+  \simeq\A^2.
+\]
+An explicit isomorphism and its inverse are
+\begin{align*}
+  (x,y)&\longmapsto\bigl([x:1+xy],[1:y]\bigr),\\
+  \bigl([a:b],[m:n]\bigr)&\longmapsto
+  \left(\frac{am}{bm-an},\frac nm\right).
+\end{align*}
+The denominators do not vanish precisely because the horizontal section and
+diagonal were removed.  This is the geometric origin of $\beta=1+xy$.
+
+All lines in the pencil over $\lambda$ meet at
+\[
+  b_\lambda=[x^2:-x\beta:-2\beta^2]\in\PP^2.
+\]
+Every quadratic outside the two deleted lines lies on a unique allowed pencil
+member; that member, with $b_\lambda$ removed, is $\A^1$.  Consequently
+\[
+  X_{\mathrm{proj}}\longrightarrow B\simeq\A^2,
+  \qquad \text{fiber}\simeq\A^1,
+\]
+is an affine-line bundle, so it is locally a product with $\A^1$.  The
+formulas below show directly that it is globally $\A^2\times\A^1$.
+
+Return now to the normalized equations.  The two equations in (3.3) become
+\[
+  x\delta+\beta\gamma=1,\qquad
+  x^2\epsilon-x\beta\delta+\beta^2\gamma=1.
 \tag{3.6}
 \]
-The following formulas define an isomorphism $\A^3_{x,y,z}\to M_{\omega,\tau}$:
+In other words, $\mathcal H_\lambda(q)=\mathcal R_\lambda(q)=1$.  If
+\[
+  y=-\mathcal K_\lambda(q)=2\beta\delta-x\epsilon,
+\]
+then $\mathcal R_\lambda=\beta\mathcal H_\lambda+x\mathcal K_\lambda$ immediately gives
+$\beta=1+xy$.  The base coordinates are therefore exactly
+$([x:\beta],[m:n])=([x:1+xy],[1:y])$.  It remains only to choose a coordinate
+along the affine-line fiber.  The following formulas choose it globally:
 \begin{align*}
-\beta&=1+xy,&
-\gamma&=\frac{2-3xy+x^2z}{2},\\
-\delta&=\frac{y+3xy^2-xz-x^2yz}{2},&
-\epsilon&=-z(1+xy)^2+y^2(4+3xy).
+  \beta&=1+xy,&
+  \gamma&=\frac{2-3xy+x^2z}{2},\\
+  \delta&=\frac{y+3xy^2-xz-x^2yz}{2},&
+  \epsilon&=-z(1+xy)^2+y^2(4+3xy).
 \tag{3.7}
 \end{align*}
-Its inverse is polynomial and is evaluated in this order:
+For fixed $(x,y)$, the dependence on $z$ is exactly in the common-base-point
+direction:
+\[
+  \frac{\partial(\gamma,\delta,\epsilon)}{\partial z}
+  =\frac12(x^2,-x\beta,-2\beta^2).
+\]
+Thus $x,y$ are coordinates on $B$ and $z$ is the affine coordinate along its
+fiber.  The inverse is polynomial and is evaluated in this order:
 \[
   x=x,\qquad y_*=2\beta\delta-x\epsilon,\qquad
   z_*=4y_*\delta+2\gamma y_*^2-\epsilon.
@@ -378,6 +460,11 @@ Then the exact relation is
   \boxed{G=R_0\circ F\circ S_0.}
 \tag{4.6}
 \]
+Thus Jiang's projective morphism is not a second counterexample: it is the
+Alp\"oge--Fable map in different coordinates, as Litt also emphasized
+\cite{LittComment}.  More precisely, Jiang's projective morphism, Lou's
+normalized factor map, and $F$ are the same abstract morphism under the
+source and target identifications displayed above.
 This is left-right linear equivalence: source and target coordinates change
 independently.  In particular, the displayed identification is not a
 dynamical conjugacy by one common coordinate change.
@@ -485,7 +572,7 @@ text and original repository graphics are released under the Creative
 Commons Attribution 4.0 International license.  Third-party posts and papers
 remain under their respective terms and are linked rather than republished.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 
 \bibitem{Alpoge}
 L.~Alp\"oge,
@@ -510,6 +597,25 @@ A.~Lou (@aaron\_lou),
 \newblock research note, 20 July 2026,
 \newblock \url{https://aaronlou.com/jacobian_counterexample_derivation.pdf},
 \newblock X profile: \url{https://x.com/aaron_lou}.
+
+\bibitem{LittBundle}
+D.~Litt (@littmath),
+\newblock X thread explaining the marked-root source as an $\A^1$-bundle over
+  $\A^2$ through pencils of lines, and later noting substantial ChatGPT
+  assistance,
+\newblock 20--21 July 2026,
+\newblock \url{https://x.com/littmath/status/2079347618417971212},
+\newblock \url{https://x.com/littmath/status/2079353531430289734}, and
+\newblock \url{https://x.com/littmath/status/2079414119720165633}
+  (accessed 21 July 2026).
+
+\bibitem{LittComment}
+D.~Litt (@littmath),
+\newblock X comment identifying Jiang's projective post with the
+  Alp\"oge--Fable construction and recommending a geometric explanation,
+\newblock 21 July 2026,
+\newblock \url{https://x.com/littmath/status/2079475742401003816}
+  (accessed 21 July 2026).
 
 \bibitem{Keller}
 O.-H.~Keller,

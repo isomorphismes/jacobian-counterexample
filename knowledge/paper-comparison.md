@@ -1,6 +1,6 @@
 # One map, three public descriptions
 
-Status date: 20 July 2026. This note compares the two local paper drafts and
+Status date: 21 July 2026. This note compares the two local paper drafts and
 the three public presentations they synthesize. It separates mathematical
 equivalence from provenance. It is not a priority determination.
 
@@ -26,7 +26,14 @@ The public roles are distinct:
 3. [Aaron Lou's note](https://aaronlou.com/jacobian_counterexample_derivation.pdf)
    ([@aaron_lou](https://x.com/aaron_lou)) gives a
    factorization--resultant derivation and an explicit global affine chart.
-4. This repository compares, verifies, and explains these presentations. Its
+4. Daniel Litt ([@littmath](https://x.com/littmath)) later gave a conceptual
+   [pencil-bundle gloss](https://x.com/littmath/status/2079353531430289734)
+   on why the projective source is affine three-space, described it as
+   developed [with substantial ChatGPT help](https://x.com/littmath/status/2079414119720165633),
+   and emphasized that the projective and coordinate posts are
+   [the same construction](https://x.com/littmath/status/2079475742401003816).
+   This is an explanation of the existing construction, not a fourth one.
+5. This repository compares, verifies, and explains these presentations. Its
    compiler does not claim discovery of the formula or either construction.
 
 ## What the two retained paper artifacts contain
@@ -42,7 +49,7 @@ The older coordinate-free paper is retained unchanged as historical version 1.
 | Artifact | `src/distinguished_root_map.tex` and `output/pdf/one_map_three_descriptions.pdf` | `output/pdf/marked_root_binary_cubic.tex` and `.pdf` |
 | Opening | Exact formula, determinant, collision, referee-status note | Intrinsic marked-root theorem and incidence variety |
 | Expository order | Plain-language mechanism, then projective, resultant, and coordinate lenses | Coordinate-free construction first, coordinates later |
-| Projective lens | Jiang--GPT symmetric-product map, with a beginner translation | Intrinsic affine normalization of Jiang's projective model |
+| Projective lens | Jiang--GPT symmetric-product map, with Litt's pencil/affine-line-bundle explanation | Intrinsic affine normalization of Jiang's projective model |
 | Resultant lens | Lou's gauge, kernel proof, and global chart | More detailed invariant resultant development and étaleness proof |
 | Explicit lens | Alpöge--Fable formula plus the exact bridge $G=R_0FS_0$ | Recovers both coordinate orders after the intrinsic proof |
 | Provenance | Role-specific statement on page one and in the bibliography | All three public sources recorded in a provenance paragraph |
@@ -79,6 +86,19 @@ Three languages describe that arrow:
 
 The coordinate-free incidence description used by this repository is a
 synthesis of the last two lenses, not a fourth discovery claim.
+
+Litt's explanation supplies the missing geometric digestion of the source.
+After projection to the marked linear-factor class (equivalently, the marked
+point), the two deleted loci are lines in the quadratic-factor plane; at the
+tangency fiber they coincide.  Passing to their
+limiting pencils gives a base obtained from
+$\mathbf P^1\times\mathbf P^1$ by deleting a horizontal section and the
+diagonal, hence an affine plane.  Removing each pencil's base point leaves an
+affine-line fiber.  This explains why an $\mathbf A^1$-bundle over
+$\mathbf A^2$ appears.  It does not by itself replace the final
+trivialization step: the canonical paper retains the explicit chart and its
+polynomial inverse as the elementary global proof that the total space is
+$\mathbf A^3$.
 
 ## Exact bridge between the projective and resultant gauges
 
@@ -178,7 +198,8 @@ sections and no table of contents:
    slice.
 3. **Lou: fix the factorization gauge by a resultant.** It factors
    $C=\ell q$, imposes resultant one, proves étaleness by the kernel argument,
-   and gives the global $\mathbf A^3$ chart.
+   uses Litt's pencil-bundle gloss to reveal the affine-plane base and
+   affine-line fibers, and gives the global $\mathbf A^3$ chart.
 4. **Alpöge--Fable: recovering the displayed formula.** It gives the exact
    sign-and-scale bridge, displays $G=R_0FS_0$, and recovers the determinant
    and collision.

@@ -22,6 +22,18 @@ The three public descriptions have distinct sources:
   ([@aaron_lou](https://x.com/aaron_lou)) gives the factorization--resultant
   gauge and global affine chart.
 
+Daniel Litt ([@littmath](https://x.com/littmath)) later supplied a conceptual
+gloss on the same construction: the source is an
+[affine-line bundle over an affine plane](https://x.com/littmath/status/2079347618417971212),
+organized by a
+[family of pencils](https://x.com/littmath/status/2079353531430289734).
+He described that explanation as developed
+[with substantial ChatGPT help](https://x.com/littmath/status/2079414119720165633)
+and separately emphasized that Jiang's and Alpöge's posts describe
+[the same construction](https://x.com/littmath/status/2079475742401003816).
+This is geometric digestion of the three presentations, not a fourth
+construction.
+
 Bartosz Naskrecki is the compiler and independent auditor of this repository
 and the author of its landing page and visual exposition. He does **not** claim
 authorship of the formula or of the three mathematical presentations above.
@@ -30,7 +42,9 @@ See the exact [paper comparison](knowledge/paper-comparison.md) and
 
 The current canonical short paper is
 [One Map, Three Descriptions](output/pdf/one_map_three_descriptions.pdf).
-It can be rebuilt with `make paper`; the
+Its current revision incorporates Litt's pencil-bundle explanation while
+retaining the explicit affine chart as the global proof. It can be rebuilt
+with `make paper`; the
 [paper artifact index](output/pdf/README.md) distinguishes it from the
 historical version 1.
 

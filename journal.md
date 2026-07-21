@@ -343,3 +343,25 @@ all decisive outputs are also encoded as executable assertions.
   276.598698 seconds with 104 regenerated, nonoverlapping WebVTT cues.  The
   full media stream decodes without error and the caption text remains exactly
   equal to the canonical narration.
+
+## 2026-07-21 — Litt pencil-bundle revision
+
+- Recorded Daniel Litt's ([@littmath](https://x.com/littmath)) conceptual
+  explanation of the marked-root source as an affine-line bundle over an
+  affine plane, obtained from a family of pencils with a horizontal section
+  and the diagonal deleted
+  ([thread](https://x.com/littmath/status/2079347618417971212),
+  [full gloss](https://x.com/littmath/status/2079353531430289734)).
+- Preserved the provenance boundary: this explains the Jiang--GPT and
+  Alpöge--Fable construction rather than introducing a fourth one. Litt also
+  made that equivalence explicit in a later
+  [comment](https://x.com/littmath/status/2079475742401003816).
+- Recorded Litt's own statement that the gloss was developed with substantial
+  [ChatGPT assistance](https://x.com/littmath/status/2079414119720165633).
+  The canonical paper revision uses the geometry as motivation and retains
+  the polynomial chart and inverse as the global proof that the source is
+  affine three-space.
+- Added exact SymPy regressions for the pencil identity, common base point,
+  and affine-plane parametrization.  The verifier and all 78 Pytests pass;
+  the Jupyter Book rebuilds cleanly, and the warning-free eight-page PDF was
+  rendered and inspected page by page.

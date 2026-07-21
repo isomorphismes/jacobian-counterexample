@@ -199,6 +199,57 @@ def certify_binary_cubic_geometry():
     ) ** 3
 
 
+def certify_pencil_bundle_geometry():
+    """Certify the pencil description of the marked-root source."""
+    x, beta, gamma, delta, epsilon = sp.symbols(
+        "x beta gamma delta epsilon"
+    )
+
+    hyperplane = beta * gamma + x * delta
+    limiting_line = -2 * beta * delta + x * epsilon
+    resultant = beta**2 * gamma - x * beta * delta + x**2 * epsilon
+    assert sp.expand(resultant - beta * hyperplane - x * limiting_line) == 0
+
+    # This projective point is the common base point of the whole pencil.
+    base_point = {
+        gamma: x**2,
+        delta: -x * beta,
+        epsilon: -2 * beta**2,
+    }
+    assert sp.expand(hyperplane.subs(base_point)) == 0
+    assert sp.expand(limiting_line.subs(base_point)) == 0
+    assert sp.expand(resultant.subs(base_point)) == 0
+
+    # The complement of the constant section and diagonal is A^2.  The
+    # forward parametrization is ([s:1+st],[1:t]); its separating determinant
+    # is one, so its rational-looking inverse has no pole on this open set.
+    s, t = sp.symbols("s t")
+    forward_x, forward_beta = s, 1 + s * t
+    forward_m, forward_n = sp.Integer(1), t
+    forward_determinant = (
+        forward_beta * forward_m - forward_x * forward_n
+    )
+    assert sp.expand(forward_determinant) == 1
+    assert sp.cancel(
+        forward_x * forward_m / forward_determinant - s
+    ) == 0
+    assert sp.cancel(forward_n / forward_m - t) == 0
+
+    # Conversely, for ([x:beta],[m:n]) in the open set, put
+    # s=xm/(beta*m-x*n) and t=n/m.  The reconstructed pairs agree
+    # projectively with the original pairs.
+    m, n = sp.symbols("m n", nonzero=True)
+    separating_determinant = beta * m - x * n
+    inverse_s = x * m / separating_determinant
+    inverse_t = n / m
+    reconstructed_beta = 1 + inverse_s * inverse_t
+    assert sp.cancel(
+        reconstructed_beta - beta * m / separating_determinant
+    ) == 0
+    assert sp.cancel(inverse_s * beta - reconstructed_beta * x) == 0
+    assert sp.cancel(n - inverse_t * m) == 0
+
+
 def certify_escape_curve():
     (x, y, z), F = canonical_map()
     s = sp.symbols("s", nonzero=True)
@@ -251,6 +302,7 @@ def run_all():
     certify_normalization()
     certify_x_elimination()
     certify_binary_cubic_geometry()
+    certify_pencil_bundle_geometry()
     certify_escape_curve()
     certify_weyl_relations()
 

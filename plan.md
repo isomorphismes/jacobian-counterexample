@@ -74,6 +74,9 @@ provenance, and scope.
   Jiang/GPT for the projective marked-root post, Lou (@aaron_lou) for the
   resultant chart,
   and Bartosz Naskrecki for compilation, audit, repository, and landing page.
+- [x] Incorporate Daniel Litt's (@littmath) pencil and affine-line-bundle
+  gloss, including his stated ChatGPT assistance, while identifying it as a
+  conceptual explanation of the same construction rather than a fourth one.
 - [x] Replace the two competing drafts with one clearly designated canonical
   short paper and retain the older paper as a labeled historical version.
 - [x] Compile the canonical LaTeX source without warnings, render every page,

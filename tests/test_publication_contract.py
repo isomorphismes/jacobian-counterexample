@@ -12,6 +12,10 @@ ALPOGE_POST = "https://x.com/__alpoge__/status/2079028340955197566"
 JIANG_POST = "https://x.com/davikrehalt/status/2079175065695035442"
 LOU_NOTE = "https://aaronlou.com/jacobian_counterexample_derivation.pdf"
 LOU_PROFILE = "https://x.com/aaron_lou"
+LITT_BUNDLE_POST = "https://x.com/littmath/status/2079347618417971212"
+LITT_PENCIL_POST = "https://x.com/littmath/status/2079353531430289734"
+LITT_ASSISTANCE_POST = "https://x.com/littmath/status/2079414119720165633"
+LITT_COMPARISON_POST = "https://x.com/littmath/status/2079475742401003816"
 KELLER_DOI = "https://doi.org/10.1007/BF01695502"
 BCW_DOI = "https://doi.org/10.1090/S0273-0979-1982-15032-7"
 DRUZKOWSKI_DOI = "https://doi.org/10.1007/BF01459126"
@@ -58,6 +62,15 @@ def test_compiler_role_is_not_presented_as_discovery_authorship() -> None:
     assert "Bartosz Naskrecki" in readme
     assert "Bartosz Naskrecki" in paper
     assert "Bartosz Naskrecki" in site
+
+
+def test_litt_pencil_bundle_explanation_is_credited_in_the_paper() -> None:
+    paper = text("src/distinguished_root_map.tex")
+    assert "@littmath" in paper
+    assert LITT_BUNDLE_POST in paper
+    assert LITT_PENCIL_POST in paper
+    assert LITT_ASSISTANCE_POST in paper
+    assert LITT_COMPARISON_POST in paper
 
 
 def test_historical_literature_links_use_the_canonical_dois() -> None:
