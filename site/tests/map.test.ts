@@ -57,6 +57,11 @@ describe("displayed polynomial map", () => {
 });
 
 describe("viewer fixtures", () => {
+  it("omits the unreadable inverse-sheets preset", () => {
+    expect(curvePresets).toHaveLength(5);
+    expect(curvePresets.map((preset) => preset.id)).not.toContain("sheets");
+  });
+
   it("opens on an eleven-line pencil through the origin", () => {
     const pencil = curvePresets[0]!;
     expect(pencil.id).toBe("pencil");

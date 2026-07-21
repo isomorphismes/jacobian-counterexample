@@ -19,8 +19,8 @@ The production build is written to the ignored `site/dist/` directory.  The
 assembly step copies the canonical paper and, when available, the built
 Jupyter Book into that directory.
 
-The elementary curves and marked-root sheets in the browser and Manim film
-share the deterministic data in
+The elementary browser curves and the Manim film's curve sequences share
+the deterministic data in
 [`shared/curve-fixtures.json`](../shared/curve-fixtures.json).  Regenerate it
 from the exact Python formulas with:
 

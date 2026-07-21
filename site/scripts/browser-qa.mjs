@@ -76,7 +76,7 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
   report.viewports[label] = geometry;
 
   if (label === "desktop") {
-    assert.equal(await page.locator("#curve-select option").count(), 6);
+    assert.equal(await page.locator("#curve-select option").count(), 5);
     assert.equal(await page.locator("#curve-select").inputValue(), "pencil");
     assert.equal(await page.locator("#coordinate-rows tr").count(), 11);
     await page.locator("[data-viewer]").scrollIntoViewIfNeeded();
@@ -93,15 +93,6 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
     assert.equal(await page.locator("#coordinate-rows tr").count(), 3);
     await page.locator("[data-viewer]").screenshot({ path: resolve(outputDir, "desktop-viewer-surface.png") });
 
-    await page.locator("#curve-select").selectOption("sheets");
-    assert.equal(await page.locator("#coordinate-rows tr").count(), 3);
-    await page.locator("#curve-progress").evaluate((element) => {
-      element.value = "800";
-      element.dispatchEvent(new Event("input", { bubbles: true }));
-    });
-    const targets = await page.locator("#coordinate-rows td:last-child").allTextContents();
-    assert.equal(new Set(targets).size, 1, "three marked-root sheets must share one target");
-
     const sections = [
       ["infographic", ".root-infographic"],
       ["viewer", "[data-viewer]"],
@@ -114,12 +105,10 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
     }
     await transcript.screenshot({ path: resolve(outputDir, "desktop-film-transcript.png") });
     report.interaction = {
-      presets: 6,
+      presets: 5,
       pencilRows: 11,
       surfaceVertices: 775,
       pixelRatio,
-      sheetRows: 3,
-      coincidentTarget: targets[0],
       transcriptSegments: 14,
       captionTrack: true,
       videoFormat: "video/mp4",

@@ -13,12 +13,6 @@ type CurveFixture = {
   space_note: string;
   map_formula: string[];
   elementary_curves: ElementaryFixture[];
-  sheet_family: {
-    polynomial: string;
-    domain: number[];
-    target: FixtureSample[];
-    branches: Record<string, FixtureSample[]>;
-  };
   three_point_fiber: { source: number[][]; target: number[] };
 };
 
@@ -244,37 +238,6 @@ const ruledSurface: CurvePreset = {
   surfaces: [ruledPlane],
 };
 
-const sheetTargets = canonicalCurveFixture.sheet_family.target;
-const sheetBranches = ["zero", "moving", "remaining"] as const;
-const sheetFrames: CurveFrame[] = [...sheetTargets].reverse().map((targetSample, reverseIndex) => {
-  const originalIndex = sheetTargets.length - 1 - reverseIndex;
-  const s = targetSample.parameter;
-  const target = fixtureVec(targetSample.point);
-  return {
-    parameter: s,
-    parameterText: `s = ${s.toFixed(3)} · roots 0, ${s.toFixed(3)}, ${(1 - s).toFixed(3)}`,
-    tracks: sheetBranches.map((branch, index) => ({
-      id: `root-${index}`,
-      label: `marked root ${branch === "zero" ? "0" : branch === "moving" ? "s" : "1−s"}`,
-      color: colors[index]!,
-      source: fixtureVec(canonicalCurveFixture.sheet_family.branches[branch]![originalIndex]!.point),
-      target,
-    })),
-  };
-});
-
-const threeSheets: CurvePreset = {
-  id: "sheets",
-  title: "Three sheets over one target curve",
-  shortTitle: "Three inverse sheets",
-  description:
-    "The target cubic 2T(T−s)(T−(1−s)) has roots 0, s, and 1−s. Marking each root gives one colored source curve; forgetting the mark makes all three land on the same target curve.",
-  reading:
-    "Three moving source points correspond to one moving target point. As s tends to 0, the first two roots collide and their marked branches escape.",
-  camera: { yaw: -0.7, pitch: 0.38 },
-  samples: sheetFrames,
-};
-
 const escape: CurvePreset = {
   id: "escape",
   title: "A missing inverse branch escapes to infinity",
@@ -298,7 +261,6 @@ export const curvePresets: readonly CurvePreset[] = [
   ruledSurface,
   collision,
   elementary,
-  threeSheets,
   escape,
 ];
 
