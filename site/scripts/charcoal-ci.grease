@@ -15,10 +15,10 @@ npm test
 npm run build:web
 node node_modules/playwright-core/cli.js install --with-deps chromium
 var chrome_path = $(node --input-type=module -e 'import { chromium } from "playwright-core"; process.stdout.write(chromium.executablePath())')
-export CHROME_PATH="$chrome_path"
+setglobal ENV.CHROME_PATH = chrome_path
 var site_url = 'http://127.0.0.1:4174/'
-export SITE_URL="$site_url"
-export BROWSER_QA_OUTPUT="$output"
+setglobal ENV.SITE_URL = site_url
+setglobal ENV.BROWSER_QA_OUTPUT = output
 fork { npm run preview -- --port 4174 > "$output/preview.log" 2>&1 }
 var preview_pid = $!
 trap 'kill "$preview_pid"' EXIT
