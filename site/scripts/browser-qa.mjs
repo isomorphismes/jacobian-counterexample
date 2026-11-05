@@ -141,8 +141,10 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
   report.charcoal ??= {};
   report.charcoal[label] = await inspectCharcoal(page, label);
   const whiteRoot = await page.addStyleTag({ content: "body { background: #FFFFFF !important; }" });
+  await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === "rgb(255, 255, 255)");
   await assert.rejects(() => inspectCharcoal(page, label), /Charcoal role mismatch body/);
   await whiteRoot.evaluate((element) => element.remove());
+  await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === "rgb(33, 33, 33)");
   await inspectCharcoal(page, label);
   report.charcoal[label].whiteRootNegative = "REJECTED";
   await page.keyboard.press("Tab");
