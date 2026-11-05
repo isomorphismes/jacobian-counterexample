@@ -1,0 +1,34 @@
+#!/usr/bin/env grease
+set -eu -o pipefail
+test "$#" -eq 2
+var root = ARGV[0]
+var output = ARGV[1]
+mkdir -p "$output"
+diff -qr "$root/.baseline/site/src/math" "$root/site/src/math"
+diff -qr "$root/.baseline/site/src/viewer" "$root/site/src/viewer"
+diff -qr "$root/.baseline/site/public" "$root/site/public"
+cmp "$root/.baseline/site/src/main.ts" "$root/site/src/main.ts"
+cmp "$root/.baseline/site/index.html" "$root/site/index.html"
+cd "$root/site"
+npm ci
+npm test
+npm run build:web
+node node_modules/playwright-core/cli.js install --with-deps chromium
+var chrome_path = $(node --input-type=module -e 'import { chromium } from "playwright-core"; process.stdout.write(chromium.executablePath())')
+setglobal ENV.CHROME_PATH = chrome_path
+var site_url = 'http://127.0.0.1:4174/'
+setglobal ENV.SITE_URL = site_url
+setglobal ENV.BROWSER_QA_OUTPUT = output
+fork { npm run preview -- --port 4174 > "$output/preview.log" 2>&1 }
+var preview_pid = $!
+var ready = false
+for attempt in @(seq 1 40) {
+  try { curl --fail --silent --output /dev/null "$site_url" }
+  if (_error.code === 0) { setvar ready = true; break }
+  sleep 0.25
+}
+if (not ready) { cat "$output/preview.log" >&2; try { kill "$preview_pid" }; exit 1 }
+try { npm run qa:browser }
+var result = _error.code
+try { kill "$preview_pid" }
+exit "$result"
