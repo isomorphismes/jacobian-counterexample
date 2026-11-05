@@ -21,12 +21,14 @@ setglobal ENV.SITE_URL = site_url
 setglobal ENV.BROWSER_QA_OUTPUT = output
 fork { npm run preview -- --port 4174 > "$output/preview.log" 2>&1 }
 var preview_pid = $!
-trap 'kill "$preview_pid"' EXIT
 var ready = false
 for attempt in @(seq 1 40) {
   try { curl --fail --silent --output /dev/null "$site_url" }
   if (_error.code === 0) { setvar ready = true; break }
   sleep 0.25
 }
-if (not ready) { cat "$output/preview.log" >&2; exit 1 }
-npm run qa:browser
+if (not ready) { cat "$output/preview.log" >&2; try { kill "$preview_pid" }; exit 1 }
+try { npm run qa:browser }
+var result = _error.code
+try { kill "$preview_pid" }
+exit "$result"

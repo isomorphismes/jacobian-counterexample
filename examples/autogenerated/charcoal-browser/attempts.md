@@ -5,3 +5,5 @@ Hosted run42017498673 passed exact scientific/media source comparison, all site 
 The repaired runner assigns child-process environment through `setglobal ENV.NAME = value`, retaining a local URL for readiness polling. No Bash execution or alternate shell is introduced. Actual browser, AA, focus and white-root acceptance remain pending until they execute successfully.
 
 The existing JavaScript browser oracle is extended in its established Node/Playwright architecture; a second implementation would duplicate this test owner. Mathematical types and WebGL rendering remain unchanged and are compared with the prior source.
+
+Hosted run42018493395 accepts ENV assignments and starts the real preview server, then rejects the POSIX-style trap invocation under simple_trap_builtin. That attempt is preserved. The runner now performs explicit bounded readiness and cleanup, saves the actual browser exit code before cleanup, and returns it unchanged. This removes a nonessential trap dependency without replacing Grease or relaxing browser tests.
