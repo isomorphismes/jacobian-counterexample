@@ -147,8 +147,15 @@ async function inspectViewport(browser, label, viewport, reducedMotion = "no-pre
   await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === "rgb(33, 33, 33)");
   await inspectCharcoal(page, label);
   report.charcoal[label].whiteRootNegative = "REJECTED";
-  await page.keyboard.press("Tab");
   await page.locator(".hero-actions .button").first().focus();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab");
+  await page.waitForFunction(() => {
+    const element = document.querySelector(".hero-actions .button");
+    const style = getComputedStyle(element);
+    return document.activeElement === element && element.matches(":focus-visible")
+      && style.outlineColor === "rgb(180, 180, 180)" && style.outlineWidth === "3px";
+  });
   const focus = await page.locator(".hero-actions .button").first().evaluate((element) => {
     const style = getComputedStyle(element);
     return { color: style.outlineColor, width: style.outlineWidth, style: style.outlineStyle };
