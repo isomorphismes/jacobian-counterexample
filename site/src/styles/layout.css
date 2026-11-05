@@ -16,7 +16,7 @@
   justify-content: space-between;
   gap: 2rem;
   padding: 1.25rem max(1.125rem, calc((100% - var(--page)) / 2));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.17);
+  border-bottom: 1px solid var(--line);
   color: var(--white);
 }
 
@@ -36,7 +36,7 @@
   width: 2rem;
   height: 2rem;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--line);
   border-radius: 50%;
   font-family: var(--serif);
   font-size: 1.25rem;
@@ -44,7 +44,7 @@
 
 .site-header nav { display: flex; gap: clamp(0.8rem, 2.2vw, 2rem); }
 .site-header nav a { font-size: 0.82rem; font-weight: 650; text-decoration: none; }
-.site-header nav a:hover { color: var(--teal-bright); }
+.site-header nav a:hover { color: var(--ink); }
 
 .section { padding-block: clamp(5rem, 9vw, 8.5rem); }
 .section-light { background: var(--paper-bright); }
@@ -61,7 +61,7 @@
 
 .kicker, .eyebrow {
   margin-bottom: 1rem;
-  color: var(--teal);
+  color: var(--ink-soft);
   font-size: 0.73rem;
   font-weight: 820;
   letter-spacing: 0.16em;
@@ -81,15 +81,15 @@
 .scope-note {
   margin: 0;
   padding-left: 1.25rem;
-  border-left: 2px solid var(--amber-bright);
-  color: #cbd3e4;
+  border-left: 2px solid var(--focus);
+  color: var(--ink-soft);
   font-size: 0.9rem;
 }
 
 footer {
   padding-block: 3.5rem;
-  background: #060912;
-  color: #b7c0d2;
+  background: var(--paper);
+  color: var(--ink-soft);
   font-size: 0.86rem;
 }
 

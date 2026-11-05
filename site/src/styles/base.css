@@ -5,7 +5,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-  color-scheme: light dark;
+  color-scheme: dark;
 }
 
 body {
@@ -45,11 +45,11 @@ button, .button, select {
 }
 
 :focus-visible {
-  outline: 3px solid var(--amber-bright);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
-::selection { background: #c9f2e8; color: var(--ink); }
+::selection { background: var(--selection); color: var(--ink); }
 
 dfn { font-style: normal; font-weight: 700; }
 
@@ -72,8 +72,8 @@ dfn { font-style: normal; font-weight: 700; }
   left: 0.75rem;
   padding: 0.7rem 1rem;
   border-radius: var(--radius-sm);
-  background: var(--white);
-  color: var(--night);
+  background: var(--interactive);
+  color: var(--ink);
   font-weight: 750;
   transform: translateY(-160%);
   transition: transform 160ms ease;
